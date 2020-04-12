@@ -1,0 +1,7 @@
+org\testApp\Answer.class
+org\testApp\Questionnaire.class
+org\testApp\Theme.class
+org\testApp\Question.class
+org\testApp\enums\Role.class
+org\testApp\User.class
+org\testApp\InfoForTeacher.class
