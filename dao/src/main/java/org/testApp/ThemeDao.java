@@ -1,6 +1,8 @@
 package org.testApp;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testApp.ConnectUtils.MySQLConnector;
@@ -29,10 +31,20 @@ public class ThemeDao implements IThemeDao{
 
     public String getName(Integer theme_id){
        /* Session session = SFUtil.getSession();*/
+        Transaction transaction = null;
         try(Session session = HibernateUtil.getSession()){
+            transaction = session.beginTransaction();
             Theme theme = session.get(Theme.class, theme_id);
+            transaction.commit();
             log.info("Get theme - " + theme.getName());
             return theme.getName();
+        }
+        catch (HibernateException e){
+            log.error("Exception - {} in getName() ThemeDao by Id:{}", theme_id, e);
+            if(transaction != null){
+                transaction.rollback();
+            }
+            return null;
         }
     }
 

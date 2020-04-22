@@ -57,11 +57,9 @@ public class UserDao implements IUserDao {
     @Override
     public List<User> getUsersHibernate(UserFilter userFilter) {
         Transaction transaction = null;
-        Session session = null;
-        try {
-            session = SFUtil.getSession();
+        try(Session session = HibernateUtil.getSession()) {
+           // session = SFUtil.getSession();
             transaction = session.beginTransaction();
-
             Query query = session.createQuery("FROM User");
             List<User> users = query.getResultList();
             log.info("Get Users from DB");
@@ -73,10 +71,6 @@ public class UserDao implements IUserDao {
                 transaction.rollback();
             }
             return null;
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
     } //hibernate
 
@@ -84,9 +78,9 @@ public class UserDao implements IUserDao {
     public User getUserHibernate(String userLogin) {
         String hql = "FROM User WHERE login = :userLogin";
         Transaction transaction = null;
-        Session session = null;
-        try {
-            session = SFUtil.getSession();
+
+        try(Session session = HibernateUtil.getSession()) {
+           // session = SFUtil.getSession();
             transaction = session.beginTransaction();
             Query query = session.createQuery(hql, User.class);
             query.setParameter("userLogin", userLogin);
@@ -100,10 +94,6 @@ public class UserDao implements IUserDao {
                 transaction.rollback();
             }
             return null;
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
     } //hibernate
 
@@ -111,9 +101,8 @@ public class UserDao implements IUserDao {
     public boolean deleteUserHibernate(String login) {
         String hql = "DELETE User WHERE login = :userLogin";
         Transaction transaction = null;
-        Session session = null;
-        try {
-            session = SFUtil.getSession();
+        try(Session session = HibernateUtil.getSession()) {
+           // session = SFUtil.getSession();
             transaction = session.beginTransaction();
             Query query = session.createQuery(hql);
             query.setParameter("userLogin", login);
@@ -127,10 +116,6 @@ public class UserDao implements IUserDao {
                 transaction.rollback();
             }
             return false;
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
     } //hibernate
 
@@ -138,12 +123,11 @@ public class UserDao implements IUserDao {
     public long updateUserForAdminHibernate(String oldUserLogin, User newUser) {
         String hql = "UPDATE User SET password = :newPassword, email = :newEmail, role = :newRole where login = :oldLogin";
         Transaction transaction = null;
-        Session session = null;
         String newPassword = newUser.getPassword();
         String newEmail = newUser.getEmail();
         Role newRole = newUser.getRole();
-        try {
-            session = SFUtil.getSession();
+        try (Session session = HibernateUtil.getSession()){
+          //  session = SFUtil.getSession();
             transaction = session.beginTransaction();
             Query query = session.createQuery(hql);
             query.setParameter("newPassword", newPassword);
@@ -160,10 +144,6 @@ public class UserDao implements IUserDao {
                 transaction.rollback();
             }
             return 0;
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
     } //hibernate
 
@@ -171,10 +151,10 @@ public class UserDao implements IUserDao {
     public long updateUserEmailHibernate(String newEmail, User user) {
         String hql = "UPDATE User Set email = :newEmail WHERE login = :userLogin";
         String userLogin = user.getLogin();
-        Session session = null;
+
         Transaction transaction = null;
-        try {
-            session = SFUtil.getSession();
+        try(Session session = HibernateUtil.getSession()) {
+          // session = SFUtil.getSession();
             transaction = session.beginTransaction();
             Query query = session.createQuery(hql);
             query.setParameter("newEmail", newEmail);
@@ -189,10 +169,6 @@ public class UserDao implements IUserDao {
                 transaction.rollback();
             }
             return 0;
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
     } //hibernate
 
@@ -200,10 +176,9 @@ public class UserDao implements IUserDao {
     public long updateUserPasswordHibernate(String newPassword, User user) {
         String hql = "UPDATE User Set password = :newPassword WHERE login = :userLogin";
         String userLogin = user.getLogin();
-        Session session = null;
         Transaction transaction = null;
-        try {
-            session = SFUtil.getSession();
+        try (Session session = HibernateUtil.getSession()){
+          //  session = SFUtil.getSession();
             transaction = session.beginTransaction();
             Query query = session.createQuery(hql);
             query.setParameter("newPassword", newPassword);
@@ -218,10 +193,6 @@ public class UserDao implements IUserDao {
                 transaction.rollback();
             }
             return 0;
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
     } //hibernate
 
