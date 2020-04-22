@@ -22,6 +22,7 @@ public class ThemeDaoTest {
 
     @Test
     public void testGetName(){
+
         Integer id = 1;
         String themeName = themeDao.getName(id);
         Assertions.assertEquals("Объекты и классы", themeName);
