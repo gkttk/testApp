@@ -1,17 +1,38 @@
 package org.testApp;
 
-public class Theme {
-    private int id;
-    private String name;
-    private int id_owner;
+import javax.persistence.*;
 
-    public Theme(int id, String name, int id_owner) {
+@Entity
+public class Theme {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    @Column
+    private String name;
+    @Column(name = "owner_id")
+    private Integer id_owner;
+
+    public Theme(){}
+
+    public Theme(Integer id, String name, Integer id_owner) {
         this.id = id;
         this.name = name;
         this.id_owner = id_owner;
     }
 
-    public int getId() {
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setId_owner(Integer id_owner) {
+        this.id_owner = id_owner;
+    }
+
+    public Integer getId() {
         return id;
     }
 
@@ -19,7 +40,7 @@ public class Theme {
         return name;
     }
 
-    public int getId_owner() {
+    public Integer getId_owner() {
         return id_owner;
     }
 

@@ -20,6 +20,6 @@ public class ThemeService implements IThemeService {
 
     @Override
     public String getThemeName(int themeId) {
-       return themeDao.getThemeNameByThemeId(themeId);
+       return themeDao.getName(themeId);
     }
 }

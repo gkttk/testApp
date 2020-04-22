@@ -1,9 +1,13 @@
 package org.testApp;
 
+import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testApp.ConnectUtils.MySQLConnector;
 import org.testApp.api.IThemeDao;
+import org.testApp.hibernateUtil.HibernateUtil;
+import org.testApp.hibernateUtil.SFUtil;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,8 +27,18 @@ public class ThemeDao implements IThemeDao{
         return instance;
     }
 
+    public String getName(Integer theme_id){
+       /* Session session = SFUtil.getSession();*/
+        try(Session session = HibernateUtil.getSession()){
+            Theme theme = session.get(Theme.class, theme_id);
+            log.info("Get theme - " + theme.getName());
+            return theme.getName();
+        }
+    }
 
-   public String getThemeNameByThemeId(int themeId){
+
+
+  /* public String getThemeNameByThemeId(int themeId){
         String query = "SELECT name FROM theme WHERE id = ?";
         try (Connection connection = MySQLConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -40,6 +54,6 @@ public class ThemeDao implements IThemeDao{
             log.error("Fail to getThemeName with theme_id is {}", themeId);
            throw new RuntimeException(e);
         }
-    }
+    }*/
 
 }

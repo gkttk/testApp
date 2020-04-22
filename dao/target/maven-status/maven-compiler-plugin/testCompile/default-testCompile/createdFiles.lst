@@ -1,6 +1,6 @@
 org\testApp\UserDaoTest.class
+org\testApp\QuestionnaireDaoTest.class
+org\testApp\InfoForTeacherDaoTest.class
 org\testApp\ThemeDaoTest.class
 org\testApp\QuestionDaoTest.class
 org\testApp\AnswerDaoTest.class
-org\testApp\QuestionnaireDaoTest.class
-org\testApp\InfoForTeacherDaoTest.class

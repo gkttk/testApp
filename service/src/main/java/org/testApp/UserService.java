@@ -20,34 +20,34 @@ public class UserService implements IUserService{
 
     @Override
     public long changePassword(String newPassword, User user){
-       return userDao.updateUserPassword(newPassword,user);
+       return userDao.updateUserPasswordHibernate(newPassword,user);
     }
 
     @Override
     public long changeEmail(String newEmail, User user){
-        return userDao.updateUserEmail(newEmail,user);
+        return userDao.updateUserEmailHibernate(newEmail,user);
     }
 
     @Override
-    public long addUser(User user) {
-          return userDao.add(user);
+    public Integer addUser(User user) {
+          return userDao.addHibernate(user);
     }
 
     @Override
     public List<User> getUsersList(){
-        return userDao.getUsers(null);
+        return userDao.getUsersHibernate(null);
     }
 
     @Override
     public User getUser(String userLogin){
-        User user = userDao.getUser(userLogin);
+        User user = userDao.getUserHibernate(userLogin);
         return user;
     }
 
 
     @Override
     public boolean deleteUser(String userLogin){
-           return userDao.delete(userLogin);
+           return userDao.deleteUserHibernate(userLogin);
     }
 
 

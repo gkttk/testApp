@@ -4,7 +4,7 @@ import org.testApp.User;
 import java.util.List;
 
 public interface IUserService {
-    long addUser(User user);
+    Integer addUser(User user);
     List<User> getUsersList();
     User getUser(String userLogin);
     boolean deleteUser(String userLogin);

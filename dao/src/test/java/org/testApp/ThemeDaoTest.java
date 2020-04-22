@@ -13,11 +13,18 @@ public class ThemeDaoTest {
         themeDao = ThemeDao.getInstance();
     }
 
-    @Test
+   /* @Test
     public void testGetThemeNameByThemeId(){
         int themeId = 2;
         String themeName = themeDao.getThemeNameByThemeId(themeId);
         Assertions.assertEquals("Наследование", themeName);
+    }*/
+
+    @Test
+    public void testGetName(){
+        Integer id = 1;
+        String themeName = themeDao.getName(id);
+        Assertions.assertEquals("Объекты и классы", themeName);
     }
 
 }

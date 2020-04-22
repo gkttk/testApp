@@ -1,15 +1,27 @@
 package org.testApp;
 
+
 import org.testApp.enums.Role;
+import javax.persistence.*;
 import java.util.Objects;
 
+@Entity
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column
     private String login;
+    @Column
     private String password;
+    @Column
     private String email;
+
+    @Enumerated(EnumType.STRING)
+    @Column
     private Role role;
 
+    public User(){}
 
     public User(int id, String login, String password, String email) {
         this.id = id;
@@ -35,6 +47,22 @@ public class User {
         this.role = role;
     }
 
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 
     public int getId() {
         return id;

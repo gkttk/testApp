@@ -11,6 +11,8 @@ org\testApp\ConnectUtils\AutoIncrementCompressor.class
 org\testApp\api\IThemeDao.class
 org\testApp\filters\AnswerFilter.class
 org\testApp\InfoForTeacherDao.class
+org\testApp\hibernateUtil\HibernateUtil.class
+org\testApp\hibernateUtil\SFUtil.class
 org\testApp\api\IInfoForTeacherDao.class
 org\testApp\api\IQuestionnaireDao.class
 org\testApp\filters\UserFilter.class

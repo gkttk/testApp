@@ -19,13 +19,13 @@ public class UserValidator implements IValidator {
     }
     @Override
     public boolean checkLoginInDB(String login){
-        List<User> users = daoUser.getUsers(null);
+        List<User> users = daoUser.getUsersHibernate(null);
         return users.stream().anyMatch(user->user.getLogin().equalsIgnoreCase(login));
     }
 
     @Override
     public boolean checkUserPassword(String userLogin, String userPassword) {
-        User user = daoUser.getUser(userLogin);
+        User user = daoUser.getUserHibernate(userLogin);
         return user.getPassword().equals(userPassword);
     }
 

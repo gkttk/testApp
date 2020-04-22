@@ -28,7 +28,7 @@ public class ThemeServiceTest {
     @Test
     public void testGetThemeName(){
         int themeId = 1;
-        when(themeDao.getThemeNameByThemeId(1)).thenReturn("testTheme");
+        when(themeDao.getName(1)).thenReturn("testTheme");
         String themeName = themeService.getThemeName(themeId);
         Assertions.assertEquals("testTheme", themeName);
     }
