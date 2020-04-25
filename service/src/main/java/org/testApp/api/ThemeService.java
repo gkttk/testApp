@@ -1,6 +1,6 @@
 package org.testApp.api;
 
 
-public interface IThemeService {
+public interface ThemeService {
     String getThemeName(int themeId);
 }
