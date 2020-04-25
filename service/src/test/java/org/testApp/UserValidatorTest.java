@@ -8,6 +8,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.testApp.api.*;
+import org.testApp.api.UserDao;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import static org.mockito.Mockito.when;
@@ -15,10 +17,10 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class UserValidatorTest {
     @Mock
-    private static IUserDao userDao;
+    private static UserDao userDao;
 
     @InjectMocks
-    private static IValidator userValidator;
+    private static Validator userValidator;
 
     @BeforeAll
     public static void createInstance() {

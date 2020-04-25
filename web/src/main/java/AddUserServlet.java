@@ -1,7 +1,7 @@
 import WebUtil.WebUtil;
 import org.testApp.User;
-import org.testApp.UserService;
-import org.testApp.api.IUserService;
+import org.testApp.UserServiceImpl;
+import org.testApp.api.UserService;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,10 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(name = "AddUserServlet", urlPatterns = "/addUser")
 public class AddUserServlet extends HttpServlet {
-    private IUserService userService;
+    private UserService userService;
 
     public void init() {
-        userService = UserService.getInstance();
+        userService = UserServiceImpl.getInstance();
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {

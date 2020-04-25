@@ -1,12 +1,11 @@
 import WebUtil.WebUtil;
-import org.testApp.QuestionnaireService;
+import org.testApp.QuestionnaireServiceImpl;
 import org.testApp.User;
-import org.testApp.UserService;
+import org.testApp.UserServiceImpl;
 import org.testApp.UserValidator;
-import org.testApp.api.IQuestionService;
-import org.testApp.api.IQuestionnaireService;
-import org.testApp.api.IUserService;
-import org.testApp.api.IValidator;
+import org.testApp.api.QuestionnaireService;
+import org.testApp.api.UserService;
+import org.testApp.api.Validator;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,14 +13,14 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(name = "DeleteUserServlet", urlPatterns = "/deleteUser")
 public class DeleteUserServlet extends HttpServlet {
-    private IUserService userService;
-    private IValidator userValidator;
-    private IQuestionnaireService questionnaireService;
+    private UserService userService;
+    private Validator userValidator;
+    private QuestionnaireService questionnaireService;
 
     public void init() {
-        userService = UserService.getInstance();
+        userService = UserServiceImpl.getInstance();
         userValidator = UserValidator.getInstance();
-        questionnaireService = QuestionnaireService.getInstance();
+        questionnaireService = QuestionnaireServiceImpl.getInstance();
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {

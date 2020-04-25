@@ -1,7 +1,7 @@
 import WebUtil.WebUtil;
 import org.testApp.InfoForTeacher;
-import org.testApp.InfoForTeacherService;
-import org.testApp.api.IInfoForTeacherService;
+import org.testApp.InfoForTeacherServiceImpl;
+import org.testApp.api.InfoForTeacherService;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -11,10 +11,10 @@ import java.util.List;
 
 @WebServlet(name = "GetResultForTeacherServlet", urlPatterns = "/getResultForTeacher")
 public class GetResultForTeacherServlet extends HttpServlet {
-    private IInfoForTeacherService infoForTeacherService;
+    private InfoForTeacherService infoForTeacherService;
 
     public void init() {
-        infoForTeacherService = InfoForTeacherService.getInstance();
+        infoForTeacherService = InfoForTeacherServiceImpl.getInstance();
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {

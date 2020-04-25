@@ -1,13 +1,13 @@
 package org.testApp;
 
-import org.testApp.api.IUserDao;
-import org.testApp.api.IValidator;
+import org.testApp.api.UserDao;
+import org.testApp.api.Validator;
 import java.util.List;
 
-public class UserValidator implements IValidator {
+public class UserValidator implements Validator {
 
     private static volatile UserValidator instance;
-    private IUserDao daoUser = UserDao.getInstance();
+    private UserDao daoUser = UserDaoImpl.getInstance();
 
     private UserValidator(){}
 

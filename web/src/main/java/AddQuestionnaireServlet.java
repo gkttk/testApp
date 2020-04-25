@@ -1,7 +1,7 @@
 import WebUtil.WebUtil;
 import org.testApp.Questionnaire;
-import org.testApp.QuestionnaireDao;
-import org.testApp.api.IQuestionnaireDao;
+import org.testApp.QuestionnaireDaoImpl;
+import org.testApp.api.QuestionnaireDao;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,10 +11,10 @@ import javax.servlet.http.HttpSession;
 
 @WebServlet(name = "AddQuestionnaireServlet", urlPatterns = "/addQuestionnaire")
 public class AddQuestionnaireServlet extends HttpServlet {
-    private IQuestionnaireDao questionnaireDao;
+    private QuestionnaireDao questionnaireDao;
 
     public void init() {
-        questionnaireDao = QuestionnaireDao.getInstance();
+        questionnaireDao = QuestionnaireDaoImpl.getInstance();
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {

@@ -1,6 +1,6 @@
 import WebUtil.WebUtil;
 import org.testApp.UserValidator;
-import org.testApp.api.IValidator;
+import org.testApp.api.Validator;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(name = "CheckLoginRegistrationServlet", urlPatterns = "/validationLoginReg")
 public class CheckLoginRegistrationServlet extends HttpServlet {
-    private IValidator userValidator;
+    private Validator userValidator;
 
     public void init() {
         userValidator = UserValidator.getInstance();

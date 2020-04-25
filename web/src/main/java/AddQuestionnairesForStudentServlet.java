@@ -1,6 +1,6 @@
 import WebUtil.WebUtil;
 import org.testApp.*;
-import org.testApp.api.IQuestionnaireService;
+import org.testApp.api.QuestionnaireService;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -11,10 +11,10 @@ import java.util.List;
 @WebServlet(name = "AddQuestionnairesForStudentServlet", urlPatterns = "/addQForStudent")
 public class AddQuestionnairesForStudentServlet extends HttpServlet {
 
-    private IQuestionnaireService questionnaireService;
+    private QuestionnaireService questionnaireService;
 
     public void init() {
-        questionnaireService = QuestionnaireService.getInstance();
+        questionnaireService = QuestionnaireServiceImpl.getInstance();
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {

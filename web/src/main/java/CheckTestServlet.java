@@ -1,8 +1,8 @@
 import WebUtil.WebUtil;
 import org.testApp.Question;
-import org.testApp.QuestionService;
+import org.testApp.QuestionServiceImpl;
 import org.testApp.Questionnaire;
-import org.testApp.api.IQuestionService;
+import org.testApp.api.QuestionService;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,10 +15,10 @@ import java.util.List;
 @WebServlet(name = "CheckTestServlet", urlPatterns = "/checkTest")
 public class CheckTestServlet extends HttpServlet {
 
-    private IQuestionService questionService;
+    private QuestionService questionService;
 
     public void init() {
-        questionService = QuestionService.getInstance();
+        questionService = QuestionServiceImpl.getInstance();
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {

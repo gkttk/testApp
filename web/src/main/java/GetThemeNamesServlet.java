@@ -1,7 +1,7 @@
 import WebUtil.WebUtil;
 import org.testApp.Questionnaire;
-import org.testApp.ThemeService;
-import org.testApp.api.IThemeService;
+import org.testApp.ThemeServiceImpl;
+import org.testApp.api.ThemeService;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,10 +12,10 @@ import java.util.List;
 @WebServlet(name = "GetThemeNamesServlet", urlPatterns = "/getThemeNames")
 public class GetThemeNamesServlet extends HttpServlet {
 
-    private IThemeService themeService;
+    private ThemeService themeService;
 
     public void init() {
-        themeService = ThemeService.getInstance();
+        themeService = ThemeServiceImpl.getInstance();
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
