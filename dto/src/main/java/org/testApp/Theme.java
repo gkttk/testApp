@@ -1,6 +1,10 @@
 package org.testApp;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Theme {
@@ -12,12 +16,34 @@ public class Theme {
     @Column(name = "owner_id")
     private Integer ownerId;
 
+    @OneToMany(mappedBy = "qTheme", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Question> tQuestions = new ArrayList<>();
+
+    @OneToMany(mappedBy = "questionnaireTheme", fetch = FetchType.LAZY)
+    private List<Questionnaire> uQuestionnaires = new ArrayList<>();
+
     public Theme(){}
 
     public Theme(Integer id, String name, Integer ownerId) {
         this.id = id;
         this.name = name;
         this.ownerId = ownerId;
+    }
+
+    public List<Question> gettQuestions() {
+        return tQuestions;
+    }
+
+    public void settQuestions(List<Question> tQuestions) {
+        this.tQuestions = tQuestions;
+    }
+
+    public List<Questionnaire> getuQuestionnaires() {
+        return uQuestionnaires;
+    }
+
+    public void setuQuestionnaires(List<Questionnaire> uQuestionnaires) {
+        this.uQuestionnaires = uQuestionnaires;
     }
 
     public void setId(Integer id) {

@@ -34,7 +34,7 @@ public class AnswerDaoImpl implements AnswerDao {
 
     @Override
     public List<Answer> getAnswers(int questionId){
-        String hql = "FROM Answer where questionId = :questionIdParam";
+        String hql = "FROM Answer where question_id = :questionIdParam";
         List<Answer> answers = null;
         Transaction transaction = null;
         try(Session session = HibernateUtil.getSession()){

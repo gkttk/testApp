@@ -22,6 +22,25 @@ public class ThemeDaoImpl implements ThemeDao {
         return instance;
     }
 
+    public Theme getTheme(Integer themeId){
+        Transaction transaction = null;
+        Theme themeFromDb = null;
+        try(Session session = HibernateUtil.getSession()){
+            transaction = session.beginTransaction();
+            themeFromDb = session.get(Theme.class, themeId);
+            transaction.commit();
+            log.info("GetTheme with themeId:{} - ", themeId);
+        }
+        catch (HibernateException e){
+            log.error("Exception - {} in getTheme with themeId:{}", e, themeId);
+            if(transaction != null){
+                transaction.rollback();
+            }
+        }
+        return themeFromDb;
+    }
+
+
     public String getName(Integer theme_id){
        /* Session session = SFUtil.getSession();*/
         Transaction transaction = null;

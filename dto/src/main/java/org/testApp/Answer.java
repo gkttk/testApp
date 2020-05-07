@@ -13,18 +13,19 @@ public class Answer {
     private String answerText;
     @Column(name = "correctness")
     private String correctness;
-    @Column(name = "question_id")
-    private Integer questionId;
 
+    @ManyToOne
+    @JoinColumn(name = "question_id")
+    private Question aQuestion;
 
     public Answer() {
     }
 
-    public Answer(int id, String answerText, String correctness, Integer questionId) {
+    public Answer(int id, String answerText, String correctness, Question aQuestion) {
         this.id = id;
         this.answerText = answerText;
         this.correctness = correctness;
-        this.questionId = questionId;
+        this.aQuestion = aQuestion;
     }
 
 
@@ -42,13 +43,19 @@ public class Answer {
         return correctness;
     }
 
-    public Integer getQuestionId() {
-        return questionId;
+
+    public Question getaQuestion() {
+        return aQuestion;
+    }
+
+    public void setaQuestion(Question aQuestion) {
+        this.aQuestion = aQuestion;
     }
 
     public void setId(Integer id) {
         this.id = id;
     }
+
 
     public void setAnswerText(String answerText) {
         this.answerText = answerText;
@@ -58,9 +65,6 @@ public class Answer {
         this.correctness = correctness;
     }
 
-    public void setQuestionId(Integer questionId) {
-        this.questionId = questionId;
-    }
 
     @Override
     public String toString() {

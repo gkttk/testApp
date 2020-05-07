@@ -1,6 +1,7 @@
 package org.testApp;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 @Entity
@@ -12,20 +13,32 @@ public class Question {
     private Integer id;
     @Column(name = "text")
     private String questionText;
-    @Column(name = "theme_id")
-    private Integer themeId;
-    @Transient
+
+    @ManyToOne
+    @JoinColumn(name = "theme_id")
+    private Theme qTheme;
+
+    @OneToMany(mappedBy = "aQuestion", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Answer> answers;
+
+   /* @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "questions_questionnaires", joinColumns = {@JoinColumn(name = "question_id")},
+            inverseJoinColumns = {@JoinColumn(name = "questionnaire_id")})*/
+   @Transient
+    private List<Questionnaire> questionQuestionnaires = new ArrayList<>();
+
 
     public Question() {
     }
 
-    public Question(int id, String questionText, List<Answer> answers, Integer themeId) {
+    public Question(int id, String questionText, List<Answer> answers, Theme qTheme) {
         this.id = id;
         this.questionText = questionText;
         this.answers = answers;
-        this.themeId = themeId;
+        this.qTheme = qTheme;
     }
+
+
 
     public Integer getId() {
         return id;
@@ -43,11 +56,28 @@ public class Question {
         return answers;
     }
 
-    public Integer getThemeId() {
-        return themeId;
+    public Theme getqTheme() {
+        return qTheme;
     }
 
-    @Override
+    public void setqTheme(Theme qTheme) {
+        this.qTheme = qTheme;
+    }
+
+    public List<Questionnaire> getQuestionQuestionnaires() {
+        return questionQuestionnaires;
+    }
+
+    public void setQuestionQuestionnaires(List<Questionnaire> questionQuestionnaires) {
+        this.questionQuestionnaires = questionQuestionnaires;
+    }
+
+
+
+
+
+
+    /*@Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -60,7 +90,7 @@ public class Question {
     @Override
     public int hashCode() {
         return Objects.hash(id, questionText, themeId);
-    }
+    }*/
 
     @Override
     public String toString() {

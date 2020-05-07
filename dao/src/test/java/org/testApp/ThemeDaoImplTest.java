@@ -21,6 +21,16 @@ public class ThemeDaoImplTest {
     }*/
 
     @Test
+    public void testGetThemeHibernate(){
+        Integer themeId = 3;
+        Theme theme = themeDao.getTheme(themeId);
+        Assertions.assertNotNull(theme);
+        Assertions.assertAll(()-> Assertions.assertEquals("Коллекции", theme.getName()),
+                ()-> Assertions.assertEquals(3, theme.getId()));
+    } //hibernate
+
+
+    @Test
     public void testGetName(){
 
 

@@ -34,7 +34,7 @@ public class QuestionDaoImpl implements QuestionDao {
 
     @Override
     public List<Question> getQuestions(int themeId) {
-        String hql = "FROM Question where themeId =: themeIdParam";
+        String hql = "FROM Question where theme_id =: themeIdParam";
         List<Question> questions = null;
         Transaction transaction = null;
         try(Session session = HibernateUtil.getSession()){

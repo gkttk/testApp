@@ -3,27 +3,32 @@ package org.testApp;
 
 import org.testApp.enums.Role;
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     @Column
     private String login;
     @Column
     private String password;
     @Column
     private String email;
-
     @Enumerated(EnumType.STRING)
     @Column
     private Role role;
 
+    @OneToMany(mappedBy = "questionnaireUser", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Questionnaire> uQuestionnaires = new ArrayList<>();
+
+
     public User(){}
 
-    public User(int id, String login, String password, String email) {
+    public User(Integer id, String login, String password, String email) {
         this.id = id;
         this.login = login;
         this.password = password;
@@ -39,7 +44,7 @@ public class User {
         this.role = Role.STUDENT;
     }
 
-    public User(int id, String login, String password, String email, Role role) {
+    public User(Integer id, String login, String password, String email, Role role) {
         this.id = id;
         this.login = login;
         this.password = password;
@@ -64,7 +69,7 @@ public class User {
         this.role = role;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -84,7 +89,7 @@ public class User {
         return role;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

@@ -1,58 +1,97 @@
 package org.testApp;
 
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+@Entity
+@Table(name = "questionnaire")
 public class Questionnaire {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
-    private List<Question> questions;
-    private Integer studentId;
-    private Integer themeId;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User questionnaireUser;
+
+    @ManyToOne
+    @JoinColumn(name = "theme_id")
+    private Theme questionnaireTheme;
+
+    @Column(name = "score")
     private Double score = 0.0;
 
-    public Questionnaire(List<Question> questions, Integer studentId, Integer themeId) {
-        this.questions = questions;
-        this.studentId = studentId;
-        this.themeId = themeId;
+
+   /* @ManyToMany(mappedBy = "questionQuestionnaires", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)*/
+    @Transient
+    private List<Question> questionnaireQuestions = new ArrayList<>();
+
+
+    public Questionnaire() {
     }
 
-    public Questionnaire(Integer id, List<Question> questions, Integer studentId, Integer themeId) {
+    public Questionnaire(Integer id, Double score, User questionnaireUser, Theme questionnaireTheme) {
         this.id = id;
-        this.questions = questions;
-        this.studentId = studentId;
-        this.themeId = themeId;
-    }
-
-    public Questionnaire(Integer id, Integer studentId, Integer themeId, Double score) {
-        this.id = id;
-        this.studentId = studentId;
-        this.themeId = themeId;
         this.score = score;
+        this.questionnaireUser = questionnaireUser;
+        this.questionnaireTheme = questionnaireTheme;
     }
+
+    public Questionnaire(Integer id, Double score, User questionnaireUser, Theme questionnaireTheme, List<Question> questionnaireQuestions) {
+        this.id = id;
+        this.score = score;
+        this.questionnaireUser = questionnaireUser;
+        this.questionnaireTheme = questionnaireTheme;
+        this.questionnaireQuestions = questionnaireQuestions;
+    }
+
 
 
     public Integer getId() {
         return id;
     }
 
-    public List<Question> getQuestions() {
-        return questions;
+    public List<Question> getQuestionnaireQuestions() {
+        return questionnaireQuestions;
     }
 
-    public Integer getStudentId() {
-        return studentId;
+    public void setQuestionnaireQuestions(List<Question> questionnaireQuestions) {
+        this.questionnaireQuestions = questionnaireQuestions;
     }
 
-    public Integer getThemeId() {
-        return themeId;
+    public void setId(Integer id) {
+        this.id = id;
     }
+
+    public void setScore(Double score) {
+        this.score = score;
+    }
+
+    public User getQuestionnaireUser() {
+        return questionnaireUser;
+    }
+
+    public void setQuestionnaireUser(User questionnaireUser) {
+        this.questionnaireUser = questionnaireUser;
+    }
+
+    public Theme getQuestionnaireTheme() {
+        return questionnaireTheme;
+    }
+
+    public void setQuestionnaireTheme(Theme questionnaireTheme) {
+        this.questionnaireTheme = questionnaireTheme;
+    }
+
+
 
     public Double getScore() {
         return score;
     }
 
-    @Override
-    public String toString() {
-        return "id = " + id + ", id_student = " + studentId + ", id_theme = " + themeId + ", score = " + score;
-    }
+
 }
