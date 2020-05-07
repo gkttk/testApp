@@ -1,9 +1,13 @@
 package org.testApp;
 
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testApp.ConnectUtils.MySQLConnector;
 import org.testApp.api.QuestionDao;
+import org.testApp.hibernateUtil.HibernateUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -27,8 +31,29 @@ public class QuestionDaoImpl implements QuestionDao {
         return instance;
     }
 
-//вопросы без ответов(null)
+
     @Override
+    public List<Question> getQuestions(int themeId) {
+        String hql = "FROM Question where themeId =: themeIdParam";
+        List<Question> questions = null;
+        Transaction transaction = null;
+        try(Session session = HibernateUtil.getSession()){
+            transaction = session.beginTransaction();
+            questions = session.createQuery(hql, Question.class).setParameter("themeIdParam", themeId).list();
+            transaction.commit();
+            log.info("GetQuestions with themeId:{}", themeId);
+        }catch (HibernateException e){
+            log.error("Fail to GetQuestions(Hibernate) with themeId {}", themeId);
+            if(transaction != null){
+                transaction.rollback();
+            }
+        }
+        return questions;
+    }
+
+
+//вопросы без ответов(null)
+  /*  @Override
     public List<Question> getQuestions(int theme_id) {
         List<Question> questions = new ArrayList<>();
         String query = "SELECT * FROM question WHERE theme_id = ?";
@@ -51,7 +76,7 @@ public class QuestionDaoImpl implements QuestionDao {
             log.error("Fail to getQuestions by theme_id: {}", theme_id);
             throw new RuntimeException(e);
         }
-    }
+    }*/  //JDBC
 
 
 }

@@ -1,9 +1,14 @@
 package org.testApp;
 
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testApp.ConnectUtils.MySQLConnector;
 import org.testApp.api.AnswerDao;
+import org.testApp.hibernateUtil.HibernateUtil;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,7 +31,27 @@ public class AnswerDaoImpl implements AnswerDao {
 
     }
 
+
     @Override
+    public List<Answer> getAnswers(int questionId){
+        String hql = "FROM Answer where questionId = :questionIdParam";
+        List<Answer> answers = null;
+        Transaction transaction = null;
+        try(Session session = HibernateUtil.getSession()){
+            transaction = session.beginTransaction();
+            answers = session.createQuery(hql, Answer.class).setParameter("questionIdParam", questionId).list();
+            transaction.commit();
+            log.info("GetAnswers with id:{}", questionId);
+        }catch (HibernateException e){
+            log.error("Fail to getAnswers(Hibernate) by id {}", questionId);
+            if(transaction != null){
+                transaction.rollback();
+            }
+        }
+        return answers;
+    } //hibernate
+
+   /* @Override
     public List<Answer> getAnswers(int question_id) {
         List<Answer> answers = new ArrayList<>(6);
         String query = "SELECT * FROM answer WHERE question_id = ?";
@@ -53,5 +78,5 @@ public class AnswerDaoImpl implements AnswerDao {
             log.error("Fail to getAnswers by id {}", question_id);
             throw new RuntimeException(e);
         }
-    }
+    }*/  //JDBC
 }

@@ -1,14 +1,24 @@
 package org.testApp;
 
+import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
-
+@Entity
+@Table(name = "question")
 public class Question {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
+    @Column(name = "text")
     private String questionText;
+    @Column(name = "theme_id")
     private Integer themeId;
-
+    @Transient
     private List<Answer> answers;
+
+    public Question() {
+    }
 
     public Question(int id, String questionText, List<Answer> answers, Integer themeId) {
         this.id = id;

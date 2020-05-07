@@ -2,18 +2,23 @@ package org.testApp;
 
 import javax.persistence.*;
 
-//@Entity
-//@Table(name = "answer")
+@Entity
+@Table(name = "answer")
 public class Answer {
-  //  @Id
-  //  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  //  @Column(name = "id")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
-   // @Column(name = "text")
+    @Column(name = "text")
     private String answerText;
-  //  @Column(name = "id")
+    @Column(name = "correctness")
     private String correctness;
+    @Column(name = "question_id")
     private Integer questionId;
+
+
+    public Answer() {
+    }
 
     public Answer(int id, String answerText, String correctness, Integer questionId) {
         this.id = id;
@@ -21,6 +26,9 @@ public class Answer {
         this.correctness = correctness;
         this.questionId = questionId;
     }
+
+
+
 
     public Integer getId() {
         return id;
@@ -38,9 +46,24 @@ public class Answer {
         return questionId;
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setAnswerText(String answerText) {
+        this.answerText = answerText;
+    }
+
+    public void setCorrectness(String correctness) {
+        this.correctness = correctness;
+    }
+
+    public void setQuestionId(Integer questionId) {
+        this.questionId = questionId;
+    }
 
     @Override
     public String toString() {
-        return id + " " +  answerText + " " + correctness;
+        return id + " " + answerText + " " + correctness;
     }
 }
