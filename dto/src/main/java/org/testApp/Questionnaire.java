@@ -4,34 +4,34 @@ import java.util.List;
 
 public class Questionnaire {
 
-    private int id;
+    private Integer id;
     private List<Question> questions;
-    private int id_student;
-    private int id_theme;
-    private double score = 0.0;
+    private Integer studentId;
+    private Integer themeId;
+    private Double score = 0.0;
 
-    public Questionnaire(List<Question> questions, int id_student, int id_theme) {
+    public Questionnaire(List<Question> questions, Integer studentId, Integer themeId) {
         this.questions = questions;
-        this.id_student = id_student;
-        this.id_theme = id_theme;
+        this.studentId = studentId;
+        this.themeId = themeId;
     }
 
-    public Questionnaire(int id, List<Question> questions, int id_student, int id_theme) {
+    public Questionnaire(Integer id, List<Question> questions, Integer studentId, Integer themeId) {
         this.id = id;
         this.questions = questions;
-        this.id_student = id_student;
-        this.id_theme = id_theme;
+        this.studentId = studentId;
+        this.themeId = themeId;
     }
 
-    public Questionnaire(int id, int id_student, int id_theme, double score) {
+    public Questionnaire(Integer id, Integer studentId, Integer themeId, Double score) {
         this.id = id;
-        this.id_student = id_student;
-        this.id_theme = id_theme;
+        this.studentId = studentId;
+        this.themeId = themeId;
         this.score = score;
     }
 
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -39,20 +39,20 @@ public class Questionnaire {
         return questions;
     }
 
-    public int getId_student() {
-        return id_student;
+    public Integer getStudentId() {
+        return studentId;
     }
 
-    public int getId_theme() {
-        return id_theme;
+    public Integer getThemeId() {
+        return themeId;
     }
 
-    public double getScore() {
+    public Double getScore() {
         return score;
     }
 
     @Override
     public String toString() {
-        return "id = " + id + ", id_student = " + id_student + ", id_theme = " + id_theme + ", score = " + score;
+        return "id = " + id + ", id_student = " + studentId + ", id_theme = " + themeId + ", score = " + score;
     }
 }

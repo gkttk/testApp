@@ -25,7 +25,7 @@ public class GetThemeNamesServlet extends HttpServlet {
         List<Questionnaire> questionnaires = (List<Questionnaire>) session.getAttribute("studentQuestionnairesList");
 
         for (int i = 1; i <= questionnaires.size(); i++) {
-            theme_id = questionnaires.get(i - 1).getId_theme();
+            theme_id = questionnaires.get(i - 1).getThemeId();
             themeName = themeService.getThemeName(theme_id);
             session.setAttribute("themeName" + i, themeName);
         }

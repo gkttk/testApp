@@ -4,9 +4,9 @@ public class InfoForTeacher {
     private String userLogin;
     private String userEmail;
     private String themeName;
-    private double score;
+    private Double score;
 
-    public InfoForTeacher(String userLogin, String userEmail, String themeName, double score) {
+    public InfoForTeacher(String userLogin, String userEmail, String themeName, Double score) {
         this.userLogin = userLogin;
         this.userEmail = userEmail;
         this.themeName = themeName;
@@ -25,7 +25,7 @@ public class InfoForTeacher {
         return themeName;
     }
 
-    public double getScore() {
+    public Double getScore() {
         return score;
     }
 

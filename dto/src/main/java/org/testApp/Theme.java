@@ -10,14 +10,14 @@ public class Theme {
     @Column
     private String name;
     @Column(name = "owner_id")
-    private Integer id_owner;
+    private Integer ownerId;
 
     public Theme(){}
 
-    public Theme(Integer id, String name, Integer id_owner) {
+    public Theme(Integer id, String name, Integer ownerId) {
         this.id = id;
         this.name = name;
-        this.id_owner = id_owner;
+        this.ownerId = ownerId;
     }
 
     public void setId(Integer id) {
@@ -28,8 +28,8 @@ public class Theme {
         this.name = name;
     }
 
-    public void setId_owner(Integer id_owner) {
-        this.id_owner = id_owner;
+    public void setOwnerId(Integer id_owner) {
+        this.ownerId = id_owner;
     }
 
     public Integer getId() {
@@ -40,13 +40,13 @@ public class Theme {
         return name;
     }
 
-    public Integer getId_owner() {
-        return id_owner;
+    public Integer getOwnerId() {
+        return ownerId;
     }
 
 
     @Override
     public String toString() {
-        return id + " - " + name + " - " + id_owner;
+        return id + " - " + name + " - " + ownerId;
     }
 }

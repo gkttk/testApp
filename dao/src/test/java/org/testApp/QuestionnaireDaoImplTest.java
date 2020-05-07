@@ -49,7 +49,7 @@ public class QuestionnaireDaoImplTest {
       int studentId = 1;
         List<Questionnaire> testQuestionnaireList = questionnaireDao.getQuestionnairesForStudent(studentId);
         Assertions.assertNotNull(testQuestionnaireList);
-        testQuestionnaireList.forEach((questionnaire -> Assertions.assertEquals(studentId, questionnaire.getId_student())));
+        testQuestionnaireList.forEach((questionnaire -> Assertions.assertEquals(studentId, questionnaire.getStudentId())));
     }
 
     @AfterAll

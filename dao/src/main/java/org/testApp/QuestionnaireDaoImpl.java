@@ -25,8 +25,8 @@ public class QuestionnaireDaoImpl implements QuestionnaireDao {
     @Override
     public int add(Questionnaire questionnaire, double score) {
         String query = "INSERT INTO questionnaire (theme_id, user_id, score) VALUES (?,?,?)";
-        int theme_id = questionnaire.getId_theme();
-        int user_id = questionnaire.getId_student();
+        int theme_id = questionnaire.getThemeId();
+        int user_id = questionnaire.getStudentId();
 
         try (Connection connection = MySQLConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {

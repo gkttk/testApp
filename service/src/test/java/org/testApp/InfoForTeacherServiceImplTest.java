@@ -29,7 +29,7 @@ public class InfoForTeacherServiceImplTest {
     @Test
     public void testGetResults(){
         when(infoForTeacherDao.getAllResults()).
-                thenReturn(Arrays.asList(new InfoForTeacher("test", "test@", "theme", 50)));
+                thenReturn(Arrays.asList(new InfoForTeacher("test", "test@", "theme", 50d)));
         List<InfoForTeacher> result = infoForTeacherService.getResults();
         result.forEach(infoForTeacher -> Assertions.assertAll(()->infoForTeacher.getUserLogin().equals("test"),
                 ()->infoForTeacher.getUserEmail().equals("test@"),

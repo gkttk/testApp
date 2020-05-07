@@ -20,7 +20,7 @@ public class QuestionDaoImplTest {
         int theme_id = 1;
         List<Question> testQuestions;
         testQuestions = questionDao.getQuestions(theme_id);
-        testQuestions.forEach(question -> Assertions.assertEquals(1, question.getTheme_id()));
+        testQuestions.forEach(question -> Assertions.assertEquals(1, question.getThemeId()));
     }
 
 }

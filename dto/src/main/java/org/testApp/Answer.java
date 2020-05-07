@@ -1,19 +1,19 @@
 package org.testApp;
 
 public class Answer {
-    private int id;
+    private Integer id;
     private String answerText;
-    private boolean correctness;
-    private int id_question;
+    private Boolean correctness;
+    private Integer questionId;
 
-    public Answer(int id, String answerText, boolean correctness, int id_question) {
+    public Answer(int id, String answerText, boolean correctness, Integer questionId) {
         this.id = id;
         this.answerText = answerText;
         this.correctness = correctness;
-        this.id_question = id_question;
+        this.questionId = questionId;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -21,12 +21,12 @@ public class Answer {
         return answerText;
     }
 
-    public boolean isCorrectness() {
+    public Boolean isCorrectness() {
         return correctness;
     }
 
-    public int getId_question() {
-        return id_question;
+    public Integer getQuestionId() {
+        return questionId;
     }
 
 

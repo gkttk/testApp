@@ -4,19 +4,19 @@ import java.util.List;
 import java.util.Objects;
 
 public class Question {
-    private int id;
+    private Integer id;
     private String questionText;
     private List<Answer> answers;
-    private int theme_id;
+    private Integer themeId;
 
-    public Question(int id, String questionText, List<Answer> answers, int theme_id) {
+    public Question(int id, String questionText, List<Answer> answers, Integer themeId) {
         this.id = id;
         this.questionText = questionText;
         this.answers = answers;
-        this.theme_id = theme_id;
+        this.themeId = themeId;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -32,8 +32,8 @@ public class Question {
         return answers;
     }
 
-    public int getTheme_id() {
-        return theme_id;
+    public Integer getThemeId() {
+        return themeId;
     }
 
     @Override
@@ -42,13 +42,13 @@ public class Question {
         if (o == null || getClass() != o.getClass()) return false;
         Question question = (Question) o;
         return id == question.id &&
-                theme_id == question.theme_id &&
+                themeId == question.themeId &&
                 questionText.equals(question.questionText);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, questionText, theme_id);
+        return Objects.hash(id, questionText, themeId);
     }
 
     @Override
