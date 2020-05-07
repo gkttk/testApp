@@ -1,12 +1,21 @@
 package org.testApp;
 
+import javax.persistence.*;
+
+//@Entity
+//@Table(name = "answer")
 public class Answer {
+  //  @Id
+  //  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  //  @Column(name = "id")
     private Integer id;
+   // @Column(name = "text")
     private String answerText;
-    private Boolean correctness;
+  //  @Column(name = "id")
+    private String correctness;
     private Integer questionId;
 
-    public Answer(int id, String answerText, boolean correctness, Integer questionId) {
+    public Answer(int id, String answerText, String correctness, Integer questionId) {
         this.id = id;
         this.answerText = answerText;
         this.correctness = correctness;
@@ -21,7 +30,7 @@ public class Answer {
         return answerText;
     }
 
-    public Boolean isCorrectness() {
+    public String getCorrectness() {
         return correctness;
     }
 

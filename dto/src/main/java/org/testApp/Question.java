@@ -6,8 +6,9 @@ import java.util.Objects;
 public class Question {
     private Integer id;
     private String questionText;
-    private List<Answer> answers;
     private Integer themeId;
+
+    private List<Answer> answers;
 
     public Question(int id, String questionText, List<Answer> answers, Integer themeId) {
         this.id = id;

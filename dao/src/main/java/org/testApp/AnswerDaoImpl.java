@@ -32,7 +32,7 @@ public class AnswerDaoImpl implements AnswerDao {
         String query = "SELECT * FROM answer WHERE question_id = ?";
         int answer_id = 0;
         String answer_text = null;
-        boolean answer_correctness = false;
+        String answer_correctness = null;
         Answer answer = null;
         try(Connection connection = MySQLConnector.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query)){
@@ -42,7 +42,7 @@ public class AnswerDaoImpl implements AnswerDao {
                 while (resultSet.next()) {
                     answer_id = resultSet.getInt("id");
                     answer_text = resultSet.getString("text");
-                    answer_correctness = Boolean.parseBoolean(resultSet.getString("correctness"));
+                    answer_correctness = resultSet.getString("correctness");
                     answer = new Answer(answer_id, answer_text, answer_correctness, question_id);
                     answers.add(answer);
                 }

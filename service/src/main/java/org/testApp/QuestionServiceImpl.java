@@ -39,7 +39,7 @@ public class QuestionServiceImpl implements QuestionService {
     public int checkQuestion(Question question, List<String> answers) {
         List<String> correctAnswers = new LinkedList<>();
         for(Answer answer: question.getAnswers()){
-            if(answer.isCorrectness()){
+            if(answer.getCorrectness().equalsIgnoreCase("true")){
                 correctAnswers.add(String.valueOf(answer.getId()));
             }
         }

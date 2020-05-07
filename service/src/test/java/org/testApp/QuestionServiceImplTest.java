@@ -36,10 +36,10 @@ public class QuestionServiceImplTest {
 
     @Test
     public void testCheckQuestion(){
-        List<Answer> answersOfTestQuestion = Arrays.asList(new Answer(1,"1",true,0),
-                new Answer(2,"2",false,0),
-                new Answer(3,"3",true,0),
-                new Answer(4,"4",false,0));
+        List<Answer> answersOfTestQuestion = Arrays.asList(new Answer(1,"1","true",0),
+                new Answer(2,"2","false",0),
+                new Answer(3,"3","true",0),
+                new Answer(4,"4","false",0));
         List<String> otherAnswers = Arrays.asList("1", "3"); //id верных ответов
 
         Question testQuestion = new Question(0,"testQuestion", answersOfTestQuestion, 0);
