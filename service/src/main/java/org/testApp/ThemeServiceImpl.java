@@ -17,6 +17,10 @@ public class ThemeServiceImpl implements ThemeService {
         return instance;
     }
 
+    @Override
+    public Theme getTheme(int themeId) {
+        return themeDao.getTheme(themeId);
+    }
 
     @Override
     public String getThemeName(int themeId) {

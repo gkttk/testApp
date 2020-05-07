@@ -26,7 +26,7 @@ public class DeleteUserServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         String login = request.getParameter("deleteUserLogin");
         if(userValidator.checkLoginInDB(login)){
-            User deleteUser = userService.getUser(login);
+            User deleteUser = userService.getUserByLogin(login);
             int id = deleteUser.getId();
             questionnaireService.deleteQuestionnaire(id);
             userService.deleteUser(login);

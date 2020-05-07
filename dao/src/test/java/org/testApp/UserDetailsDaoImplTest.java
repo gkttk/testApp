@@ -26,7 +26,7 @@ public class UserDetailsDaoImplTest {
 
     @Test
     public void addUserDetailsHibernateTest(){
-        User user = userDao.getUserHibernate("admin");
+        User user = userDao.getUserByLoginHibernate("admin");
         UserDetails userDetails = new UserDetails(null, "testName", "testSurname", 100, null, user);
         user.setuDetails(userDetails);
         int userId = user.getId();
@@ -37,7 +37,7 @@ public class UserDetailsDaoImplTest {
 
     @Test
     public void getUserDetailsHibernateTest(){
-        User user = userDao.getUserHibernate("admin");
+        User user = userDao.getUserByLoginHibernate("admin");
         UserDetails userDetails = new UserDetails(null, "testName", "testSurname", 100, null, user);
         user.setuDetails(userDetails);
         userDetailsDao.addUserDetails(userDetails);
@@ -54,7 +54,7 @@ public class UserDetailsDaoImplTest {
 
     @Test
     public void  updateUserDetailsHibernateTest(){
-        User user = userDao.getUserHibernate("admin");
+        User user = userDao.getUserByLoginHibernate("admin");
         UserDetails userDetails = new UserDetails(null, "testName", "testSurname", 100, null, user);
         user.setuDetails(userDetails);
         userDetailsDao.addUserDetails(userDetails);
@@ -72,7 +72,7 @@ public class UserDetailsDaoImplTest {
 
     @Test
     public void  deleteUserDetailsHibernateTest(){
-        User user = userDao.getUserHibernate("admin");
+        User user = userDao.getUserByLoginHibernate("admin");
         UserDetails userDetails = new UserDetails(null, "testName", "testSurname", 100, null, user);
         user.setuDetails(userDetails);
         userDetailsDao.addUserDetails(userDetails);

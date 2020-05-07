@@ -25,7 +25,7 @@ public class UserValidator implements Validator {
 
     @Override
     public boolean checkUserPassword(String userLogin, String userPassword) {
-        User user = daoUser.getUserHibernate(userLogin);
+        User user = daoUser.getUserByLoginHibernate(userLogin);
         return user.getPassword().equals(userPassword);
     }
 

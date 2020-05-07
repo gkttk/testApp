@@ -56,7 +56,7 @@ public class QuestionnaireDaoImplTest {
 
     @Test
     public void testDeleteQuestionnaireHibernate() {
-        User userFromDB = userDao.getUserHibernate("Kirill");
+        User userFromDB = userDao.getUserByLoginHibernate("Kirill");
         Theme themeFromDB = themeDao.getTheme(2);
         Double scoreForDB = 5.0;
         Questionnaire questionnaire = new Questionnaire(null, scoreForDB, userFromDB, themeFromDB);

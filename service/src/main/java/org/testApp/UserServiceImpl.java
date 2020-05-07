@@ -38,11 +38,14 @@ public class UserServiceImpl implements UserService {
     public List<User> getUsersList(){
         return userDao.getUsersHibernate(null);
     }
+    @Override
+    public User getUser(Integer userId){
+        return userDao.getUserHibernate(userId);
+    }
 
     @Override
-    public User getUser(String userLogin){
-        User user = userDao.getUserHibernate(userLogin);
-        return user;
+    public User getUserByLogin(String userLogin){
+        return userDao.getUserByLoginHibernate(userLogin);
     }
 
 

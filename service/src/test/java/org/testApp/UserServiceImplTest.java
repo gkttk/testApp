@@ -60,9 +60,9 @@ public class UserServiceImplTest {
     @Test
     public void testGetUser(){
         User testUser = new User("testUser", "testPass", "test@mail.ru");
-        when(userDao.getUserHibernate("testUser")).
+        when(userDao.getUserByLoginHibernate("testUser")).
                 thenReturn(new User("testUser", "testPass", "test@mail.ru"));
-        User userFromDb = userService.getUser("testUser");
+        User userFromDb = userService.getUserByLogin("testUser");
         Assertions.assertEquals(testUser, userFromDb);
     }
 

@@ -7,12 +7,12 @@ import java.util.List;
 public interface UserDao {
     Integer addHibernate(User user); //hibernate
     List<User> getUsersHibernate(UserFilter userFilter); //hibernate
-    User getUserHibernate(String login); //hibernate
+    User getUserByLoginHibernate(String login); //hibernate
     boolean deleteUserHibernate(String login); //hibernate
     long updateUserForAdminHibernate(String oldUserLogin, User newUser); //hibernate
     long updateUserEmailHibernate(String newEmail, User user); //hibernate
     long updateUserPasswordHibernate(String newPassword, User user); //hibernate
-
+    User getUserHibernate(Integer userId);
     int countOfUsers();
 
     /*long updateUserPassword(String newPassword, User user);*/ //JDBC

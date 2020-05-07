@@ -19,7 +19,7 @@ public class UserInSessionServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         String login = request.getParameter("login");
-        User authUser = userService.getUser(login);
+        User authUser = userService.getUserByLogin(login);
         session.setAttribute("authUser", authUser);
         WebUtil.forword("facade", request, response);
 

@@ -46,7 +46,7 @@ public class QuestionnaireServiceImplTest {
     @Test
     public void testGetQuestionnairesForStudent() {
         int studentId = 1;
-        when(questionnaireDao.getQuestionnairesForStudent(studentId)).thenReturn(null);
+        when(questionnaireDao.getQuestionnairesForUser(studentId)).thenReturn(null);
         List<Questionnaire> listQ = questionnaireService.getQuestionnairesForStudent(studentId);
         Assertions.assertNull(listQ);
     }

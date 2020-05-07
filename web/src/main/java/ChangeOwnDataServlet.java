@@ -30,7 +30,7 @@ public class ChangeOwnDataServlet extends HttpServlet {
             userService.changeEmail(newEmail, oldAuthUser);
         }
         String userLogin = oldAuthUser.getLogin();
-        User authUser = userService.getUser(userLogin);
+        User authUser = userService.getUserByLogin(userLogin);
         session.setAttribute("authUser", authUser);
         WebUtil.forword("helloUser.jsp", request, response);
 

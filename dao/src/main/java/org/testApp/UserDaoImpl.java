@@ -32,8 +32,27 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public User getUserHibernate(Integer userId) {
+        Transaction transaction = null;
+        User userFromDB = null;
+        try (Session session = HibernateUtil.getSession()) {
+            transaction = session.beginTransaction();
+            userFromDB = session.get(User.class, userId);
+
+            transaction.commit();
+            log.info("Get User with ID: {} from DB", userId);
+        } catch (HibernateException e) {
+            log.error("Exception:{}. Can't get User with ID: {} from DB" , e, userId);
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        }
+        return  userFromDB;
+    }
+
+
+    @Override
     public Integer addHibernate(User user) {
-        //  Session session = SFUtil.getSession();
         Transaction transaction = null;
         Integer id = null;
         try(Session session = HibernateUtil.getSession();) {
@@ -73,7 +92,7 @@ public class UserDaoImpl implements UserDao {
     } //hibernate
 
     @Override
-    public User getUserHibernate(String userLogin) {
+    public User getUserByLoginHibernate(String userLogin) {
         String hql = "FROM User WHERE login = :userLogin";
         Transaction transaction = null;
 

@@ -40,7 +40,7 @@ public class UserValidatorTest {
     public void testCheckUserPassword(){
         String testLogin = "test";
         User testUser = new User("test", "testPass", "test@mail.ru");
-        when(userDao.getUserHibernate(testLogin)).thenReturn(testUser);
+        when(userDao.getUserByLoginHibernate(testLogin)).thenReturn(testUser);
         boolean result = userValidator.checkUserPassword(testLogin,"testPass");
         Assertions.assertTrue(result);
     }

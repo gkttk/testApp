@@ -11,6 +11,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
     private QuestionnaireDao questionnaireDao = QuestionnaireDaoImpl.getInstance();
     private QuestionService questionServiceImpl = QuestionServiceImpl.getInstance();
     private ThemeService themeServiceImpl = ThemeServiceImpl.getInstance();
+    private UserService userServiceImpl = UserServiceImpl.getInstance();
 
     private final int QUESTION_COUNT = 5;
 
@@ -33,11 +34,11 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
     }
 
     @Override
-    public Questionnaire generateQuestionnaire(int student_id, int theme_id) {
+    public Questionnaire generateQuestionnaire(int userId, int themeId) {
         Random random = new Random();
         int randomNum;
         Question question =  null;
-        List<Question> questions = questionServiceImpl.getQuestions(theme_id);
+        List<Question> questions = questionServiceImpl.getQuestions(themeId);
         List<Question> questionForQuestionnaire = new LinkedList<>();
         while(questionForQuestionnaire.size() < QUESTION_COUNT){
             randomNum = random.nextInt(questions.size());
@@ -46,12 +47,13 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
                 questionForQuestionnaire.add(question);
             }
         }
-        return new Questionnaire(questionForQuestionnaire, student_id, theme_id);
+        Theme theme = themeServiceImpl.getTheme(themeId);
+        User user = userServiceImpl.getUser(userId);
+        return new Questionnaire(null, user, theme, questionForQuestionnaire);
     }
 
-    public List<Questionnaire> getQuestionnairesForStudent(int studentId){
-        return questionnaireDao.getQuestionnairesForStudent(studentId);
-
+    public List<Questionnaire> getQuestionnairesForStudent(int userId){
+        return questionnaireDao.getQuestionnairesForUser(userId);
     }
 
 

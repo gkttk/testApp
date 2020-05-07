@@ -34,6 +34,13 @@ public class Questionnaire {
     public Questionnaire() {
     }
 
+    public Questionnaire(Integer id, User questionnaireUser, Theme questionnaireTheme, List<Question> questionnaireQuestions) {
+        this.id = id;
+        this.questionnaireUser = questionnaireUser;
+        this.questionnaireTheme = questionnaireTheme;
+        this.questionnaireQuestions = questionnaireQuestions;
+    }
+
     public Questionnaire(Integer id, Double score, User questionnaireUser, Theme questionnaireTheme) {
         this.id = id;
         this.score = score;

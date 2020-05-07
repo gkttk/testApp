@@ -20,9 +20,19 @@ public class UserDaoImplTest {
 
     @Test
     public void getUserHibernateTest(){
+        int userId = 1;
+        User user = userDao.getUserHibernate(userId);
+        Assertions.assertAll(
+                ()-> Assertions.assertNotNull(user),
+                ()-> Assertions.assertEquals(1, user.getId())
+        );
+    }
+    
+    @Test
+    public void getUserByLoginHibernateTest(){
         User user = new User("testUser", "test", "test@mail.ru");
         userDao.addHibernate(user);
-        User userFromDB = userDao.getUserHibernate("testUser");
+        User userFromDB = userDao.getUserByLoginHibernate("testUser");
         Assertions.assertNotNull(userFromDB);
         Assertions.assertEquals(user, userFromDB);
         userDao.deleteUserHibernate("testUser");

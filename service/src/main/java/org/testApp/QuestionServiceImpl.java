@@ -23,13 +23,13 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public List<Question> getQuestions(int theme_id) {
-        int question_id = 0;
+    public List<Question> getQuestions(int themeId) {
+        int questionId = 0;
         List<Answer> answers = null;
-        List<Question> questions = questionDao.getQuestions(theme_id);
+        List<Question> questions = questionDao.getQuestions(themeId);
         for (Question question : questions) {
-            question_id = question.getId();
-            answers = answerService.getAnswers(question_id);
+            questionId = question.getId();
+            answers = answerService.getAnswers(questionId);
             question.setAnswers(answers);
         }
         return questions;
