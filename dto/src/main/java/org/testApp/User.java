@@ -25,6 +25,9 @@ public class User {
     @OneToMany(mappedBy = "questionnaireUser", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Questionnaire> uQuestionnaires = new ArrayList<>();
 
+    @OneToOne(mappedBy = "detailsUser", fetch = FetchType.EAGER,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    private UserDetails uDetails;
 
     public User(){}
 
@@ -52,6 +55,21 @@ public class User {
         this.role = role;
     }
 
+    public List<Questionnaire> getuQuestionnaires() {
+        return uQuestionnaires;
+    }
+
+    public void setuQuestionnaires(List<Questionnaire> uQuestionnaires) {
+        this.uQuestionnaires = uQuestionnaires;
+    }
+
+    public UserDetails getuDetails() {
+        return uDetails;
+    }
+
+    public void setuDetails(UserDetails uDetails) {
+        this.uDetails = uDetails;
+    }
 
     public void setLogin(String login) {
         this.login = login;
