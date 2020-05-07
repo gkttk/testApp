@@ -1,6 +1,5 @@
 package filters;
 
-import WebUtil.WebUtil;
 import org.testApp.User;
 import org.testApp.UserServiceImpl;
 import org.testApp.api.UserService;
@@ -27,7 +26,7 @@ public class UserInSessionFilter implements Filter {
 
         HttpSession session = request.getSession();
         String login = request.getParameter("login");
-        User authUser = userService.getUser(login);  //запрос в БД через сервис, по логам запрос проходит корректно
+        User authUser = userService.getUserByLogin(login);  //запрос в БД через сервис, по логам запрос проходит корректно
         session.setAttribute("authUser", authUser);
         chain.doFilter(request, response);
     }

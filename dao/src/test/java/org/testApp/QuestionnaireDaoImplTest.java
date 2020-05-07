@@ -1,13 +1,13 @@
 package org.testApp;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import org.junit.jupiter.api.*;
 import org.testApp.ConnectUtils.AutoIncrementCompressor;
 import org.testApp.api.QuestionDao;
 import org.testApp.api.QuestionnaireDao;
 import org.testApp.api.ThemeDao;
 import org.testApp.api.UserDao;
-import org.testApp.filters.QuestionnaireFilter;
+
 
 import java.util.List;
 

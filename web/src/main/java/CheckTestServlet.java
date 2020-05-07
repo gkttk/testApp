@@ -26,16 +26,16 @@ public class CheckTestServlet extends HttpServlet {
         Questionnaire questionnaire = (Questionnaire) session.getAttribute("questionnaire");
         List<String> answers;
         int count = 0;
-        for (int i = 1; i <= questionnaire.getQuestions().size(); i++) {
+        for (int i = 1; i <= questionnaire.getQuestionnaireQuestions().size(); i++) {
             if(request.getParameterValues("question_" + i + "[]") == null){
                 continue;
             }
             answers = Arrays.asList(request.getParameterValues("question_" + i + "[]"));
 
-            Question question = questionnaire.getQuestions().get(i - 1);
+            Question question = questionnaire.getQuestionnaireQuestions().get(i - 1);
             count += questionService.checkQuestion(question, answers);
         }
-            Double result = (double)(100/questionnaire.getQuestions().size())*count;
+            Double result = (double)(100/questionnaire.getQuestionnaireQuestions().size())*count;
         session.setAttribute("result", result);
         session.setAttribute("date", new Date());
 
