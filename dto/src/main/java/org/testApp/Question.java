@@ -21,9 +21,8 @@ public class Question {
     @OneToMany(mappedBy = "aQuestion", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Answer> answers;
 
-   /* @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "questions_questionnaires", joinColumns = {@JoinColumn(name = "question_id")},
-            inverseJoinColumns = {@JoinColumn(name = "questionnaire_id")})*/
+
+    @ManyToMany(mappedBy = "questionnaireQuestions", fetch = FetchType.EAGER)
    @Transient
     private List<Questionnaire> questionQuestionnaires = new ArrayList<>();
 

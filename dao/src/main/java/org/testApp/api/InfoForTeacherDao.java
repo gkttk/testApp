@@ -5,4 +5,5 @@ import java.util.List;
 
 public interface InfoForTeacherDao {
     List<InfoForTeacher> getAllResults();
+    List<InfoForTeacher> getResultsPagination(int numberOfPage, int maxResultsOnPage);
 }

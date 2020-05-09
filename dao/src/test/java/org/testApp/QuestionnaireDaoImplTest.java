@@ -25,34 +25,19 @@ public class QuestionnaireDaoImplTest {
         questionDao = QuestionDaoImpl.getInstance();
     }
 
-   /* @Test
+    @Test
     public void testAddQuestionnaireHibernate() {
-        User userFromDB = userDao.getUserHibernate("Kirill");  //получение юзера из бд с логином Kirill
-
+        User userFromDB = userDao.getUserByLoginHibernate("Kirill");  //получение юзера из бд с логином Kirill
         Theme themeFromDB = themeDao.getTheme(2);  //получение темы из бд с id 2
-
         Double scoreForDB = 5.0;  //оценка по вопроснику
-
-        // получение всех вопросов из бд с ID темы = 2
         List<Question> questionsForDB = questionDao.getQuestions(2);
-
-        //создание вопросника без ID и с пустым листом вопросов(arraylist.size() = 0)
         Questionnaire questionnaire = new Questionnaire(null, scoreForDB, userFromDB, themeFromDB);
-
-        //для каждого вопроса из тех что вернулись из базы в строке 35 добавить в поле "Вопросники" созданные вопросник
         questionsForDB.forEach(question -> question.getQuestionQuestionnaires().add(questionnaire));
-
-        //для созданного вопросника в строке 37 установить поле "Вопросы" с теми вопросами, что вернулись из базы
         questionnaire.setQuestionnaireQuestions(questionsForDB);
-
-        //добавление вопросника в базу данных, на этой строке происходит ошибка detached entity passed to persist: org.testApp.Question
         Integer questionnaireId = questionnaireDao.add(questionnaire, scoreForDB);
-
-
-
-       // questionnaireDao.delete(questionnaireId);
+        questionnaireDao.delete(questionnaireId);
         Assertions.assertTrue(questionnaireId > 0);
-    }  //hibernate*/ //настроить связь manytomany с question
+    }  //hibernate
 
     @Test
     public void testDeleteQuestionnaireHibernate() {
@@ -94,13 +79,13 @@ public class QuestionnaireDaoImplTest {
     }
 
     @Test
-    public void testCountOfQuestionnaires(){
+    public void testCountOfQuestionnaires() {
         Long result = questionnaireDao.countOfQuestionnaires();
         Assertions.assertTrue(result >= 0);
     }
 
     @AfterAll
-    public static void trimToSize(){
+    public static void trimToSize() {
         Long rows = questionnaireDao.countOfQuestionnaires();
         AutoIncrementCompressor.compressionTable("questionnaire", rows);
     }

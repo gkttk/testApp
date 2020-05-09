@@ -6,6 +6,9 @@ public class InfoForTeacher {
     private String themeName;
     private Double score;
 
+    public InfoForTeacher() {
+    }
+
     public InfoForTeacher(String userLogin, String userEmail, String themeName, Double score) {
         this.userLogin = userLogin;
         this.userEmail = userEmail;

@@ -26,8 +26,9 @@ public class Questionnaire {
     private Double score = 0.0;
 
 
-   /* @ManyToMany(mappedBy = "questionQuestionnaires", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)*/
-    @Transient
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "questions_questionnaires", joinColumns = {@JoinColumn(name = "questionnaire_id")},
+            inverseJoinColumns = {@JoinColumn(name = "question_id")})
     private List<Question> questionnaireQuestions = new ArrayList<>();
 
 

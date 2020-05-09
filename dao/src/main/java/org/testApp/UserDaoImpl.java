@@ -2,9 +2,11 @@
 package org.testApp;
 
 
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Projections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testApp.ConnectUtils.MySQLConnector;
@@ -14,6 +16,8 @@ import org.testApp.filters.UserFilter;
 import org.testApp.hibernateUtil.HibernateUtil;
 
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import java.sql.*;
 import java.util.List;
 
@@ -42,12 +46,12 @@ public class UserDaoImpl implements UserDao {
             transaction.commit();
             log.info("Get User with ID: {} from DB", userId);
         } catch (HibernateException e) {
-            log.error("Exception:{}. Can't get User with ID: {} from DB" , e, userId);
+            log.error("Exception:{}. Can't get User with ID: {} from DB", e, userId);
             if (transaction != null) {
                 transaction.rollback();
             }
         }
-        return  userFromDB;
+        return userFromDB;
     }
 
 
@@ -55,7 +59,7 @@ public class UserDaoImpl implements UserDao {
     public Integer addHibernate(User user) {
         Transaction transaction = null;
         Integer id = null;
-        try(Session session = HibernateUtil.getSession();) {
+        try (Session session = HibernateUtil.getSession();) {
             transaction = session.beginTransaction();
             session.saveOrUpdate(user);
             id = user.getId();
@@ -74,8 +78,8 @@ public class UserDaoImpl implements UserDao {
     @Override
     public List<User> getUsersHibernate(UserFilter userFilter) {
         Transaction transaction = null;
-        try(Session session = HibernateUtil.getSession()) {
-           // session = SFUtil.getSession();
+        try (Session session = HibernateUtil.getSession()) {
+            // session = SFUtil.getSession();
             transaction = session.beginTransaction();
             Query query = session.createQuery("FROM User");
             List<User> users = query.getResultList();
@@ -96,8 +100,8 @@ public class UserDaoImpl implements UserDao {
         String hql = "FROM User WHERE login = :userLogin";
         Transaction transaction = null;
 
-        try(Session session = HibernateUtil.getSession()) {
-           // session = SFUtil.getSession();
+        try (Session session = HibernateUtil.getSession()) {
+            // session = SFUtil.getSession();
             transaction = session.beginTransaction();
             Query query = session.createQuery(hql, User.class);
             query.setParameter("userLogin", userLogin);
@@ -118,8 +122,8 @@ public class UserDaoImpl implements UserDao {
     public boolean deleteUserHibernate(String login) {
         String hql = "DELETE User WHERE login = :userLogin";
         Transaction transaction = null;
-        try(Session session = HibernateUtil.getSession()) {
-           // session = SFUtil.getSession();
+        try (Session session = HibernateUtil.getSession()) {
+            // session = SFUtil.getSession();
             transaction = session.beginTransaction();
             Query query = session.createQuery(hql);
             query.setParameter("userLogin", login);
@@ -143,8 +147,8 @@ public class UserDaoImpl implements UserDao {
         String newPassword = newUser.getPassword();
         String newEmail = newUser.getEmail();
         Role newRole = newUser.getRole();
-        try (Session session = HibernateUtil.getSession()){
-          //  session = SFUtil.getSession();
+        try (Session session = HibernateUtil.getSession()) {
+            //  session = SFUtil.getSession();
             transaction = session.beginTransaction();
             Query query = session.createQuery(hql);
             query.setParameter("newPassword", newPassword);
@@ -170,8 +174,8 @@ public class UserDaoImpl implements UserDao {
         String userLogin = user.getLogin();
 
         Transaction transaction = null;
-        try(Session session = HibernateUtil.getSession()) {
-          // session = SFUtil.getSession();
+        try (Session session = HibernateUtil.getSession()) {
+            // session = SFUtil.getSession();
             transaction = session.beginTransaction();
             Query query = session.createQuery(hql);
             query.setParameter("newEmail", newEmail);
@@ -194,8 +198,8 @@ public class UserDaoImpl implements UserDao {
         String hql = "UPDATE User Set password = :newPassword WHERE login = :userLogin";
         String userLogin = user.getLogin();
         Transaction transaction = null;
-        try (Session session = HibernateUtil.getSession()){
-          //  session = SFUtil.getSession();
+        try (Session session = HibernateUtil.getSession()) {
+            //  session = SFUtil.getSession();
             transaction = session.beginTransaction();
             Query query = session.createQuery(hql);
             query.setParameter("newPassword", newPassword);
@@ -212,6 +216,45 @@ public class UserDaoImpl implements UserDao {
             return 0;
         }
     } //hibernate
+
+
+    public int countOfUsers() {
+        String hql = "SELECT COUNT(u) FROM User u";
+        Transaction transaction = null;
+        int result = -1;
+        try (Session session = HibernateUtil.getSession()) {
+            transaction = session.beginTransaction();
+            result = session.createQuery(hql, Long.class).uniqueResult().intValue();
+            transaction.commit();
+            log.info("get count of users, result: {}", result);
+        } catch (HibernateException e) {
+            log.error("Fail to get count of rows in user table");
+            if(transaction != null){
+                transaction.rollback();
+            }
+        }
+        return result;
+    }
+
+
+
+ /*   @Override
+    public int countOfUsers() {
+        String query = "SELECT COUNT(*) FROM user";
+        try (Connection connection = MySQLConnector.getConnection();
+             Statement statement = connection.createStatement()) {
+            try (ResultSet resultSet = statement.executeQuery(query)) {
+                int count = 0;
+                if (resultSet.next()) {
+                    count = resultSet.getInt(1);
+                }
+                return count;
+            }
+        } catch (SQLException e) {
+            log.error("Fail to get count of rows in user table");
+            throw new RuntimeException(e);
+        }
+    }*/  //JDBC
 
    /* @Override
     public long add(User user) {
@@ -380,24 +423,6 @@ public class UserDaoImpl implements UserDao {
             throw new RuntimeException(e);
         }
     }*/ //JDBC updateUserPassword
-
-    @Override
-    public int countOfUsers() {
-        String query = "SELECT COUNT(*) FROM user";
-        try (Connection connection = MySQLConnector.getConnection();
-             Statement statement = connection.createStatement()) {
-            try (ResultSet resultSet = statement.executeQuery(query)) {
-                int count = 0;
-                if (resultSet.next()) {
-                    count = resultSet.getInt(1);
-                }
-                return count;
-            }
-        } catch (SQLException e) {
-            log.error("Fail to get count of rows in user table");
-            throw new RuntimeException(e);
-        }
-    }
 
 
 }

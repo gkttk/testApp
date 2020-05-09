@@ -16,7 +16,7 @@
 <form id="testForm" name="testForm" method="get" action="checkTest">
     <fieldset>
         <c:set var="x" scope="page" value="1" />
-<c:forEach items="${questionnaire.getQuestions()}" var="question">
+<c:forEach items="${questionnaire.getQuestionnaireQuestions()}" var="question">
    <h2> <c:out value="${question.getQuestionText()}"/></h2>
 
     <c:forEach items="${question.getAnswers()}" var="answer">

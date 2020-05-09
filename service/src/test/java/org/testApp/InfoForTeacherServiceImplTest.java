@@ -10,6 +10,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.testApp.api.InfoForTeacherDao;
 import org.testApp.api.InfoForTeacherService;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import static org.mockito.Mockito.when;
@@ -24,6 +25,21 @@ public class InfoForTeacherServiceImplTest {
     @BeforeAll
     public static void createInstance() {
         infoForTeacherService = InfoForTeacherServiceImpl.getInstance();
+    }
+
+
+    @Test
+    public void testGetResultsPagination(){
+        when(infoForTeacherDao.getResultsPagination(1,5))
+                .thenReturn(Arrays.asList(new InfoForTeacher("test1", "test@1", "theme1", 50d),
+                       new InfoForTeacher("test2", "test@2", "theme2", 40d),
+                       new InfoForTeacher("test3", "test@3", "theme1", 20d),
+                       new InfoForTeacher("test4", "test@4", "theme3", 30d),
+                       new InfoForTeacher("test5", "test@5", "theme2", 10d)));
+
+      List<InfoForTeacher> result = infoForTeacherService.getResultsPagination(1, 5);
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals(5, result.size());
     }
 
     @Test

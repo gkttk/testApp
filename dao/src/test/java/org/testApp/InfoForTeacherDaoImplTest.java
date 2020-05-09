@@ -14,9 +14,16 @@ public class InfoForTeacherDaoImplTest {
     public static void createInstance() { infoForTeacherDao = InfoForTeacherDaoImpl.getInstance();}
 
     @Test
+    public void testGetAllResultHibernate(){
+        List<InfoForTeacher> infoForTeacherFromDB = infoForTeacherDao.getAllResults();
+        Assertions.assertNotNull(infoForTeacherFromDB);
+    }
+
+
+   /* @Test
     public void testGetAllResults(){
         List<InfoForTeacher> infoForTeachers = infoForTeacherDao.getAllResults();
         Assertions.assertNotNull(infoForTeachers);
-    }
+    }*/  //JDBC
 
 }
