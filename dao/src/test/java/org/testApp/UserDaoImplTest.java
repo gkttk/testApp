@@ -49,7 +49,7 @@ public class UserDaoImplTest {
     @Test
     public void getUsersHibernateTest() {
         List<User> users = new ArrayList<>();
-        users = userDao.getUsersHibernate(null);
+        users = userDao.getUsersHibernate();
         Assertions.assertNotNull(users);
     }  //hibernate
 
@@ -92,6 +92,13 @@ public class UserDaoImplTest {
         userDao.deleteUserHibernate("test");
         Assertions.assertNotEquals(0, result);
     } //hibernate
+
+    @Test
+    public void testGetCountOfUsers() {
+        int result = userDao.countOfUsers();
+        Assertions.assertTrue(result >= 0);
+    }
+
 
     /*@Test
     public void testAddUser() {
@@ -170,11 +177,7 @@ public class UserDaoImplTest {
 
 
 
-    @Test
-    public void testGetCountOfUsers() {
-        int result = userDao.countOfUsers();
-        Assertions.assertTrue(result >= 0);
-    }
+
 
 
 

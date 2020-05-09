@@ -52,7 +52,7 @@ public class UserServiceImplTest {
 
     @Test
     public void testGetUsersList(){
-        when(userDao.getUsersHibernate(null)).thenReturn(null);
+        when(userDao.getUsersHibernate()).thenReturn(null);
         List<User> users = userService.getUsersList();
         Assertions.assertNull(users);
     }

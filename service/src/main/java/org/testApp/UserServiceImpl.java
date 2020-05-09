@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getUsersList(){
-        return userDao.getUsersHibernate(null);
+        return userDao.getUsersHibernate();
     }
     @Override
     public User getUser(Integer userId){

@@ -31,7 +31,7 @@ public class UserValidatorTest {
     public void testCheckLoginInDB(){
         String testLogin = "test";
         User testUser = new User("test", "testPass", "test@mail.ru");
-        when(userDao.getUsersHibernate(null)).thenReturn(new ArrayList<>(Collections.singletonList(testUser)));
+        when(userDao.getUsersHibernate()).thenReturn(new ArrayList<>(Collections.singletonList(testUser)));
         boolean result = userValidator.checkLoginInDB(testLogin);
         Assertions.assertTrue(result);
     }

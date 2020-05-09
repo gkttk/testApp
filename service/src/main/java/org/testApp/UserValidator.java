@@ -19,7 +19,7 @@ public class UserValidator implements Validator {
     }
     @Override
     public boolean checkLoginInDB(String login){
-        List<User> users = daoUser.getUsersHibernate(null);
+        List<User> users = daoUser.getUsersHibernate();
         return users.stream().anyMatch(user->user.getLogin().equalsIgnoreCase(login));
     }
 

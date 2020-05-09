@@ -14,7 +14,8 @@
         <option value="3">Коллекции</option>
     </select>
     <button type="submit" value="beginTest"><fmt:message key="HelloUser.beginTest" bundle="${messages}"/></button>
-</form><br>
+</form>
+<br>
 
 <h1><fmt:message key="teacherHelloUser.helloTeacher" bundle="${messages}"/></h1>
 
@@ -22,19 +23,45 @@
 <c:forEach items="${infoForTeacher}" var="info">
     <li>${info.toString()}</li>
 </c:forEach>
+
+<c:if test="${currentPage != 1}">
+    <td><a href="getResultForTeacher?currentPage=${currentPage - 1}">Назад</a></td>
+</c:if>
+
+<table border="1" cellpadding="5" cellspacing="5">
+    <tr>
+        <c:forEach begin="1" end="${pagesCount}" var="i">
+            <c:choose>
+                <c:when test="${currentPage eq i}">
+                    <td>${i}</td>
+                </c:when>
+                <c:otherwise>
+                    <td><a href="getResultForTeacher?currentPage=${i}">${i}</a></td>
+                </c:otherwise>
+            </c:choose>
+        </c:forEach>
+    </tr>
+</table>
+
+<c:if test="${currentPage lt pagesCount}">
+    <td><a href="getResultForTeacher?currentPage=${currentPage + 1}">Вперед</a></td>
+</c:if>
+
 <h1><fmt:message key="HelloUser.pastTests" bundle="${messages}"/></h1>
 <fieldset>
-<ul>
-    <c:set var="x" value="1"/>
-    <c:forEach items="${studentQuestionnairesList}" var="studQuest">
-        <li>${studQuest.getId()} - ${sessionScope.get("themeName" += x)} - ${studQuest.getScore()}</li>
-        <c:set var="x" value= "${x+1}"/>
-    </c:forEach>
-</ul>
+    <ul>
+        <c:set var="x" value="1"/>
+        <c:forEach items="${studentQuestionnairesList}" var="studQuest">
+            <li>${studQuest.getId()} - ${sessionScope.get("themeName" += x)} - ${studQuest.getScore()}</li>
+            <c:set var="x" value="${x+1}"/>
+        </c:forEach>
+    </ul>
 </fieldset>
 <form id="changeOwnData" name="changeOwnData" method="get" action="changeOwnData.jsp">
-    <input type="submit" value=<fmt:message key="changeOwnDate.changeData" bundle="${messages}"/> align="middle">
+    <input type="submit" value=
+    <fmt:message key="changeOwnDate.changeData" bundle="${messages}"/> align="middle">
 </form>
 <form id="exit" name="exit" method="get" action="exit">
-    <input type="submit" value=<fmt:message key="HelloUser.exit" bundle="${messages}"/> align="middle">
+    <input type="submit" value=
+    <fmt:message key="HelloUser.exit" bundle="${messages}"/> align="middle">
 </form>

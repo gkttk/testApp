@@ -18,6 +18,7 @@ import org.testApp.hibernateUtil.HibernateUtil;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.sql.*;
 import java.util.List;
 
@@ -75,11 +76,34 @@ public class UserDaoImpl implements UserDao {
         }
     }  //hibernate
 
+
+
     @Override
+    public List<User> getUsersHibernate(){
+        Transaction transaction = null;
+        List<User> usersFromDB = null;
+        try (Session session = HibernateUtil.getSession()) {
+            transaction = session.beginTransaction();
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<User> query = cb.createQuery(User.class);
+            query.select(query.from(User.class));
+            usersFromDB = session.createQuery(query).getResultList();
+            transaction.commit();
+            log.info("Get Users from DB");
+        }
+        catch (HibernateException e){
+            log.error("Exception in getUsers " + e);
+            if(transaction != null){
+                transaction.rollback();
+            }
+        }
+        return usersFromDB;
+    } //criteria
+
+    /*@Override
     public List<User> getUsersHibernate(UserFilter userFilter) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSession()) {
-            // session = SFUtil.getSession();
             transaction = session.beginTransaction();
             Query query = session.createQuery("FROM User");
             List<User> users = query.getResultList();
@@ -93,7 +117,7 @@ public class UserDaoImpl implements UserDao {
             }
             return null;
         }
-    } //hibernate
+    } //hibernate*/
 
     @Override
     public User getUserByLoginHibernate(String userLogin) {

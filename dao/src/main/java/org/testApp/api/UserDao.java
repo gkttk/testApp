@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface UserDao {
     Integer addHibernate(User user); //hibernate
-    List<User> getUsersHibernate(UserFilter userFilter); //hibernate
+    List<User> getUsersHibernate(); //hibernate
     User getUserByLoginHibernate(String login); //hibernate
     boolean deleteUserHibernate(String login); //hibernate
     long updateUserForAdminHibernate(String oldUserLogin, User newUser); //hibernate
