@@ -24,63 +24,39 @@ public class UserDetailsDaoImplTest {
         userDao = UserDaoImpl.getInstance();
     }
 
-    @Test
-    public void addUserDetailsHibernateTest(){
-        User user = userDao.getUserByLoginHibernate("admin");
-        UserDetails userDetails = new UserDetails(null, "testName", "testSurname", 100, null, user);
-        user.setuDetails(userDetails);
-        int userId = user.getId();
-        Integer detailsId = userDetailsDao.addUserDetails(userDetails);
-        userDetailsDao.deleteUserDetails(userId);
-        Assertions.assertNotNull(detailsId);
-    } //hibernate
+
+
+
 
     @Test
     public void getUserDetailsHibernateTest(){
         User user = userDao.getUserByLoginHibernate("admin");
-        UserDetails userDetails = new UserDetails(null, "testName", "testSurname", 100, null, user);
-        user.setuDetails(userDetails);
-        userDetailsDao.addUserDetails(userDetails);
         int userId = user.getId();
         UserDetails userDetailsFromDB = userDetailsDao.getUserDetails(userId);
-        userDetailsDao.deleteUserDetails(userId);
         Assertions.assertNotNull(userDetailsFromDB);
         Assertions.assertAll(
-                ()-> Assertions.assertEquals(userDetailsFromDB.getName(), userDetails.getName()),
-                ()-> Assertions.assertEquals(userDetailsFromDB.getSurname(), userDetails.getSurname()),
-                ()-> Assertions.assertEquals(userDetailsFromDB.getAge(), userDetails.getAge()));
+                ()-> Assertions.assertEquals(userDetailsFromDB.getName(), user.getuDetails().getName()),
+                ()-> Assertions.assertEquals(userDetailsFromDB.getSurname(), user.getuDetails().getSurname()),
+                ()-> Assertions.assertEquals(userDetailsFromDB.getAge(), user.getuDetails().getAge()));
 
     }
 
     @Test
     public void  updateUserDetailsHibernateTest(){
-        User user = userDao.getUserByLoginHibernate("admin");
-        UserDetails userDetails = new UserDetails(null, "testName", "testSurname", 100, null, user);
+        User user = new User("TestLogin", "TestPassword", "test@gmail.ru");
+        UserDetails userDetails = new UserDetails(null,null,null,null,user);
         user.setuDetails(userDetails);
-        userDetailsDao.addUserDetails(userDetails);
-        int userId = user.getId();
-        UserDetails newUserDetails = userDetailsDao.getUserDetails(userId);
-        newUserDetails.setName("NewName");
-        newUserDetails.setSurname("NewSurname");
-        newUserDetails.setAge(800);
-        Boolean result = userDetailsDao.updateUserDetails(newUserDetails);
-        userDetailsDao.deleteUserDetails(userId);
+        Integer id = userDao.addHibernate(user);
+        user = userDao.getUserHibernate(id);
+        user.getuDetails().setName("newName");
+        user.getuDetails().setSurname("newSurname");
+        user.getuDetails().setAge(111);
+        userDetails = user.getuDetails();
+        Boolean result = userDetailsDao.updateUserDetails(userDetails);
+        userDao.deleteUserHibernate("TestLogin");
         Assertions.assertTrue(result);
+
     }
-
-
-
-    @Test
-    public void  deleteUserDetailsHibernateTest(){
-        User user = userDao.getUserByLoginHibernate("admin");
-        UserDetails userDetails = new UserDetails(null, "testName", "testSurname", 100, null, user);
-        user.setuDetails(userDetails);
-        userDetailsDao.addUserDetails(userDetails);
-        int userId = user.getId();
-        boolean result = userDetailsDao.deleteUserDetails(userId);
-        Assertions.assertTrue(result);
-    }
-
 
 
 

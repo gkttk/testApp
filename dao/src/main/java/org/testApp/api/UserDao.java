@@ -14,6 +14,7 @@ public interface UserDao {
     long updateUserPasswordHibernate(String newPassword, User user); //hibernate
     User getUserHibernate(Integer userId);
     int countOfUsers();
+    boolean updateUserHibernate(User user);
 
     /*long updateUserPassword(String newPassword, User user);*/ //JDBC
     /*long updateUserEmail(String newEmail, User user);*/ //JDBC

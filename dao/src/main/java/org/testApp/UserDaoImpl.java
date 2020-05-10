@@ -60,20 +60,19 @@ public class UserDaoImpl implements UserDao {
     public Integer addHibernate(User user) {
         Transaction transaction = null;
         Integer id = null;
-        try (Session session = HibernateUtil.getSession();) {
+        try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
-            session.saveOrUpdate(user);
-            id = user.getId();
+            id = (Integer)session.save(user);
             log.info("User " + user.getLogin() + " saved");
             transaction.commit();
-            return id;
+
         } catch (HibernateException e) {
             log.error("Add user error in DAO module" + e);
             if (transaction != null) {
                 transaction.rollback();
             }
-            return null;
         }
+        return id;
     }  //hibernate
 
 
@@ -143,6 +142,25 @@ public class UserDaoImpl implements UserDao {
     } //hibernate
 
     @Override
+    public boolean updateUserHibernate(User user){
+        Transaction transaction = null;
+        try(Session session = HibernateUtil.getSession()){
+            transaction = session.beginTransaction();
+            session.update(user);
+            transaction.commit();
+            log.info("User with id:{} was updated", user.getId());
+            return true;
+        }
+        catch (HibernateException e){
+            log.error("Exception: {} ; Can't update User with id:{}", e, user.getId());
+            if(transaction != null){
+                transaction.rollback();
+            }
+        }
+        return false;
+    }
+
+    @Override
     public boolean deleteUserHibernate(String login) {
         String hql = "DELETE User WHERE login = :userLogin";
         Transaction transaction = null;
@@ -163,6 +181,8 @@ public class UserDaoImpl implements UserDao {
             return false;
         }
     } //hibernate
+
+
 
     @Override
     public long updateUserForAdminHibernate(String oldUserLogin, User newUser) {

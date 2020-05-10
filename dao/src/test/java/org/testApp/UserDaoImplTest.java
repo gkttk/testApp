@@ -19,17 +19,29 @@ public class UserDaoImplTest {
     }
 
     @Test
-    public void getUserHibernateTest(){
+    public void getUserHibernateTest() {
         int userId = 1;
         User user = userDao.getUserHibernate(userId);
         Assertions.assertAll(
-                ()-> Assertions.assertNotNull(user),
-                ()-> Assertions.assertEquals(1, user.getId())
+                () -> Assertions.assertNotNull(user),
+                () -> Assertions.assertEquals(1, user.getId())
         );
     }
-    
+
+
     @Test
-    public void getUserByLoginHibernateTest(){
+    public void updateUserHibernateTest() {
+        User user = new User("testUser", "test", "test@mail.ru");
+        int userId = userDao.addHibernate(user);
+        User newUser = new User(userId, "testUser321", "test321", "test@mail.ru321");
+        boolean result = userDao.updateUserHibernate(newUser);
+        userDao.deleteUserHibernate("testUser321");
+        Assertions.assertTrue(result);
+
+    }
+
+    @Test
+    public void getUserByLoginHibernateTest() {
         User user = new User("testUser", "test", "test@mail.ru");
         userDao.addHibernate(user);
         User userFromDB = userDao.getUserByLoginHibernate("testUser");
@@ -41,8 +53,10 @@ public class UserDaoImplTest {
     @Test
     public void addHibernateTest() {
         User user = new User("TestLogin", "TestPassword", "test@gmail.ru");
+        UserDetails userDetails = new UserDetails(null,null,null,null,user);
+        user.setuDetails(userDetails);
         Integer id = userDao.addHibernate(user);
-        userDao.deleteUserHibernate("TestLogin");
+       userDao.deleteUserHibernate("TestLogin");
         Assertions.assertNotNull(id);
     }  //hibernate
 
@@ -54,7 +68,7 @@ public class UserDaoImplTest {
     }  //hibernate
 
     @Test
-    public void deleteUserHibernateTest(){
+    public void deleteUserHibernateTest() {
         User user = new User("testUser", "test", "test@mail.ru");
         userDao.addHibernate(user);
         boolean result = userDao.deleteUserHibernate("testUser");
@@ -62,7 +76,7 @@ public class UserDaoImplTest {
     } //hibernate
 
     @Test
-    public void updateUserForAdminHibernateTest(){
+    public void updateUserForAdminHibernateTest() {
         User testUser = new User("test", "testPass", "test@mail.ru");
         userDao.addHibernate(testUser);
         String oldUserLogin = testUser.getLogin();
@@ -74,7 +88,7 @@ public class UserDaoImplTest {
     } //hibernate
 
     @Test
-    public void updateUserEmailHibernateTest(){
+    public void updateUserEmailHibernateTest() {
         String newEmail = "newTestEmail@gmail.ru";
         User testUser = new User("test", "testPass", "test@mail.ru");
         userDao.addHibernate(testUser);
@@ -84,7 +98,7 @@ public class UserDaoImplTest {
     } //hibernate
 
     @Test
-    public void updateUserPasswordHibernateTest(){
+    public void updateUserPasswordHibernateTest() {
         String newPassword = "newTestPassword";
         User testUser = new User("test", "testPass", "test@mail.ru");
         userDao.addHibernate(testUser);
@@ -174,12 +188,6 @@ public class UserDaoImplTest {
         userDao.deleteUserHibernate("testLogin1");
         Assertions.assertEquals(newPassword, userPassFromDb);
     }*/ //JDBC testUpdateUserPassword
-
-
-
-
-
-
 
 
     @AfterAll

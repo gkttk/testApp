@@ -11,5 +11,5 @@ public interface UserService {
     boolean deleteUser(String userLogin);
     long changeEmail(String newEmail, User user);
     long changePassword(String newPassword, User user);
-
+    boolean updateUser(User newUser);
 }

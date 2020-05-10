@@ -55,4 +55,9 @@ public class UserServiceImpl implements UserService {
     }
 
 
+    @Override
+    public boolean updateUser(User newUser){
+        return userDao.updateUserHibernate(newUser);
+    }
+
 }

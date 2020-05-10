@@ -25,24 +25,6 @@ public class UserDetailsDaoImpl implements UserDetailsDao {
 
 
 
-    @Override
-    public Integer addUserDetails(UserDetails userDetails) {
-        Transaction transaction = null;
-        Integer id = null;
-        try (Session session = HibernateUtil.getSession()) {
-            transaction = session.beginTransaction();
-            id = (Integer) session.save(userDetails);
-            transaction.commit();
-            log.info("UserDetails with id:{} for User with id:{} was saved", id, userDetails.getDetailsUser().getId());
-        } catch (HibernateException e) {
-            log.error("Exception: {}; Can't add UserDetail for User with id:{}", e, userDetails.getDetailsUser().getId());
-            if (transaction != null) {
-                transaction.rollback();
-            }
-        }
-        return id;
-
-    }
 
     @Override
     public UserDetails getUserDetails(Integer userId) {
@@ -81,23 +63,4 @@ public class UserDetailsDaoImpl implements UserDetailsDao {
         return false;
     }
 
-    @Override
-    public Boolean deleteUserDetails(Integer userId) {
-        String hql = "DELETE FROM UserDetails WHERE user_id =: userIdParam";
-        Transaction transaction = null;
-        try (Session session = HibernateUtil.getSession()){
-            transaction = session.beginTransaction();
-            session.createQuery(hql).setParameter("userIdParam", userId).executeUpdate();
-            transaction.commit();
-            log.info("Delete UserDetails for User with id:{}", userId);
-            return true;
-        } catch (HibernateException e) {
-            log.error("Exception: {}; Can't delete UserDetail for User with id:{}", e, userId);
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            return false;
-        }
-
-    }
 }

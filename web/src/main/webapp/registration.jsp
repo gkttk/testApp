@@ -23,8 +23,16 @@
                 <label for="password"><fmt:message key="index.password" bundle="${messages}"/></label><br>
                 <input type="text" id="email" name="email" required>
                 <label for="email"><fmt:message key="registration.Email" bundle="${messages}"/></label><br>
-                <input type="submit" value=<fmt:message key="index.registration" bundle="${messages}"/> >
 
+                Необязательно<br>
+                <input type="text" id="name" name="name">
+                <label for="name">Имя</label><br>
+                <input type="text" id="surname" name="surname">
+                <label for="surname">Фамилия</label><br>
+                <input type="text" id="age" name="age">
+                <label for="age">Возраст</label><br>
+
+                <input type="submit" value=<fmt:message key="index.registration" bundle="${messages}"/> >
             </fieldset>
         </form>
 

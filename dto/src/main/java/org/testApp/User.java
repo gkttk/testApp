@@ -26,7 +26,7 @@ public class User {
     private List<Questionnaire> uQuestionnaires = new ArrayList<>();
 
     @OneToOne(mappedBy = "detailsUser", fetch = FetchType.EAGER,
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+            cascade = CascadeType.ALL, orphanRemoval = true)
     private UserDetails uDetails;
 
     public User(){}

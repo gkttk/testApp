@@ -21,6 +21,9 @@ public class ChangeOwnDataServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         String newPassword = request.getParameter("newPassword");
         String newEmail = request.getParameter("newEmail");
+        String newName = request.getParameter("newName");
+        String newSurname = request.getParameter("newSurname");
+        String newAge = request.getParameter("newAge");
         HttpSession session = request.getSession();
         User oldAuthUser = (User) session.getAttribute("authUser");
         if (!newPassword.equals("")) {
@@ -31,6 +34,16 @@ public class ChangeOwnDataServlet extends HttpServlet {
         }
         String userLogin = oldAuthUser.getLogin();
         User authUser = userService.getUserByLogin(userLogin);
+        if(!newName.equals("")){
+            authUser.getuDetails().setName(newName);
+        }
+        if(!newSurname.equals("")){
+            authUser.getuDetails().setSurname(newSurname);
+        }
+        if(!newAge.equals("")){
+            authUser.getuDetails().setAge(Integer.parseInt(newAge));
+        }
+        userService.updateUser(authUser);
         session.setAttribute("authUser", authUser);
         WebUtil.forword("helloUser.jsp", request, response);
 

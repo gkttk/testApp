@@ -22,7 +22,8 @@ public class UserDetails {
     @Column(name = "registration_date")
     private LocalDate registrationDate;
 
-    @OneToOne(fetch = FetchType.EAGER)
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name ="user_id")
     private User detailsUser;
 
@@ -30,12 +31,11 @@ public class UserDetails {
     public UserDetails() {
     }
 
-    public UserDetails(Integer id, String name, String surname, Integer age, LocalDate registrationDate, User detailsUser) {
+    public UserDetails(Integer id, String name, String surname, Integer age, User detailsUser) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.age = age;
-        this.registrationDate = registrationDate;
         this.detailsUser = detailsUser;
     }
 

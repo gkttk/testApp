@@ -1,5 +1,6 @@
 import WebUtil.WebUtil;
 import org.testApp.User;
+import org.testApp.UserDetails;
 import org.testApp.UserServiceImpl;
 import org.testApp.api.UserService;
 
@@ -20,8 +21,25 @@ public class AddUserServlet extends HttpServlet {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
         String email = request.getParameter("email");
+        User user = new User(login, password, email);
+        UserDetails userDetails = new UserDetails(null, null, null, null, user);
 
-        userService.addUser(new User(login, password, email));
+
+        String name = request.getParameter("name");
+        String surname = request.getParameter("surname");
+        String age = request.getParameter("age");
+        if(!name.equals("")){
+            userDetails.setName(name);
+        }
+        if(!surname.equals("")){
+            userDetails.setSurname(surname);
+        }
+        if(!age.equals("")){
+            userDetails.setAge(Integer.parseInt(age));
+        }
+
+        user.setuDetails(userDetails);
+        userService.addUser(user);
 
         WebUtil.forword("userInSession", request, response);
 

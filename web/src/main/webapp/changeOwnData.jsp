@@ -21,7 +21,18 @@
                 <label for="newPassword"><fmt:message key="changeOwnDate.newPassword" bundle="${messages}"/></label><br>
                 <input type="text" id="newEmail" name="newEmail">
                 <label for="newEmail"><fmt:message key="changeOwnDate.newEmail" bundle="${messages}"/></label><br>
+
+                <input type="text" id="newName" name="newName">
+                <label for="newName">Новое имя</label><br>
+                <input type="text" id="newSurname" name="newSurname">
+                <label for="newSurname">Новая фамилия</label><br>
+                <input type="text" id="newAge" name="newAge">
+                <label for="newAge">Новый возраст</label><br>
+
+
                 <input type="submit" value=<fmt:message key="changeOwnDate.change" bundle="${messages}"/> >
+
+
 
             </fieldset>
         </form>
