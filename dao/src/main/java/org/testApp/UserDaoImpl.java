@@ -2,27 +2,22 @@
 package org.testApp;
 
 
-import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Projections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testApp.ConnectUtils.MySQLConnector;
 import org.testApp.api.UserDao;
 import org.testApp.enums.Role;
-import org.testApp.filters.UserFilter;
 import org.testApp.hibernateUtil.HibernateUtil;
 
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-import java.sql.*;
 import java.util.List;
 
 public class UserDaoImpl implements UserDao {
+
     private static final Logger log = LoggerFactory.getLogger(UserDaoImpl.class);
     private static volatile UserDao instance;
 
@@ -62,7 +57,7 @@ public class UserDaoImpl implements UserDao {
         Integer id = null;
         try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
-            id = (Integer)session.save(user);
+            id = (Integer) session.save(user);
             log.info("User " + user.getLogin() + " saved");
             transaction.commit();
 
@@ -76,9 +71,8 @@ public class UserDaoImpl implements UserDao {
     }  //hibernate
 
 
-
     @Override
-    public List<User> getUsersHibernate(){
+    public List<User> getUsersHibernate() {
         Transaction transaction = null;
         List<User> usersFromDB = null;
         try (Session session = HibernateUtil.getSession()) {
@@ -89,34 +83,16 @@ public class UserDaoImpl implements UserDao {
             usersFromDB = session.createQuery(query).getResultList();
             transaction.commit();
             log.info("Get Users from DB");
-        }
-        catch (HibernateException e){
+        } catch (HibernateException e) {
             log.error("Exception in getUsers " + e);
-            if(transaction != null){
+            if (transaction != null) {
                 transaction.rollback();
             }
         }
         return usersFromDB;
     } //criteria
 
-    /*@Override
-    public List<User> getUsersHibernate(UserFilter userFilter) {
-        Transaction transaction = null;
-        try (Session session = HibernateUtil.getSession()) {
-            transaction = session.beginTransaction();
-            Query query = session.createQuery("FROM User");
-            List<User> users = query.getResultList();
-            log.info("Get Users from DB");
-            transaction.commit();
-            return users;
-        } catch (HibernateException e) {
-            log.error("Exception in getUsers " + e);
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            return null;
-        }
-    } //hibernate*/
+
 
     @Override
     public User getUserByLoginHibernate(String userLogin) {
@@ -142,18 +118,17 @@ public class UserDaoImpl implements UserDao {
     } //hibernate
 
     @Override
-    public boolean updateUserHibernate(User user){
+    public boolean updateUserHibernate(User user) {
         Transaction transaction = null;
-        try(Session session = HibernateUtil.getSession()){
+        try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
             session.update(user);
             transaction.commit();
             log.info("User with id:{} was updated", user.getId());
             return true;
-        }
-        catch (HibernateException e){
+        } catch (HibernateException e) {
             log.error("Exception: {} ; Can't update User with id:{}", e, user.getId());
-            if(transaction != null){
+            if (transaction != null) {
                 transaction.rollback();
             }
         }
@@ -181,7 +156,6 @@ public class UserDaoImpl implements UserDao {
             return false;
         }
     } //hibernate
-
 
 
     @Override
@@ -273,7 +247,7 @@ public class UserDaoImpl implements UserDao {
             log.info("get count of users, result: {}", result);
         } catch (HibernateException e) {
             log.error("Fail to get count of rows in user table");
-            if(transaction != null){
+            if (transaction != null) {
                 transaction.rollback();
             }
         }
@@ -282,7 +256,26 @@ public class UserDaoImpl implements UserDao {
 
 
 
- /*   @Override
+     /*@Override
+    public List<User> getUsersHibernate(UserFilter userFilter) {
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSession()) {
+            transaction = session.beginTransaction();
+            Query query = session.createQuery("FROM User");
+            List<User> users = query.getResultList();
+            log.info("Get Users from DB");
+            transaction.commit();
+            return users;
+        } catch (HibernateException e) {
+            log.error("Exception in getUsers " + e);
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            return null;
+        }
+    }*/  //hibernate
+
+     /*   @Override
     public int countOfUsers() {
         String query = "SELECT COUNT(*) FROM user";
         try (Connection connection = MySQLConnector.getConnection();
@@ -300,7 +293,7 @@ public class UserDaoImpl implements UserDao {
         }
     }*/  //JDBC
 
-   /* @Override
+     /* @Override
     public long add(User user) {
         String query = "INSERT INTO user (login, password, email, role) VALUES (?,?,?,?)";
         String login = user.getLogin();
@@ -329,8 +322,7 @@ public class UserDaoImpl implements UserDao {
         }
     }//готово*/ //JDBC add
 
-
-   /* @Override
+     /* @Override
     public List<User> getUsers(UserFilter userFilter) {
         String query = "SELECT * FROM user";
         List<User> users = new ArrayList<>();
@@ -354,8 +346,7 @@ public class UserDaoImpl implements UserDao {
         }
     }//готово*/ //JDBC getUsers
 
-
-   /* @Override
+     /* @Override
     public User getUser(String userLogin) {
         User user = null;
         String query = "SELECT * FROM user WHERE login = ?";
@@ -379,8 +370,7 @@ public class UserDaoImpl implements UserDao {
         }
     } //готово*/  //JDBC GetUser
 
-
-    /*@Override
+     /*@Override
     public boolean delete(String login) {
         String query = "DELETE FROM user where login = ?";
         try (Connection connection = MySQLConnector.getConnection();
@@ -395,7 +385,7 @@ public class UserDaoImpl implements UserDao {
         }
     }//готово*/ //JDBC delete
 
-    /* @Override
+     /* @Override
     public long updateUserForAdmin(String oldUserLogin, User newUser) {
         String query = "UPDATE user SET password = ?, email = ?, role = ? WHERE login = ?";
         String newPassword = newUser.getPassword();
@@ -422,7 +412,7 @@ public class UserDaoImpl implements UserDao {
         }
     }*/  //JDBC UpdateUserForAdmin
 
-    /*@Override
+     /*@Override
     public long updateUserEmail(String newEmail, User user) {
         String query = "UPDATE user SET email = ? WHERE login = ?";
         String userLogin = user.getLogin();

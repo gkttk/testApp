@@ -12,7 +12,6 @@ public class AnswerDaoImplTest {
     @BeforeAll
     public static void createInstance() { answerDao = AnswerDaoImpl.getInstance();}
 
-
     @Test
     public void testGetAnswersHibernate(){
         int questionId = 3;
@@ -22,12 +21,5 @@ public class AnswerDaoImplTest {
     }
 
 
-   /* @Test
-    public void testGetAnswers() {
-        int question_id = 3;
-        List<Answer> answersList = answerDao.getAnswers(question_id);
-        Assertions.assertNotNull(answersList);
-        Assertions.assertTrue(answersList.size() > 1);
-    }*/  //JDBC getAnswers()
 
 }

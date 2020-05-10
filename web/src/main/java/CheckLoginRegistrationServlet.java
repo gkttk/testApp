@@ -1,7 +1,6 @@
 import WebUtil.WebUtil;
 import org.testApp.UserValidator;
 import org.testApp.api.Validator;
-
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 @WebServlet(name = "ValidationPasswordServlet", urlPatterns = "/validationPassword")
 public class ValidationPasswordServlet extends HttpServlet {
     private Validator userValidator;

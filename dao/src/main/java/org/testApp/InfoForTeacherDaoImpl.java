@@ -5,18 +5,10 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.transform.Transformers;
 import org.hibernate.type.StandardBasicTypes;
-import org.hibernate.type.Type;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testApp.ConnectUtils.MySQLConnector;
 import org.testApp.api.InfoForTeacherDao;
 import org.testApp.hibernateUtil.HibernateUtil;
-
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.LinkedList;
 import java.util.List;
 
 public class InfoForTeacherDaoImpl implements InfoForTeacherDao {

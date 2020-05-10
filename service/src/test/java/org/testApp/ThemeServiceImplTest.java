@@ -24,7 +24,6 @@ public class ThemeServiceImplTest {
         themeService = ThemeServiceImpl.getInstance();
     }
 
-
     @Test
     public void testGetThemeName(){
         int themeId = 1;

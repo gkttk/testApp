@@ -9,7 +9,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.testApp.api.*;
 import org.testApp.api.UserDao;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import static org.mockito.Mockito.when;

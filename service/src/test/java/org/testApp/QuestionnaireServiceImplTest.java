@@ -10,7 +10,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.testApp.api.QuestionService;
 import org.testApp.api.QuestionnaireDao;
 import org.testApp.api.ThemeService;
-
 import java.util.List;
 import static org.mockito.Mockito.when;
 

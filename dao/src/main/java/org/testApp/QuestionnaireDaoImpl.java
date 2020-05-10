@@ -5,13 +5,9 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testApp.ConnectUtils.MySQLConnector;
 import org.testApp.api.QuestionnaireDao;
-import org.testApp.filters.QuestionnaireFilter;
 import org.testApp.hibernateUtil.HibernateUtil;
 
-import java.sql.*;
-import java.util.LinkedList;
 import java.util.List;
 
 public class QuestionnaireDaoImpl implements QuestionnaireDao {
@@ -64,7 +60,6 @@ public class QuestionnaireDaoImpl implements QuestionnaireDao {
             }
             return false;
         }
-
     }
 
     @Override
@@ -112,7 +107,7 @@ public class QuestionnaireDaoImpl implements QuestionnaireDao {
         List<Questionnaire> questionnairesFromDB = null;
         try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
-           questionnairesFromDB = session.createQuery(hql, Questionnaire.class).list();
+            questionnairesFromDB = session.createQuery(hql, Questionnaire.class).list();
             transaction.commit();
             log.info("All Questionnaires was gotten");
         } catch (HibernateException e) {
@@ -144,7 +139,7 @@ public class QuestionnaireDaoImpl implements QuestionnaireDao {
     }
 
 
-  /*  @Override
+    /*  @Override
     public int add(Questionnaire questionnaire, double score) {
         String query = "INSERT INTO questionnaire (theme_id, user_id, score) VALUES (?,?,?)";
         int theme_id = questionnaire.getThemeId();
@@ -169,7 +164,7 @@ public class QuestionnaireDaoImpl implements QuestionnaireDao {
             log.error("Fail to save questionnaire with score: {}" , score);
             throw new RuntimeException(e);
         }
-    }*/
+    }*/  //JDBC
 
     /*@Override
     public List<Questionnaire> getQuestionnairesForStudent(int studentId) {
@@ -268,5 +263,5 @@ public class QuestionnaireDaoImpl implements QuestionnaireDao {
             log.error("Fail to get count of rows in questionnaire table");
             throw new RuntimeException(e);
         }
-    }*/
+    }*/ //JDBC
 }

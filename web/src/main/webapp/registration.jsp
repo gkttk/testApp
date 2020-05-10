@@ -24,21 +24,23 @@
                 <input type="text" id="email" name="email" required>
                 <label for="email"><fmt:message key="registration.Email" bundle="${messages}"/></label><br>
 
-                Необязательно<br>
+                <fmt:message key="registrationPage.notNecessary" bundle="${messages}"/><br>
                 <input type="text" id="name" name="name">
-                <label for="name">Имя</label><br>
+                <label for="name"><fmt:message key="registrationPage.name" bundle="${messages}"/></label><br>
                 <input type="text" id="surname" name="surname">
-                <label for="surname">Фамилия</label><br>
+                <label for="surname"><fmt:message key="registrationPage.surname" bundle="${messages}"/></label><br>
                 <input type="text" id="age" name="age">
-                <label for="age">Возраст</label><br>
+                <label for="age"><fmt:message key="registrationPage.age" bundle="${messages}"/></label><br>
 
                 <input type="submit" value=<fmt:message key="index.registration" bundle="${messages}"/> >
             </fieldset>
         </form>
 
-        <p>${requestScope.get("sameUser")}</p>
+        <p>${requestScope.get("UserExistsMessage")}</p>
 
-
-
+       <%-- <form id="exit" name="exit" method="get" action="index.jsp">
+            <input type="submit" value=<fmt:message key="teacherPage.backPagination" bundle="${messages}"/> align="middle">
+        </form> --%>
+        <button onclick='history.back()'><fmt:message key="teacherPage.backPagination" bundle="${messages}"/></button>
 </body>
 </html>

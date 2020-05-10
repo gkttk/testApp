@@ -9,8 +9,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.testApp.api.InfoForTeacherDao;
 import org.testApp.api.InfoForTeacherService;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import static org.mockito.Mockito.when;

@@ -2,7 +2,6 @@ package org.testApp;
 
 import org.testApp.api.AnswerDao;
 import org.testApp.api.AnswerService;
-
 import java.util.List;
 
 public class AnswerServiceImpl implements AnswerService {

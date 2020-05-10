@@ -1,7 +1,6 @@
 package org.testApp;
 
 import org.hibernate.annotations.CreationTimestamp;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 

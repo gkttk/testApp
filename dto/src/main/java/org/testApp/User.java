@@ -1,6 +1,5 @@
 package org.testApp;
 
-
 import org.testApp.enums.Role;
 import javax.persistence.*;
 import java.util.ArrayList;

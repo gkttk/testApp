@@ -5,20 +5,13 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testApp.ConnectUtils.MySQLConnector;
 import org.testApp.api.AnswerDao;
 import org.testApp.hibernateUtil.HibernateUtil;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class AnswerDaoImpl implements AnswerDao {
-    private static volatile AnswerDao instance;
 
+    private static volatile AnswerDao instance;
     private static final Logger log = LoggerFactory.getLogger(AnswerDaoImpl.class);
 
     private AnswerDaoImpl() {}
@@ -28,9 +21,7 @@ public class AnswerDaoImpl implements AnswerDao {
             instance = new AnswerDaoImpl();
         }
         return instance;
-
     }
-
 
     @Override
     public List<Answer> getAnswers(int questionId){

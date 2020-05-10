@@ -23,11 +23,11 @@
                 <label for="newEmail"><fmt:message key="changeOwnDate.newEmail" bundle="${messages}"/></label><br>
 
                 <input type="text" id="newName" name="newName">
-                <label for="newName">Новое имя</label><br>
+                <label for="newName"><fmt:message key="changeOwnData.newName" bundle="${messages}"/></label><br>
                 <input type="text" id="newSurname" name="newSurname">
-                <label for="newSurname">Новая фамилия</label><br>
+                <label for="newSurname"><fmt:message key="changeOwnData.newSurname" bundle="${messages}"/></label><br>
                 <input type="text" id="newAge" name="newAge">
-                <label for="newAge">Новый возраст</label><br>
+                <label for="newAge"><fmt:message key="changeOwnData.newAge" bundle="${messages}"/></label><br>
 
 
                 <input type="submit" value=<fmt:message key="changeOwnDate.change" bundle="${messages}"/> >
@@ -37,6 +37,7 @@
             </fieldset>
         </form>
 
+        <button onclick='history.back()'><fmt:message key="teacherPage.backPagination" bundle="${messages}"/></button>
 
 
 

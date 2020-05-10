@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface QuestionnaireService {
 
-    Questionnaire generateQuestionnaire(int student_id, int theme_id);
+    Questionnaire generateQuestionnaire(int userId, int themeId);
     String getQuestionnaireThemeName(int questionnaireThemeId);
     List<Questionnaire> getQuestionnairesForStudent(int studentId);
     boolean deleteQuestionnaire(int userId);

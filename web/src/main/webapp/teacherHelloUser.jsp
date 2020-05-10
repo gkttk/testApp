@@ -25,7 +25,7 @@
 </c:forEach>
 
 <c:if test="${currentPage != 1}">
-    <td><a href="getResultForTeacher?currentPage=${currentPage - 1}">Назад</a></td>
+    <td><a href="getResultForTeacher?currentPage=${currentPage - 1}"><fmt:message key="teacherPage.backPagination" bundle="${messages}"/></a></td>
 </c:if>
 
 <table border="1" cellpadding="5" cellspacing="5">
@@ -44,7 +44,7 @@
 </table>
 
 <c:if test="${currentPage lt pagesCount}">
-    <td><a href="getResultForTeacher?currentPage=${currentPage + 1}">Вперед</a></td>
+    <td><a href="getResultForTeacher?currentPage=${currentPage + 1}"><fmt:message key="teacherPage.forwardPagination" bundle="${messages}"/></a></td>
 </c:if>
 
 <h1><fmt:message key="HelloUser.pastTests" bundle="${messages}"/></h1>

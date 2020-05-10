@@ -1,18 +1,11 @@
 package org.testApp;
 
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.testApp.ConnectUtils.AutoIncrementCompressor;
 import org.testApp.api.UserDao;
 import org.testApp.api.UserDetailsDao;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 public class UserDetailsDaoImplTest {
     private static UserDetailsDao userDetailsDao;
@@ -25,9 +18,6 @@ public class UserDetailsDaoImplTest {
     }
 
 
-
-
-
     @Test
     public void getUserDetailsHibernateTest(){
         User user = userDao.getUserByLoginHibernate("admin");
@@ -38,7 +28,6 @@ public class UserDetailsDaoImplTest {
                 ()-> Assertions.assertEquals(userDetailsFromDB.getName(), user.getuDetails().getName()),
                 ()-> Assertions.assertEquals(userDetailsFromDB.getSurname(), user.getuDetails().getSurname()),
                 ()-> Assertions.assertEquals(userDetailsFromDB.getAge(), user.getuDetails().getAge()));
-
     }
 
     @Test
@@ -57,8 +46,4 @@ public class UserDetailsDaoImplTest {
         Assertions.assertTrue(result);
 
     }
-
-
-
-
 }

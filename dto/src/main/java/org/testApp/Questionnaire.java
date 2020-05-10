@@ -2,9 +2,7 @@ package org.testApp;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "questionnaire")
@@ -58,7 +56,6 @@ public class Questionnaire {
     }
 
 
-
     public Integer getId() {
         return id;
     }
@@ -94,8 +91,6 @@ public class Questionnaire {
     public void setQuestionnaireTheme(Theme questionnaireTheme) {
         this.questionnaireTheme = questionnaireTheme;
     }
-
-
 
     public Double getScore() {
         return score;

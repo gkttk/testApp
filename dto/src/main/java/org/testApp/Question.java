@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
 @Entity
 @Table(name = "question")
 public class Question {
@@ -26,7 +27,6 @@ public class Question {
    @Transient
     private List<Questionnaire> questionQuestionnaires = new ArrayList<>();
 
-
     public Question() {
     }
 
@@ -36,7 +36,6 @@ public class Question {
         this.answers = answers;
         this.qTheme = qTheme;
     }
-
 
 
     public Integer getId() {
@@ -71,25 +70,22 @@ public class Question {
         this.questionQuestionnaires = questionQuestionnaires;
     }
 
-
-
-
-
-
-    /*@Override
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Question question = (Question) o;
-        return id == question.id &&
-                themeId == question.themeId &&
-                questionText.equals(question.questionText);
+        return Objects.equals(id, question.id) &&
+                Objects.equals(questionText, question.questionText) &&
+                Objects.equals(qTheme, question.qTheme) &&
+                Objects.equals(answers, question.answers) &&
+                Objects.equals(questionQuestionnaires, question.questionQuestionnaires);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, questionText, themeId);
-    }*/
+        return Objects.hash(id, questionText, qTheme, answers, questionQuestionnaires);
+    }
 
     @Override
     public String toString() {

@@ -1,7 +1,6 @@
 package org.testApp.api;
 
 import org.testApp.User;
-import org.testApp.filters.UserFilter;
 import java.util.List;
 
 public interface UserDao {
@@ -16,11 +15,4 @@ public interface UserDao {
     int countOfUsers();
     boolean updateUserHibernate(User user);
 
-    /*long updateUserPassword(String newPassword, User user);*/ //JDBC
-    /*long updateUserEmail(String newEmail, User user);*/ //JDBC
-    /*Integer add(User user);*/  //JDBC
-    /*List<User> getUsers(UserFilter userFilter);*/ //JDBC
-    /*User getUser(String userLogin);*/  //JDBC
-    /*boolean delete(String login);*/ //JDBC
-    /*long updateUserForAdmin(String oldLogin, User newUser);*/ //JDBC
 }

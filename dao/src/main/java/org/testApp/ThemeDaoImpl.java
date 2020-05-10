@@ -13,7 +13,8 @@ public class ThemeDaoImpl implements ThemeDao {
     private static final Logger log = LoggerFactory.getLogger(ThemeDaoImpl.class);
     private static volatile ThemeDao instance;
 
-    private ThemeDaoImpl() {}
+    private ThemeDaoImpl() {
+    }
 
     public static synchronized ThemeDao getInstance() {
         if (instance == null) {
@@ -22,18 +23,17 @@ public class ThemeDaoImpl implements ThemeDao {
         return instance;
     }
 
-    public Theme getTheme(Integer themeId){
+    public Theme getTheme(Integer themeId) {
         Transaction transaction = null;
         Theme themeFromDb = null;
-        try(Session session = HibernateUtil.getSession()){
+        try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
             themeFromDb = session.get(Theme.class, themeId);
             transaction.commit();
             log.info("GetTheme with themeId:{} - ", themeId);
-        }
-        catch (HibernateException e){
+        } catch (HibernateException e) {
             log.error("Exception - {} in getTheme with themeId:{}", e, themeId);
-            if(transaction != null){
+            if (transaction != null) {
                 transaction.rollback();
             }
         }
@@ -41,19 +41,17 @@ public class ThemeDaoImpl implements ThemeDao {
     }
 
 
-    public String getName(Integer theme_id){
-       /* Session session = SFUtil.getSession();*/
+    public String getName(Integer theme_id) {
         Transaction transaction = null;
-        try(Session session = HibernateUtil.getSession()){
+        try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
             Theme theme = session.get(Theme.class, theme_id);
             transaction.commit();
             log.info("Get theme - " + theme.getName());
             return theme.getName();
-        }
-        catch (HibernateException e){
+        } catch (HibernateException e) {
             log.error("Exception - {} in getName() ThemeDao by Id:{}", theme_id, e);
-            if(transaction != null){
+            if (transaction != null) {
                 transaction.rollback();
             }
             return null;
@@ -78,6 +76,6 @@ public class ThemeDaoImpl implements ThemeDao {
             log.error("Fail to getThemeName with theme_id is {}", themeId);
            throw new RuntimeException(e);
         }
-    }*/
+    }*/ //JDBC
 
 }

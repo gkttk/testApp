@@ -29,8 +29,6 @@ public class Answer {
     }
 
 
-
-
     public Integer getId() {
         return id;
     }
@@ -55,7 +53,6 @@ public class Answer {
     public void setId(Integer id) {
         this.id = id;
     }
-
 
     public void setAnswerText(String answerText) {
         this.answerText = answerText;

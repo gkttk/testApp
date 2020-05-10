@@ -1,14 +1,11 @@
 package org.testApp;
 
-
 import org.junit.jupiter.api.*;
 import org.testApp.ConnectUtils.AutoIncrementCompressor;
 import org.testApp.api.QuestionDao;
 import org.testApp.api.QuestionnaireDao;
 import org.testApp.api.ThemeDao;
 import org.testApp.api.UserDao;
-
-
 import java.util.List;
 
 public class QuestionnaireDaoImplTest {
@@ -27,9 +24,9 @@ public class QuestionnaireDaoImplTest {
 
     @Test
     public void testAddQuestionnaireHibernate() {
-        User userFromDB = userDao.getUserByLoginHibernate("Kirill");  //получение юзера из бд с логином Kirill
-        Theme themeFromDB = themeDao.getTheme(2);  //получение темы из бд с id 2
-        Double scoreForDB = 5.0;  //оценка по вопроснику
+        User userFromDB = userDao.getUserByLoginHibernate("Kirill");
+        Theme themeFromDB = themeDao.getTheme(2);
+        double scoreForDB = 5.0;
         List<Question> questionsForDB = questionDao.getQuestions(2);
         Questionnaire questionnaire = new Questionnaire(null, scoreForDB, userFromDB, themeFromDB);
         questionsForDB.forEach(question -> question.getQuestionQuestionnaires().add(questionnaire));
@@ -64,7 +61,7 @@ public class QuestionnaireDaoImplTest {
         Integer userId = userDao.addHibernate(userForDB);
         userForDB.setId(userId);
         Theme themeFromDB = themeDao.getTheme(2);
-        Double scoreForDB = 5.0;
+        double scoreForDB = 5.0;
         Questionnaire questionnaire = new Questionnaire(null, scoreForDB, userForDB, themeFromDB);
         questionnaireDao.add(questionnaire, scoreForDB);
         Boolean result = questionnaireDao.deleteByUserId(userId);
@@ -132,6 +129,6 @@ public class QuestionnaireDaoImplTest {
         AutoIncrementCompressor.compressionTable("questionnaire", rows);
     }
 
-*/
+*/  //JDBC
 
 }

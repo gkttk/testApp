@@ -5,15 +5,9 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testApp.ConnectUtils.MySQLConnector;
 import org.testApp.api.QuestionDao;
 import org.testApp.hibernateUtil.HibernateUtil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class QuestionDaoImpl implements QuestionDao {
@@ -37,14 +31,14 @@ public class QuestionDaoImpl implements QuestionDao {
         String hql = "FROM Question where theme_id =: themeIdParam";
         List<Question> questions = null;
         Transaction transaction = null;
-        try(Session session = HibernateUtil.getSession()){
+        try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
             questions = session.createQuery(hql, Question.class).setParameter("themeIdParam", themeId).list();
             transaction.commit();
             log.info("GetQuestions with themeId:{}", themeId);
-        }catch (HibernateException e){
+        } catch (HibernateException e) {
             log.error("Fail to GetQuestions(Hibernate) with themeId {}", themeId);
-            if(transaction != null){
+            if (transaction != null) {
                 transaction.rollback();
             }
         }

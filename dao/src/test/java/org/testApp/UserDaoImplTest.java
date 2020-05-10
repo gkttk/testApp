@@ -6,7 +6,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.testApp.ConnectUtils.AutoIncrementCompressor;
 import org.testApp.api.UserDao;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +27,6 @@ public class UserDaoImplTest {
         );
     }
 
-
     @Test
     public void updateUserHibernateTest() {
         User user = new User("testUser", "test", "test@mail.ru");
@@ -37,7 +35,6 @@ public class UserDaoImplTest {
         boolean result = userDao.updateUserHibernate(newUser);
         userDao.deleteUserHibernate("testUser321");
         Assertions.assertTrue(result);
-
     }
 
     @Test
@@ -111,6 +108,12 @@ public class UserDaoImplTest {
     public void testGetCountOfUsers() {
         int result = userDao.countOfUsers();
         Assertions.assertTrue(result >= 0);
+    }
+
+    @AfterAll
+    public static void trimToSize() {
+        int rows = userDao.countOfUsers();
+        AutoIncrementCompressor.compressionTable("user", rows);
     }
 
 
@@ -190,10 +193,6 @@ public class UserDaoImplTest {
     }*/ //JDBC testUpdateUserPassword
 
 
-    @AfterAll
-    public static void trimToSize() {
-        int rows = userDao.countOfUsers();
-        AutoIncrementCompressor.compressionTable("user", rows);
-    }
+
 
 }

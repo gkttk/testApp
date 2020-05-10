@@ -20,10 +20,4 @@ public class InfoForTeacherDaoImplTest {
     }
 
 
-   /* @Test
-    public void testGetAllResults(){
-        List<InfoForTeacher> infoForTeachers = infoForTeacherDao.getAllResults();
-        Assertions.assertNotNull(infoForTeachers);
-    }*/  //JDBC
-
 }

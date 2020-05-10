@@ -9,12 +9,11 @@ import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
 import org.testApp.Theme;
 import org.testApp.User;
-
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+//SFUtil не настроен должным образом
 public class SFUtil {
     private static final SessionFactory sessionFactory;
 

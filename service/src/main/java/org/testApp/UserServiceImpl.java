@@ -2,7 +2,6 @@ package org.testApp;
 
 import org.testApp.api.UserDao;
 import org.testApp.api.UserService;
-
 import java.util.List;
 
 public class UserServiceImpl implements UserService {

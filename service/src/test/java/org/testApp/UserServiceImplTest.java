@@ -11,7 +11,6 @@ import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.testApp.api.UserDao;
 import org.testApp.api.UserService;
-
 import java.util.List;
 
 @ExtendWith(MockitoExtension.class)

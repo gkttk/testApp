@@ -2,16 +2,12 @@ package org.testApp;
 
 import org.testApp.api.InfoForTeacherDao;
 import org.testApp.api.InfoForTeacherService;
-import org.testApp.api.QuestionnaireDao;
-
 import java.util.List;
 
 public class InfoForTeacherServiceImpl implements InfoForTeacherService {
 
     private static volatile InfoForTeacherService instance;
-
     private InfoForTeacherDao infoForTeacherDao = InfoForTeacherDaoImpl.getInstance();
-
 
     private InfoForTeacherServiceImpl() {}
 

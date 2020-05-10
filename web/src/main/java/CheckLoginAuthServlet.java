@@ -15,16 +15,6 @@ public class CheckLoginAuthServlet extends HttpServlet {
         userValidator = UserValidator.getInstance();
     }
 
-   /* @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
-        String userLogin = request.getParameter("login");
-        if (userValidator.checkLoginInDB(userLogin)) {
-            request.setAttribute("UserExistsMessage", "Логин занят");
-            WebUtil.forword("registration.jsp", request, response);
-        } else {
-            WebUtil.forword("userInSession", request, response);
-        }
-    }*/
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         String userLogin = request.getParameter("login");
