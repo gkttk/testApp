@@ -15,6 +15,8 @@ public class QuestionDaoImplTest {
         questionDao = QuestionDaoImpl.getInstance();
     }
 
+
+
     @Test
     public void testGetQuestionsHibernate(){
         int themeId = 2;

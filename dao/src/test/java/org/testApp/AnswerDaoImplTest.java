@@ -12,6 +12,8 @@ public class AnswerDaoImplTest {
     @BeforeAll
     public static void createInstance() { answerDao = AnswerDaoImpl.getInstance();}
 
+
+
     @Test
     public void testGetAnswersHibernate(){
         int questionId = 3;

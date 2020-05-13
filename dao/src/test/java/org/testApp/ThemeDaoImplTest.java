@@ -1,5 +1,6 @@
 package org.testApp;
 
+import net.sf.ehcache.CacheManager;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,16 @@ public class ThemeDaoImplTest {
     @BeforeAll
     public static void createInstance(){
         themeDao = ThemeDaoImpl.getInstance();
+    }
+
+    @Test
+    public void testCacheTheme(){
+        int themeId = 3;
+        Theme theme1 = themeDao.getTheme(themeId);
+        Theme theme2 = themeDao.getTheme(themeId);
+        Theme theme3 = themeDao.getTheme(themeId);
+        int size = CacheManager.ALL_CACHE_MANAGERS.get(0).getCache("org.testApp.Theme").getSize();
+        Assertions.assertTrue(size > 0);
     }
 
     @Test

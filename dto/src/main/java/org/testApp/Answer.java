@@ -1,6 +1,10 @@
 package org.testApp;
 
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import javax.persistence.*;
+
+
 
 @Entity
 @Table(name = "answer")

@@ -1,11 +1,16 @@
 package org.testApp;
 
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.time.LocalDate;
 
+
+
 @Entity
 @Table(name = "user_details")
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

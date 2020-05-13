@@ -1,11 +1,16 @@
 package org.testApp;
 
+import net.sf.ehcache.CacheManager;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.testApp.ConnectUtils.AutoIncrementCompressor;
 import org.testApp.api.UserDao;
+import org.testApp.hibernateUtil.HibernateUtil;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +20,14 @@ public class UserDaoImplTest {
     @BeforeAll
     public static void createInstance() {
         userDao = UserDaoImpl.getInstance();
+    }
+
+    @Test
+    public void testCacheUser() {
+        User user1 = userDao.getUserHibernate(1);
+        User user2 = userDao.getUserHibernate(1);
+        int size = CacheManager.ALL_CACHE_MANAGERS.get(0).getCache("org.testApp.User").getSize();
+        Assertions.assertTrue(size > 0);
     }
 
     @Test
@@ -50,10 +63,10 @@ public class UserDaoImplTest {
     @Test
     public void addHibernateTest() {
         User user = new User("TestLogin", "TestPassword", "test@gmail.ru");
-        UserDetails userDetails = new UserDetails(null,null,null,null,user);
+        UserDetails userDetails = new UserDetails(null, null, null, null, user);
         user.setuDetails(userDetails);
         Integer id = userDao.addHibernate(user);
-       userDao.deleteUserHibernate("TestLogin");
+        userDao.deleteUserHibernate("TestLogin");
         Assertions.assertNotNull(id);
     }  //hibernate
 
@@ -191,8 +204,6 @@ public class UserDaoImplTest {
         userDao.deleteUserHibernate("testLogin1");
         Assertions.assertEquals(newPassword, userPassFromDb);
     }*/ //JDBC testUpdateUserPassword
-
-
 
 
 }

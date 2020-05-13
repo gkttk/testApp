@@ -1,10 +1,14 @@
 package org.testApp;
 
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Theme {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,8 +18,10 @@ public class Theme {
     @Column(name = "owner_id")
     private Integer ownerId;
 
+
     @OneToMany(mappedBy = "qTheme", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Question> tQuestions = new ArrayList<>();
+
 
     @OneToMany(mappedBy = "questionnaireTheme", fetch = FetchType.LAZY)
     private List<Questionnaire> uQuestionnaires = new ArrayList<>();

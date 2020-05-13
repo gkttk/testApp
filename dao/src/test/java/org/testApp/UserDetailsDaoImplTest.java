@@ -1,5 +1,6 @@
 package org.testApp;
 
+import net.sf.ehcache.CacheManager;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -17,6 +18,13 @@ public class UserDetailsDaoImplTest {
         userDao = UserDaoImpl.getInstance();
     }
 
+    @Test
+    public void testCacheUserDetails() {
+        UserDetails userDetails1 = userDetailsDao.getUserDetails(1);
+        UserDetails userDetails2 = userDetailsDao.getUserDetails(1);
+        int size = CacheManager.ALL_CACHE_MANAGERS.get(0).getCache("org.testApp.UserDetails").getSize();
+        Assertions.assertTrue(size > 0);
+    }
 
     @Test
     public void getUserDetailsHibernateTest(){

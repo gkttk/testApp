@@ -22,9 +22,14 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <hibernate-core.version>5.4.5.Final</hibernate-core.version>
+        <hibernate-ehcache.version>5.4.5.Final</hibernate-ehcache.version>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-ehcache</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
@@ -45,6 +50,11 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-ehcache</artifactId>
+                <version>${hibernate-ehcache.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-core</artifactId>

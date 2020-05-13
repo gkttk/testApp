@@ -1,11 +1,14 @@
 package org.testApp;
 
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Table(name = "question")
 public class Question {
     @Id
@@ -15,16 +18,18 @@ public class Question {
     @Column(name = "text")
     private String questionText;
 
+    @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @ManyToOne
     @JoinColumn(name = "theme_id")
     private Theme qTheme;
 
+    @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @OneToMany(mappedBy = "aQuestion", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Answer> answers;
 
 
     @ManyToMany(mappedBy = "questionnaireQuestions", fetch = FetchType.EAGER)
-   @Transient
+    @Transient
     private List<Questionnaire> questionQuestionnaires = new ArrayList<>();
 
     public Question() {

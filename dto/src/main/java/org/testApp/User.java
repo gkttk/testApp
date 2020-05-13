@@ -1,12 +1,16 @@
 package org.testApp;
 
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.testApp.enums.Role;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+
 @Entity
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,12 +25,13 @@ public class User {
     @Column
     private Role role;
 
-    @OneToMany(mappedBy = "questionnaireUser", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Questionnaire> uQuestionnaires = new ArrayList<>();
 
     @OneToOne(mappedBy = "detailsUser", fetch = FetchType.EAGER,
             cascade = CascadeType.ALL, orphanRemoval = true)
     private UserDetails uDetails;
+
+    @OneToMany(mappedBy = "questionnaireUser", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Questionnaire> uQuestionnaires = new ArrayList<>();
 
     public User(){}
 
