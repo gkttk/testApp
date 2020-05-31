@@ -16,13 +16,17 @@
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/testwebapp?serverTimezone=Europe/Moscow&amp;useSSL=false&amp;logger=com.mysql.cj.log.StandardLogger&amp;profileSQL=true"/>
             <property name="javax.persistence.jdbc.user" value="root"/>
             <property name="javax.persistence.jdbc.password" value="admin"/>
+
             <property name="hibernate.dialect.storage_engine" value="innodb"/>
+
             <property name="hibernate.hbm2ddl.auto" value="validate"/>
             <property name="hibernate.use_sql_comments" value="false"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.connection.pool_size" value="10"/>
+
             <property name="hibernate.cache.use_second_level_cache" value="true"/>
             <property name="hibernate.cache.use_query_cache" value="true"/>
+
             <property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.ehcache.internal.EhcacheRegionFactory"/>
         </properties>
     </persistence-unit>

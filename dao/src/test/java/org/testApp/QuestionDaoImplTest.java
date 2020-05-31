@@ -1,24 +1,27 @@
 package org.testApp;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 import org.testApp.api.QuestionDao;
+import org.testApp.config.DaoConfig;
+
 import java.util.List;
 
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = DaoConfig.class)
+@Transactional
 public class QuestionDaoImplTest {
 
-    private static QuestionDao questionDao;
-
-    @BeforeAll
-    public static void createInstance(){
-        questionDao = QuestionDaoImpl.getInstance();
-    }
-
-
+    @Autowired
+    private QuestionDao questionDao;
 
     @Test
-    public void testGetQuestionsHibernate(){
+    public void testGetQuestionsHibernate() {
         int themeId = 2;
         List<Question> questionsFromDb = questionDao.getQuestions(themeId);
         questionsFromDb.forEach(question -> {

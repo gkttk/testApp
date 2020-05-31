@@ -2,17 +2,21 @@ package org.testApp;
 
 import net.sf.ehcache.CacheManager;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 import org.testApp.api.ThemeDao;
+import org.testApp.config.DaoConfig;
 
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = DaoConfig.class)
+@Transactional
 public class ThemeDaoImplTest {
-    private static ThemeDao themeDao;
-
-    @BeforeAll
-    public static void createInstance(){
-        themeDao = ThemeDaoImpl.getInstance();
-    }
+    @Autowired
+    private ThemeDao themeDao;
 
     @Test
     public void testCacheTheme(){

@@ -23,9 +23,22 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <hibernate-core.version>5.4.5.Final</hibernate-core.version>
         <hibernate-ehcache.version>5.4.5.Final</hibernate-ehcache.version>
+        <spring-context.version>5.2.6.RELEASE</spring-context.version>
+        <spring-test.version>5.2.6.RELEASE</spring-test.version>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring-test.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring-context.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-ehcache</artifactId>
@@ -50,6 +63,11 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-webmvc</artifactId>
+                <version>5.2.6.RELEASE</version>
+            </dependency>
             <dependency>
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-ehcache</artifactId>

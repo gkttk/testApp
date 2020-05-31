@@ -2,45 +2,37 @@ package org.testApp;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
+import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testApp.api.AnswerDao;
-import org.testApp.hibernateUtil.HibernateUtil;
+
 import java.util.List;
 
 public class AnswerDaoImpl implements AnswerDao {
 
-    private static volatile AnswerDao instance;
+    private final SessionFactory sessionFactory;
     private static final Logger log = LoggerFactory.getLogger(AnswerDaoImpl.class);
 
-    private AnswerDaoImpl() {}
-
-    public static synchronized AnswerDao getInstance() {
-        if (instance == null) {
-            instance = new AnswerDaoImpl();
-        }
-        return instance;
+    public AnswerDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
+
     @Override
-    public List<Answer> getAnswers(int questionId){
+    public List<Answer> getAnswers(int questionId) {
         String hql = "FROM Answer where question_id = :questionIdParam";
         List<Answer> answers = null;
-        Transaction transaction = null;
-        try(Session session = HibernateUtil.getSession()){
-            transaction = session.beginTransaction();
+        try {
+            Session session = sessionFactory.getCurrentSession();
             answers = session.createQuery(hql, Answer.class).setParameter("questionIdParam", questionId).list();
-            transaction.commit();
             log.info("GetAnswers with id:{}", questionId);
-        }catch (HibernateException e){
+        } catch (HibernateException e) {
             log.error("Fail to getAnswers(Hibernate) by id {}", questionId);
-            if(transaction != null){
-                transaction.rollback();
-            }
         }
         return answers;
     } //hibernate
+
 
    /* @Override
     public List<Answer> getAnswers(int question_id) {

@@ -4,13 +4,11 @@ package org.testApp;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
+import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testApp.api.UserDao;
 import org.testApp.enums.Role;
-import org.testApp.hibernateUtil.HibernateUtil;
-
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -18,34 +16,23 @@ import java.util.List;
 
 public class UserDaoImpl implements UserDao {
 
+    private final SessionFactory sessionFactory;
     private static final Logger log = LoggerFactory.getLogger(UserDaoImpl.class);
-    private static volatile UserDao instance;
 
-    private UserDaoImpl() {
-    }
-
-    public static synchronized UserDao getInstance() {
-        if (instance == null) {
-            instance = new UserDaoImpl();
-        }
-        return instance;
+    public UserDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     @Override
     public User getUserHibernate(Integer userId) {
-        Transaction transaction = null;
-        User userFromDB = null;
-        try (Session session = HibernateUtil.getSession()) {
-            transaction = session.beginTransaction();
-            userFromDB = session.get(User.class, userId);
 
-            transaction.commit();
+        User userFromDB = null;
+        try{
+            Session session = sessionFactory.getCurrentSession();
+            userFromDB = session.get(User.class, userId);
             log.info("Get User with ID: {} from DB", userId);
         } catch (HibernateException e) {
             log.error("Exception:{}. Can't get User with ID: {} from DB", e, userId);
-            if (transaction != null) {
-                transaction.rollback();
-            }
         }
         return userFromDB;
     }
@@ -53,19 +40,14 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public Integer addHibernate(User user) {
-        Transaction transaction = null;
         Integer id = null;
-        try (Session session = HibernateUtil.getSession()) {
-            transaction = session.beginTransaction();
+        try{
+            Session session = sessionFactory.getCurrentSession();
             id = (Integer) session.save(user);
             log.info("User " + user.getLogin() + " saved");
-            transaction.commit();
 
         } catch (HibernateException e) {
             log.error("Add user error in DAO module" + e);
-            if (transaction != null) {
-                transaction.rollback();
-            }
         }
         return id;
     }  //hibernate
@@ -73,21 +55,16 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> getUsersHibernate() {
-        Transaction transaction = null;
         List<User> usersFromDB = null;
-        try (Session session = HibernateUtil.getSession()) {
-            transaction = session.beginTransaction();
+        try{
+            Session session = sessionFactory.getCurrentSession();
             CriteriaBuilder cb = session.getCriteriaBuilder();
             CriteriaQuery<User> query = cb.createQuery(User.class);
             query.select(query.from(User.class));
             usersFromDB = session.createQuery(query).getResultList();
-            transaction.commit();
             log.info("Get Users from DB");
         } catch (HibernateException e) {
             log.error("Exception in getUsers " + e);
-            if (transaction != null) {
-                transaction.rollback();
-            }
         }
         return usersFromDB;
     } //criteria
@@ -97,40 +74,28 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User getUserByLoginHibernate(String userLogin) {
         String hql = "FROM User WHERE login = :userLogin";
-        Transaction transaction = null;
-
-        try (Session session = HibernateUtil.getSession()) {
-            // session = SFUtil.getSession();
-            transaction = session.beginTransaction();
+        try{
+            Session session = sessionFactory.getCurrentSession();
             Query query = session.createQuery(hql, User.class);
             query.setParameter("userLogin", userLogin);
             User user = (User) query.getSingleResult();
             log.info("Get User from users login {}", userLogin);
-            transaction.commit();
             return user;
         } catch (HibernateException e) {
             log.error("GetUser by login: {} exception", userLogin);
-            if (transaction != null) {
-                transaction.rollback();
-            }
             return null;
         }
     } //hibernate
 
     @Override
     public boolean updateUserHibernate(User user) {
-        Transaction transaction = null;
-        try (Session session = HibernateUtil.getSession()) {
-            transaction = session.beginTransaction();
+        try{
+            Session session = sessionFactory.getCurrentSession();
             session.update(user);
-            transaction.commit();
             log.info("User with id:{} was updated", user.getId());
             return true;
         } catch (HibernateException e) {
             log.error("Exception: {} ; Can't update User with id:{}", e, user.getId());
-            if (transaction != null) {
-                transaction.rollback();
-            }
         }
         return false;
     }
@@ -138,21 +103,15 @@ public class UserDaoImpl implements UserDao {
     @Override
     public boolean deleteUserHibernate(String login) {
         String hql = "DELETE User WHERE login = :userLogin";
-        Transaction transaction = null;
-        try (Session session = HibernateUtil.getSession()) {
-            // session = SFUtil.getSession();
-            transaction = session.beginTransaction();
+        try{
+            Session session = sessionFactory.getCurrentSession();
             Query query = session.createQuery(hql);
             query.setParameter("userLogin", login);
             query.executeUpdate();
             log.info("User " + login + " was deleted");
-            transaction.commit();
             return true;
         } catch (HibernateException e) {
             log.error("Exception in deleteUserHibernate by login = " + login + " " + e);
-            if (transaction != null) {
-                transaction.rollback();
-            }
             return false;
         }
     } //hibernate
@@ -161,13 +120,11 @@ public class UserDaoImpl implements UserDao {
     @Override
     public long updateUserForAdminHibernate(String oldUserLogin, User newUser) {
         String hql = "UPDATE User SET password = :newPassword, email = :newEmail, role = :newRole where login = :oldLogin";
-        Transaction transaction = null;
         String newPassword = newUser.getPassword();
         String newEmail = newUser.getEmail();
         Role newRole = newUser.getRole();
-        try (Session session = HibernateUtil.getSession()) {
-            //  session = SFUtil.getSession();
-            transaction = session.beginTransaction();
+        try{
+            Session session = sessionFactory.getCurrentSession();
             Query query = session.createQuery(hql);
             query.setParameter("newPassword", newPassword);
             query.setParameter("newEmail", newEmail);
@@ -175,13 +132,9 @@ public class UserDaoImpl implements UserDao {
             query.setParameter("oldLogin", oldUserLogin);
             int result = query.executeUpdate();
             log.info("User " + oldUserLogin + " was updated");
-            transaction.commit();
             return result;
         } catch (HibernateException e) {
             log.error("Exception in updateUserForAdminHibernate by {}, Exception: {}", oldUserLogin, e);
-            if (transaction != null) {
-                transaction.rollback();
-            }
             return 0;
         }
     } //hibernate
@@ -190,23 +143,16 @@ public class UserDaoImpl implements UserDao {
     public long updateUserEmailHibernate(String newEmail, User user) {
         String hql = "UPDATE User Set email = :newEmail WHERE login = :userLogin";
         String userLogin = user.getLogin();
-
-        Transaction transaction = null;
-        try (Session session = HibernateUtil.getSession()) {
-            // session = SFUtil.getSession();
-            transaction = session.beginTransaction();
+        try{
+            Session session = sessionFactory.getCurrentSession();
             Query query = session.createQuery(hql);
             query.setParameter("newEmail", newEmail);
             query.setParameter("userLogin", userLogin);
             int result = query.executeUpdate();
             log.info("Email for user: {} was updated", userLogin);
-            transaction.commit();
             return result;
         } catch (HibernateException e) {
             log.error("Exception in updateUserEmailHibernate by login: {}, Exception: {}", userLogin, e);
-            if (transaction != null) {
-                transaction.rollback();
-            }
             return 0;
         }
     } //hibernate
@@ -215,22 +161,16 @@ public class UserDaoImpl implements UserDao {
     public long updateUserPasswordHibernate(String newPassword, User user) {
         String hql = "UPDATE User Set password = :newPassword WHERE login = :userLogin";
         String userLogin = user.getLogin();
-        Transaction transaction = null;
-        try (Session session = HibernateUtil.getSession()) {
-            //  session = SFUtil.getSession();
-            transaction = session.beginTransaction();
+        try{
+            Session session = sessionFactory.getCurrentSession();
             Query query = session.createQuery(hql);
             query.setParameter("newPassword", newPassword);
             query.setParameter("userLogin", userLogin);
             int result = query.executeUpdate();
             log.info("Password for user: {} was updated", userLogin);
-            transaction.commit();
             return result;
         } catch (HibernateException e) {
             log.error("Exception in updateUserPasswordHibernate by login: {}, Exception: {}", userLogin, e);
-            if (transaction != null) {
-                transaction.rollback();
-            }
             return 0;
         }
     } //hibernate
@@ -238,18 +178,13 @@ public class UserDaoImpl implements UserDao {
 
     public int countOfUsers() {
         String hql = "SELECT COUNT(u) FROM User u";
-        Transaction transaction = null;
         int result = -1;
-        try (Session session = HibernateUtil.getSession()) {
-            transaction = session.beginTransaction();
+        try{
+            Session session = sessionFactory.getCurrentSession();
             result = session.createQuery(hql, Long.class).uniqueResult().intValue();
-            transaction.commit();
             log.info("get count of users, result: {}", result);
         } catch (HibernateException e) {
             log.error("Fail to get count of rows in user table");
-            if (transaction != null) {
-                transaction.rollback();
-            }
         }
         return result;
     }

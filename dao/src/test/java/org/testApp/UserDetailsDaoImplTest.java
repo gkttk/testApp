@@ -2,21 +2,27 @@ package org.testApp;
 
 import net.sf.ehcache.CacheManager;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 import org.testApp.api.UserDao;
 import org.testApp.api.UserDetailsDao;
+import org.testApp.config.DaoConfig;
 
-
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = DaoConfig.class)
+@Transactional
 public class UserDetailsDaoImplTest {
-    private static UserDetailsDao userDetailsDao;
-    private static UserDao userDao;
 
-    @BeforeAll
-    public static void createInstance() {
-        userDetailsDao = UserDetailsDaoImpl.getInstance();
-        userDao = UserDaoImpl.getInstance();
-    }
+    @Autowired
+    private UserDetailsDao userDetailsDao;
+
+    @Autowired
+    private UserDao userDao;
+
 
     @Test
     public void testCacheUserDetails() {

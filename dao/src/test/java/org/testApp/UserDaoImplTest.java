@@ -1,26 +1,29 @@
 package org.testApp;
 
 import net.sf.ehcache.CacheManager;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.junit.jupiter.api.AfterAll;
+import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.testApp.ConnectUtils.AutoIncrementCompressor;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 import org.testApp.api.UserDao;
-import org.testApp.hibernateUtil.HibernateUtil;
-
+import org.testApp.config.DaoConfig;
 import java.util.ArrayList;
 import java.util.List;
 
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = DaoConfig.class)
+@Transactional
 public class UserDaoImplTest {
-    private static UserDao userDao;
 
-    @BeforeAll
-    public static void createInstance() {
-        userDao = UserDaoImpl.getInstance();
-    }
+    @Autowired
+    private UserDao userDao; //было static, возвращало null, trim не работает
+
+    @Autowired
+    private SessionFactory sessionFactory;
 
     @Test
     public void testCacheUser() {
@@ -44,6 +47,8 @@ public class UserDaoImplTest {
     public void updateUserHibernateTest() {
         User user = new User("testUser", "test", "test@mail.ru");
         int userId = userDao.addHibernate(user);
+        user.setId(userId);
+        sessionFactory.getCurrentSession().evict(user);
         User newUser = new User(userId, "testUser321", "test321", "test@mail.ru321");
         boolean result = userDao.updateUserHibernate(newUser);
         userDao.deleteUserHibernate("testUser321");
@@ -123,11 +128,11 @@ public class UserDaoImplTest {
         Assertions.assertTrue(result >= 0);
     }
 
-    @AfterAll
+    /*@AfterAll
     public static void trimToSize() {
         int rows = userDao.countOfUsers();
         AutoIncrementCompressor.compressionTable("user", rows);
-    }
+    }*/
 
 
     /*@Test

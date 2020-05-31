@@ -1,26 +1,32 @@
 package org.testApp;
 
 import org.junit.jupiter.api.*;
-import org.testApp.ConnectUtils.AutoIncrementCompressor;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 import org.testApp.api.QuestionDao;
 import org.testApp.api.QuestionnaireDao;
 import org.testApp.api.ThemeDao;
 import org.testApp.api.UserDao;
+import org.testApp.config.DaoConfig;
+
 import java.util.List;
 
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = DaoConfig.class)
+@Transactional
 public class QuestionnaireDaoImplTest {
-    private static QuestionnaireDao questionnaireDao;
-    private static UserDao userDao;
-    private static ThemeDao themeDao;
-    private static QuestionDao questionDao;
 
-    @BeforeAll
-    public static void createInstance() {
-        questionnaireDao = QuestionnaireDaoImpl.getInstance();
-        userDao = UserDaoImpl.getInstance();
-        themeDao = ThemeDaoImpl.getInstance();
-        questionDao = QuestionDaoImpl.getInstance();
-    }
+    @Autowired
+    private  QuestionnaireDao questionnaireDao;  //было static, но возвращает null, trim не работает
+    @Autowired
+    private UserDao userDao;
+    @Autowired
+    private ThemeDao themeDao;
+    @Autowired
+    private QuestionDao questionDao;
 
     @Test
     public void testAddQuestionnaireHibernate() {
@@ -81,11 +87,11 @@ public class QuestionnaireDaoImplTest {
         Assertions.assertTrue(result >= 0);
     }
 
-    @AfterAll
+   /* @AfterAll
     public static void trimToSize() {
         Long rows = questionnaireDao.countOfQuestionnaires();
         AutoIncrementCompressor.compressionTable("questionnaire", rows);
-    }
+    }*/
 
 
   /*  @Test
