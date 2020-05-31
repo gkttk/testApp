@@ -6,16 +6,12 @@ import java.util.List;
 
 public class InfoForTeacherServiceImpl implements InfoForTeacherService {
 
-    private static volatile InfoForTeacherService instance;
-    private InfoForTeacherDao infoForTeacherDao = InfoForTeacherDaoImpl.getInstance();
 
-    private InfoForTeacherServiceImpl() {}
+    private InfoForTeacherDao infoForTeacherDao;
 
-    public static synchronized InfoForTeacherService getInstance(){
-        if(instance == null){
-            instance = new InfoForTeacherServiceImpl();
-        }
-        return instance;
+
+    public InfoForTeacherServiceImpl(InfoForTeacherDao infoForTeacherDao) {
+        this.infoForTeacherDao = infoForTeacherDao;
     }
 
 

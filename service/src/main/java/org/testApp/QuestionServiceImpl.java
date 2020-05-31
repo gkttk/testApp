@@ -8,17 +8,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class QuestionServiceImpl implements QuestionService {
-    private static volatile QuestionService instance;
-    private QuestionDao questionDao = QuestionDaoImpl.getInstance();
-    private AnswerService answerService = AnswerServiceImpl.getInstance();
 
-    private QuestionServiceImpl() {}
+    private QuestionDao questionDao;
+    private AnswerService answerService;
 
-    public static synchronized QuestionService getInstance() {
-        if (instance == null) {
-            instance = new QuestionServiceImpl();
-        }
-        return instance;
+    public QuestionServiceImpl(QuestionDao questionDao, AnswerService answerService) {
+        this.questionDao = questionDao;
+        this.answerService = answerService;
     }
 
     @Override

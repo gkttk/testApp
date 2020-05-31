@@ -6,16 +6,11 @@ import java.util.List;
 
 public class UserServiceImpl implements UserService {
 
-    private static volatile UserService instance;
-    private UserDao userDao = UserDaoImpl.getInstance();
 
-    private UserServiceImpl() {}
+    private UserDao userDao;
 
-    public static synchronized UserService getInstance(){
-        if(instance == null){
-            instance = new UserServiceImpl();
-        }
-        return instance;
+    public UserServiceImpl(UserDao userDao) {
+        this.userDao = userDao;
     }
 
     @Override

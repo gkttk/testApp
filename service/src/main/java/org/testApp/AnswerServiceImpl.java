@@ -6,16 +6,10 @@ import java.util.List;
 
 public class AnswerServiceImpl implements AnswerService {
 
-    private static volatile AnswerService instance;
-    private AnswerDao answerDao = AnswerDaoImpl.getInstance();
+    private AnswerDao answerDao;
 
-    private AnswerServiceImpl() {}
-
-    public static synchronized AnswerService getInstance(){
-        if(instance == null){
-            instance = new AnswerServiceImpl();
-        }
-        return instance;
+    public AnswerServiceImpl(AnswerDao answerDao) {
+        this.answerDao = answerDao;
     }
 
     @Override

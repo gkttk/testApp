@@ -5,16 +5,12 @@ import org.testApp.api.ThemeService;
 
 public class ThemeServiceImpl implements ThemeService {
 
-    private static volatile ThemeService instance;
-    private ThemeDao themeDao = ThemeDaoImpl.getInstance();
-    private ThemeServiceImpl() {
-    }
 
-    public static synchronized ThemeService getInstance() {
-        if (instance == null) {
-            instance = new ThemeServiceImpl();
-        }
-        return instance;
+    private ThemeDao themeDao;
+
+
+    public ThemeServiceImpl(ThemeDao themeDao) {
+        this.themeDao = themeDao;
     }
 
     @Override

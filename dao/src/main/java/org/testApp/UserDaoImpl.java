@@ -25,7 +25,6 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User getUserHibernate(Integer userId) {
-
         User userFromDB = null;
         try{
             Session session = sessionFactory.getCurrentSession();

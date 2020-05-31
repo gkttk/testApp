@@ -1,14 +1,12 @@
 package org.testApp;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.testApp.api.AnswerDao;
-import org.testApp.api.AnswerService;
 import java.util.List;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
@@ -18,12 +16,8 @@ public class AnswerServiceImplTest {
     @Mock
     private static AnswerDao answerDao;
     @InjectMocks
-    private static AnswerService answerService;
+    private static AnswerServiceImpl answerService;
 
-    @BeforeAll
-    public static void createInstance() {
-        answerService = AnswerServiceImpl.getInstance();
-    }
 
     @Test
     public void testGetAnswers(){

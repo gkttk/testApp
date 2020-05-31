@@ -1,7 +1,6 @@
 package org.testApp;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -22,12 +21,8 @@ public class QuestionnaireServiceImplTest {
     @Mock
     private static QuestionService questionService;
     @InjectMocks
-    private static org.testApp.api.QuestionnaireService questionnaireService;
+    private static QuestionnaireServiceImpl questionnaireService;
 
-    @BeforeAll
-    public static void createInstance() {
-        questionnaireService = QuestionnaireServiceImpl.getInstance();
-    }
 
     @Test
     public void testGetQuestionnaireThemeName() {

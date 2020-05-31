@@ -6,17 +6,13 @@ import java.util.List;
 
 public class UserValidator implements Validator {
 
-    private static volatile UserValidator instance;
-    private UserDao daoUser = UserDaoImpl.getInstance();
 
-    private UserValidator(){}
+    private UserDao daoUser;
 
-    public static synchronized UserValidator getInstance(){
-        if(instance == null){
-            instance = new UserValidator();
-        }
-        return  instance;
+    public UserValidator(UserDao daoUser) {
+        this.daoUser = daoUser;
     }
+
     @Override
     public boolean checkLoginInDB(String login){
         List<User> users = daoUser.getUsersHibernate();
