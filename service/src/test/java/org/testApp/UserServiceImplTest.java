@@ -19,6 +19,7 @@ public class UserServiceImplTest {
     private static UserServiceImpl userService;
 
 
+
     @Test
     public void testChangePassword() {
         User testUser = new User("mockTest", "mockTestPass", "mockTest@mail.ru");

@@ -1,5 +1,6 @@
 package org.testApp;
 
+import org.springframework.transaction.annotation.Transactional;
 import org.testApp.api.AnswerDao;
 import org.testApp.api.AnswerService;
 import java.util.List;
@@ -13,6 +14,7 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
+    @Transactional
     public List<Answer> getAnswers(int questionId) {
        return answerDao.getAnswers(questionId);
     }
