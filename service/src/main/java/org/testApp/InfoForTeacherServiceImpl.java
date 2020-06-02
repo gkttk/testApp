@@ -17,13 +17,11 @@ public class InfoForTeacherServiceImpl implements InfoForTeacherService {
 
 
     @Override
-    @Transactional
     public List<InfoForTeacher> getResultsPagination(int numberOfPage,int maxResultOnPage) {
         return infoForTeacherDao.getResultsPagination(numberOfPage, maxResultOnPage);
     }
 
     @Override
-    @Transactional
     public List<InfoForTeacher> getResults() {
        return infoForTeacherDao.getAllResults();
     }

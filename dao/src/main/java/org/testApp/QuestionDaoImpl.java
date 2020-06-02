@@ -5,10 +5,11 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.transaction.annotation.Transactional;
 import org.testApp.api.QuestionDao;
 
 import java.util.List;
-
+@Transactional
 public class QuestionDaoImpl implements QuestionDao {
 
     private final SessionFactory sessionFactory;

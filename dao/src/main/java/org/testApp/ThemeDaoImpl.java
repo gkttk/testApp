@@ -5,8 +5,9 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.transaction.annotation.Transactional;
 import org.testApp.api.ThemeDao;
-
+@Transactional
 public class ThemeDaoImpl implements ThemeDao {
 
     private final SessionFactory sessionFactory;

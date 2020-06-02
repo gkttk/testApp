@@ -15,14 +15,13 @@ public class UserValidator implements Validator {
     }
 
     @Override
-    @Transactional
     public boolean checkLoginInDB(String login){
         List<User> users = daoUser.getUsersHibernate();
-        return users.stream().anyMatch(user->user.getLogin().equalsIgnoreCase(login));
+        boolean result = users.stream().anyMatch(user->user.getLogin().equalsIgnoreCase(login));
+        return result;
     }
 
     @Override
-    @Transactional
     public boolean checkUserPassword(String userLogin, String userPassword) {
         User user = daoUser.getUserByLoginHibernate(userLogin);
         return user.getPassword().equals(userPassword);

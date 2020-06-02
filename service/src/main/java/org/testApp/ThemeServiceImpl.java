@@ -15,13 +15,11 @@ public class ThemeServiceImpl implements ThemeService {
     }
 
     @Override
-    @Transactional
     public Theme getTheme(int themeId) {
         return themeDao.getTheme(themeId);
     }
 
     @Override
-    @Transactional
     public String getThemeName(int themeId) {
        return themeDao.getName(themeId);
     }

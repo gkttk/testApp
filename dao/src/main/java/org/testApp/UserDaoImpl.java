@@ -7,13 +7,14 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.transaction.annotation.Transactional;
 import org.testApp.api.UserDao;
 import org.testApp.enums.Role;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
-
+@Transactional
 public class UserDaoImpl implements UserDao {
 
     private final SessionFactory sessionFactory;

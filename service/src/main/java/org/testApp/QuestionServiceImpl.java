@@ -19,7 +19,6 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    @Transactional
     public List<Question> getQuestions(int themeId) {
         int questionId = 0;
         List<Answer> answers = null;
@@ -33,7 +32,6 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    @Transactional
     public int checkQuestion(Question question, List<String> answers) {
         List<String> correctAnswers = new LinkedList<>();
         for(Answer answer: question.getAnswers()){

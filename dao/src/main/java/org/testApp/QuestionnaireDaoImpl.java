@@ -5,10 +5,12 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.transaction.annotation.Transactional;
 import org.testApp.api.QuestionnaireDao;
 
+import java.util.ArrayList;
 import java.util.List;
-
+@Transactional
 public class QuestionnaireDaoImpl implements QuestionnaireDao {
 
     private final SessionFactory sessionFactory;
@@ -50,7 +52,7 @@ public class QuestionnaireDaoImpl implements QuestionnaireDao {
     @Override
     public List<Questionnaire> getQuestionnairesForUser(Integer userId) {
         String hql = "FROM Questionnaire WHERE user_id =: userIdParam";
-        List<Questionnaire> questionnairesForUserFromDB = null;
+        List<Questionnaire> questionnairesForUserFromDB = new ArrayList<>();
         try{
             Session session = sessionFactory.getCurrentSession();
             questionnairesForUserFromDB = session.createQuery(hql, Questionnaire.class).setParameter("userIdParam", userId).list();

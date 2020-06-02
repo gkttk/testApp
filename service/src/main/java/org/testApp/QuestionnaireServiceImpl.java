@@ -30,19 +30,16 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 
 
     @Override
-    @Transactional
     public String getQuestionnaireThemeName(int questionnaireThemeId) {
         return themeServiceImpl.getThemeName(questionnaireThemeId);
     }
 
     @Override
-    @Transactional
     public boolean deleteQuestionnaire(int userId) {
         return questionnaireDao.deleteByUserId(userId);
     }
 
     @Override
-    @Transactional
     public Questionnaire generateQuestionnaire(int userId, int themeId) {
         Random random = new Random();
         int randomNum;

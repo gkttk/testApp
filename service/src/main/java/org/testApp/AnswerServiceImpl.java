@@ -14,7 +14,6 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    @Transactional
     public List<Answer> getAnswers(int questionId) {
        return answerDao.getAnswers(questionId);
     }

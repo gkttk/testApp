@@ -7,9 +7,10 @@ import org.hibernate.transform.Transformers;
 import org.hibernate.type.StandardBasicTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.transaction.annotation.Transactional;
 import org.testApp.api.InfoForTeacherDao;
 import java.util.List;
-
+@Transactional
 public class InfoForTeacherDaoImpl implements InfoForTeacherDao {
     private final SessionFactory sessionFactory;
     private static final Logger log = LoggerFactory.getLogger(InfoForTeacherDaoImpl.class);
