@@ -2,29 +2,94 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page isELIgnored="false" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<h1><c:out value="Hello, ${authUser.getLogin()}!"/></h1>
-
 <fmt:setLocale value="ru_RU"/> <%-- en_US --%>
 <fmt:setBundle basename="translations" var="messages"/>
 
+<h2 class="display-4"><c:out value="Hello, ${authUser.getLogin()}!"/></h2>
+
+
 <form id="beginTest" name="beginTest" method="get" action="getQuestionnaire">
-    <select id="testTheme" name="testTheme">
+    <select id="testTheme" name="testTheme" class="custom-select" style="background-color: #adc0d0">
         <option value="1">ООП</option>
         <option value="2">Наследование</option>
         <option value="3">Коллекции</option>
     </select>
-    <button type="submit" value="beginTest"><fmt:message key="HelloUser.beginTest" bundle="${messages}"/></button>
+    <button class="btn btn-primary" type="submit" value="beginTest" style="margin-top: 4px">
+        <fmt:message key="HelloUser.beginTest" bundle="${messages}"/></button>
 </form>
 <br>
 
-<h1><fmt:message key="teacherHelloUser.helloTeacher" bundle="${messages}"/></h1>
+<h2 class="display-4"><fmt:message key="teacherHelloUser.helloTeacher" bundle="${messages}"/></h2>
 
-<h4><fmt:message key="teacherHelloUser.studentsResult" bundle="${messages}"/></h4>
-<c:forEach items="${infoForTeacher}" var="info">
-    <li>${info.toString()}</li>
-</c:forEach>
+<h5 class="display-4"><fmt:message key="teacherHelloUser.studentsResult" bundle="${messages}"/></h5>
 
-<c:if test="${currentPage != 1}">
+
+<table class="table">
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Логин студента</th>
+        <th scope="col">E-mail студента</th>
+        <th scope="col">Тема вопросника</th>
+        <th scope="col">Процент выполнения</th>
+    </tr>
+    </thead>
+    <tbody>
+    <c:set var="x" value="1"/>
+    <c:forEach items="${infoForTeacher}" var="info">
+        <tr>
+            <th scope="row">${x}</th>
+            <td>${info.getUserLogin()}</td>
+            <td>${info.getUserEmail()}</td>
+            <td>${info.getThemeName()}</td>
+            <td>${info.getScore()}</td>
+        </tr>
+        <c:set var="x" value="${x+1}"/>
+    </c:forEach>
+    </tbody>
+</table>
+
+
+<%--<c:forEach items="${infoForTeacher}" var="info">
+<li>${info.toString()}</li>
+</c:forEach>--%>
+
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <li class="page-item">
+            <c:if test="${currentPage != 1}">
+                <a class="page-link" href="getResultForTeacher?currentPage=${currentPage - 1}"
+                   aria-label="<fmt:message key="teacherPage.backPagination" bundle="${messages}"/>">
+                    <span aria-hidden="false"><fmt:message key="teacherPage.backPagination"
+                                                           bundle="${messages}"/></span>
+                </a>
+            </c:if>
+        </li>
+        <c:forEach begin="1" end="${pagesCount}" var="i">
+            <c:choose>
+                <c:when test="${currentPage eq i}">
+                    <li class="page-item"><a class="page-link" href="#">${i}</a></li>
+                </c:when>
+                <c:otherwise>
+                    <li class="page-item"><a class="page-link" href="getResultForTeacher?currentPage=${i}">${i}</a></li>
+                </c:otherwise>
+            </c:choose>
+        </c:forEach>
+        <li class="page-item">
+            <c:if test="${currentPage lt pagesCount}">
+                <a class="page-link" href="getResultForTeacher?currentPage=${currentPage + 1}"
+                   aria-label="<fmt:message key="teacherPage.forwardPagination" bundle="${messages}"/>">
+                    <span aria-hidden="false"><fmt:message key="teacherPage.forwardPagination"
+                                                           bundle="${messages}"/></span>
+                </a>
+            </c:if>
+        </li>
+    </ul>
+</nav>
+
+
+<%--<c:if test="${currentPage != 1}">
     <td><a href="getResultForTeacher?currentPage=${currentPage - 1}"><fmt:message key="teacherPage.backPagination" bundle="${messages}"/></a></td>
 </c:if>
 
@@ -45,10 +110,37 @@
 
 <c:if test="${currentPage lt pagesCount}">
     <td><a href="getResultForTeacher?currentPage=${currentPage + 1}"><fmt:message key="teacherPage.forwardPagination" bundle="${messages}"/></a></td>
-</c:if>
+</c:if>--%>
 
-<h1><fmt:message key="HelloUser.pastTests" bundle="${messages}"/></h1>
-<fieldset>
+
+<h5 class="display-4"><fmt:message key="HelloUser.pastTests" bundle="${messages}"/></h5>
+
+
+<table class="table">
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">ID вопросника</th>
+        <th scope="col">Название темы</th>
+        <th scope="col">Процент выполнения</th>
+    </tr>
+    </thead>
+    <tbody>
+    <c:set var="x" value="1"/>
+    <c:forEach items="${studentQuestionnairesList}" var="studQuest">
+        <tr>
+            <th scope="row">${x}</th>
+            <td>${studQuest.getId()}</td>
+            <td>${sessionScope.get("themeName" += x)}</td>
+            <td>${studQuest.getScore()}</td>
+        </tr>
+        <c:set var="x" value="${x+1}"/>
+    </c:forEach>
+    </tbody>
+</table>
+
+
+<%--<fieldset>
     <ul>
         <c:set var="x" value="1"/>
         <c:forEach items="${studentQuestionnairesList}" var="studQuest">
@@ -56,12 +148,11 @@
             <c:set var="x" value="${x+1}"/>
         </c:forEach>
     </ul>
-</fieldset>
+</fieldset>--%>
+
 <form id="changeOwnData" name="changeOwnData" method="get" action="changeOwnData.jsp">
-    <input type="submit" value=
-    <fmt:message key="changeOwnDate.changeData" bundle="${messages}"/> align="middle">
+    <button class="btn btn-primary" type="submit"><fmt:message key="changeOwnDate.changeData" bundle="${messages}"/></button>
 </form>
-<form id="exit" name="exit" method="get" action="exit">
-    <input type="submit" value=
-    <fmt:message key="HelloUser.exit" bundle="${messages}"/> align="middle">
+<form id="exit" name="exit" method="get" action="exit" style="margin-top:3px">
+    <button class="btn btn-primary" type="submit"><fmt:message key="HelloUser.exit" bundle="${messages}"/></button>
 </form>
