@@ -9,5 +9,6 @@ public interface QuestionnaireService {
     String getQuestionnaireThemeName(int questionnaireThemeId);
     List<Questionnaire> getQuestionnairesForStudent(int studentId);
     boolean deleteQuestionnaire(int userId);
-
+    int questionnairesCount();
+    int addQuestionnaireInDb(Questionnaire questionnaire, double result);
 }

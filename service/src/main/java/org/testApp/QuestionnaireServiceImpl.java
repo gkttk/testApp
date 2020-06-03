@@ -30,6 +30,18 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 
 
     @Override
+    public int addQuestionnaireInDb(Questionnaire questionnaire, double result){
+       return questionnaireDao.add(questionnaire, result);
+    }
+
+    @Override
+    public int questionnairesCount(){
+        return questionnaireDao.countOfQuestionnaires().intValue();
+    }
+
+
+
+    @Override
     public String getQuestionnaireThemeName(int questionnaireThemeId) {
         return themeServiceImpl.getThemeName(questionnaireThemeId);
     }

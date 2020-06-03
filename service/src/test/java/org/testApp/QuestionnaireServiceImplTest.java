@@ -25,6 +25,25 @@ public class QuestionnaireServiceImplTest {
 
 
     @Test
+    public void testAddQuestionnaire() {
+        Questionnaire questionnaire1 = new Questionnaire();
+        double score = 5.0;
+        when(questionnaireDao.add(questionnaire1, score)).thenReturn(16);
+        int result = questionnaireService.addQuestionnaireInDb(questionnaire1, score);
+
+    }
+
+
+    @Test
+    public void testQuestionnairesCount(){
+        when(questionnaireDao.countOfQuestionnaires()).thenReturn(20L);
+        int testInt = 20;
+        int result = questionnaireService.questionnairesCount();
+        Assertions.assertEquals(testInt, result);
+    }
+
+
+    @Test
     public void testGetQuestionnaireThemeName() {
         when(themeService.getThemeName(1)).thenReturn("testString");
         String result = questionnaireService.getQuestionnaireThemeName(1);

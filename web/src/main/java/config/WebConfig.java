@@ -12,7 +12,6 @@ import org.testApp.api.*;
 @EnableWebMvc
 public class WebConfig {
 
-    private QuestionnaireDao questionnaireDao;
 
     private QuestionnaireService questionnaireService;
     private UserService userService;
@@ -23,10 +22,9 @@ public class WebConfig {
     private Validator userValidator;
 
 
-    public WebConfig(QuestionnaireDao questionnaireDao,
-    QuestionnaireService questionnaireService, UserService userService, QuestionService questionService,
+    public WebConfig(QuestionnaireService questionnaireService, UserService userService, QuestionService questionService,
     InfoForTeacherService infoForTeacherService, ThemeService themeService, Validator userValidator) {
-        this.questionnaireDao = questionnaireDao;
+
         this.questionnaireService = questionnaireService;
         this.userService = userService;
         this.questionService = questionService;
@@ -38,7 +36,7 @@ public class WebConfig {
 
     @Bean
     public UserController userController(){
-        return new UserController(questionnaireDao, userValidator,
+        return new UserController(userValidator,
                 userService, questionnaireService, themeService,
                 infoForTeacherService, questionService);
     }

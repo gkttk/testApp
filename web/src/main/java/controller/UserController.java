@@ -17,7 +17,6 @@ import java.util.List;
 @RequestMapping
 public class UserController {
 
-    private QuestionnaireDao questionnaireDao;
     private Validator userValidator;
     private UserService userService;
     private QuestionnaireService questionnaireService;
@@ -28,10 +27,9 @@ public class UserController {
     private final static int MAXRESULTONPAGE = 5;
 
 
-    public UserController(QuestionnaireDao questionnaireDao, Validator userValidator, UserService userService,
+    public UserController(Validator userValidator, UserService userService,
                           QuestionnaireService questionnaireService, ThemeService themeService, InfoForTeacherService infoForTeacherService,
                           QuestionService questionService) {
-        this.questionnaireDao = questionnaireDao;
         this.userValidator = userValidator;
         this.userService = userService;
         this.questionnaireService = questionnaireService;
@@ -128,7 +126,7 @@ public class UserController {
         }
 
         List<InfoForTeacher> infoForTeacherList = infoForTeacherService.getResultsPagination(currentPage, MAXRESULTONPAGE);
-        int resultsCount = questionnaireDao.countOfQuestionnaires().intValue();
+        int resultsCount = questionnaireService.questionnairesCount();
         int pagesCount = (int) Math.ceil((resultsCount * 1.0) / MAXRESULTONPAGE);
 
         session.setAttribute("infoForTeacher", infoForTeacherList);
@@ -208,7 +206,7 @@ public class UserController {
     public String addQuestionnaireInDb(HttpSession session) {
         Double result = (Double) session.getAttribute("result");
         Questionnaire questionnaire = (Questionnaire) session.getAttribute("questionnaire");
-        questionnaireDao.add(questionnaire, result);
+        questionnaireService.addQuestionnaireInDb(questionnaire, result);
         return "forward:/testResultPage.jsp";
     }
 
