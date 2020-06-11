@@ -9,9 +9,14 @@ public class ThemeServiceImpl implements ThemeService {
 
     private ThemeDao themeDao;
 
-
     public ThemeServiceImpl(ThemeDao themeDao) {
         this.themeDao = themeDao;
+    }
+
+
+    @Override
+    public int addNewTheme(Theme newTheme){
+       return themeDao.saveTheme(newTheme);
     }
 
     @Override

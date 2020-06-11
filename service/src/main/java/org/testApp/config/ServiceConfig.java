@@ -51,5 +51,10 @@ public class ServiceConfig {
         return new UserValidator(daoConfig.userDao());
     }
 
+    @Bean
+    public TempNewThemeService tempNewThemeService() {
+        return new TempNewThemeServiceImpl(daoConfig.tempNewThemeDao());
+    }
+
 
 }

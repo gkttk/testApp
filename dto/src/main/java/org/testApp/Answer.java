@@ -25,7 +25,7 @@ public class Answer {
     public Answer() {
     }
 
-    public Answer(int id, String answerText, String correctness, Question aQuestion) {
+    public Answer(Integer id, String answerText, String correctness, Question aQuestion) {
         this.id = id;
         this.answerText = answerText;
         this.correctness = correctness;

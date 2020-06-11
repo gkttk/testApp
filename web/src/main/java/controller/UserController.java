@@ -2,6 +2,7 @@ package controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.testApp.*;
 import org.testApp.api.*;
@@ -9,6 +10,8 @@ import org.testApp.enums.Role;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -23,19 +26,21 @@ public class UserController {
     private ThemeService themeService;
     private InfoForTeacherService infoForTeacherService;
     private QuestionService questionService;
+    private TempNewThemeService tempNewThemeService;
 
     private final static int MAXRESULTONPAGE = 5;
 
 
     public UserController(Validator userValidator, UserService userService,
                           QuestionnaireService questionnaireService, ThemeService themeService, InfoForTeacherService infoForTeacherService,
-                          QuestionService questionService) {
+                          QuestionService questionService, TempNewThemeService tempNewThemeService) {
         this.userValidator = userValidator;
         this.userService = userService;
         this.questionnaireService = questionnaireService;
         this.themeService = themeService;
         this.infoForTeacherService = infoForTeacherService;
         this.questionService = questionService;
+        this.tempNewThemeService = tempNewThemeService;
     }
 
     @GetMapping("/validationLoginReg")
@@ -80,7 +85,7 @@ public class UserController {
         String login = request.getParameter("login");
         User authUser = userService.getUserByLogin(login);
         session.setAttribute("authUser", authUser);
-        return "forward:/facade/";
+        return "forward:/facade/"; //redirect??
     }
 
     @GetMapping("/facade")
@@ -91,7 +96,7 @@ public class UserController {
         } else if (authUser.getRole().equals(Role.TEACHER)) {
             return "forward:/getResultForTeacher/";
         }
-        return "forward:/loadUsers/";
+        return "forward:/loadUsers/";//redirect??
     }
 
     @GetMapping("/addQForStudent")
@@ -100,7 +105,7 @@ public class UserController {
         int authUserId = authUser.getId();
         List<Questionnaire> questionnaires = questionnaireService.getQuestionnairesForStudent(authUserId);
         session.setAttribute("studentQuestionnairesList", questionnaires);
-        return "forward:/getThemeNames/";
+        return "forward:/getThemeNames/"; //redirect??
 
     }
 
@@ -115,7 +120,7 @@ public class UserController {
             themeName = themeService.getThemeName(theme_id);
             session.setAttribute("themeName" + i, themeName);
         }
-        return "forward:/helloUser.jsp";
+        return "forward:/helloUser.jsp"; //redirect??
     }
 
     @GetMapping("/getResultForTeacher")
@@ -133,14 +138,14 @@ public class UserController {
         session.setAttribute("pagesCount", pagesCount);
         session.setAttribute("currentPage", currentPage);
 
-        return "forward:/addQForStudent/";
+        return "forward:/loadTempNewThemesForUser/";
     }
 
     @GetMapping("/loadUsers")
     public String loadUsers(HttpSession session) {
         List<User> users = userService.getUsersList();
         session.setAttribute("usersList", users);
-        return "forward:/addQForStudent/";
+        return "forward:/loadAllTempNewThemes/";
     }
 
 
@@ -245,24 +250,127 @@ public class UserController {
     @GetMapping("/deleteUser")
     public String deleteUserForAdmin(HttpServletRequest request) {
         String login = request.getParameter("deleteUserLogin");
-        if(userValidator.checkLoginInDB(login)){
+        if (userValidator.checkLoginInDB(login)) {
             User deleteUser = userService.getUserByLogin(login);
             int id = deleteUser.getId();
             questionnaireService.deleteQuestionnaire(id);
             userService.deleteUser(login);
             request.setAttribute("deleteUserMessage", "Пользователь успешно удален");
             return "forward:/loadUsers/";
-        }
-        else{
+        } else {
             request.setAttribute("deleteUserMessage", "Такого пользователя не существует");
             return "forward:/helloUser.jsp";
         }
     }
 
     @GetMapping("/exit")
-    public String invalidateSession(HttpSession session){
+    public String invalidateSession(HttpSession session) {
         session.invalidate();
         return "redirect:/index.jsp";
     }
+
+
+    @GetMapping("/addThemeForPermit")
+    public String addThemeForPermit(HttpServletRequest request, HttpSession session) throws UnsupportedEncodingException {
+        request.setCharacterEncoding("UTF-8");
+        String themeName = request.getParameter("themeName");
+        int numberOfQuestions = Integer.parseInt(request.getParameter("numberOfQuestions"));
+        User authUser = (User) session.getAttribute("authUser");
+        Integer ownerId = authUser.getId();
+        tempNewThemeService.addTempNewThemeForPermit(ownerId, themeName, numberOfQuestions);
+        return "forward:/loadTempNewThemesForUser/";
+    }
+
+    @GetMapping("/loadTempNewThemesForUser")
+    public String loadTempNewThemesForUser(HttpSession session) {
+        User authUser = (User) session.getAttribute("authUser");
+        List<TempNewTheme> tempNewThemes = tempNewThemeService.getTempNewThemesForUser(authUser.getId());
+        session.setAttribute("tempUserNewThemes", tempNewThemes);
+        return "forward:/addQForStudent/";
+    }
+
+    @GetMapping("/loadAllTempNewThemes")
+    public String loadAllTempNewThemes(HttpSession session) {
+        List<TempNewTheme> tempNewThemes = tempNewThemeService.getAllTempNewThemes();
+        session.setAttribute("tempNewThemes", tempNewThemes);
+        return "forward:/addQForStudent/";
+    }
+
+    @GetMapping("/acceptNewTheme")
+    public String acceptNewTheme(HttpServletRequest request) {
+        int tempThemeId = Integer.parseInt(request.getParameter("tempThemeId"));
+        tempNewThemeService.acceptTempNewTheme(tempThemeId);
+        return "forward:/loadAllTempNewThemes/";
+    }
+
+
+    @GetMapping("/refuseNewTheme")
+    public String refuseNewTheme(HttpServletRequest request) {
+        int tempThemeId = Integer.parseInt(request.getParameter("tempThemeId"));
+        tempNewThemeService.refuseTempNewTheme(tempThemeId);
+        return "forward:/loadAllTempNewThemes/";
+    }
+
+    @GetMapping("/getTempNewTheme")
+    public String getTempNewTheme(HttpServletRequest request, HttpSession session) {
+        int tempThemeId = Integer.parseInt(request.getParameter("newTempUserThemeId"));
+        TempNewTheme tempNewTheme = tempNewThemeService.getTempNewTheme(tempThemeId);
+        session.setAttribute("newTempUserTheme", tempNewTheme);
+
+        return "forward:/describeNewTheme.jsp";
+    }
+
+   @GetMapping("/addNewTheme")
+    public String addNewTheme(HttpServletRequest request, HttpSession session) {
+
+       User authUser = (User) session.getAttribute("authUser");
+       int ownerId = authUser.getId();   //id Owner
+
+       String newThemeName = request.getParameter("newTempThemeName"); //theme name
+        List<Question> questions = new ArrayList<>();
+
+        Theme theme = new Theme(null, newThemeName, ownerId);
+
+
+       String[] questionTexts = request.getParameterValues("questionText");
+
+
+        for (int i = 0; i < questionTexts.length; i++) {   //тема: описание + владелецИД
+           if (questionTexts[i].equals("")){
+               break;
+           }
+            String questionText = questionTexts[i];//вопрос: описание + лист ответов + тема
+            Question question = new Question(null, questionText, new ArrayList<>(),theme);
+
+            String[] answerTexts = request.getParameterValues("answer" + (i+1)); //ответ: описание + правильность + вопрос
+            for (int j = 0; j <answerTexts.length ; j++) {
+                if (answerTexts[j].equals("")){
+                    break;
+                }
+                String answerText = answerTexts[j];
+                String correctnessStr = request.getParameter("answerCorrectness" + (i + 1) + "_" + (j + 1));
+                Answer answer = new Answer(null, answerText, "false", question);
+                if (correctnessStr != null){
+                   answer.setCorrectness("true");
+                }
+                question.getAnswers().add(answer);
+
+            }
+            questions.add(question);
+        }
+
+        theme.settQuestions(questions);
+        themeService.addNewTheme(theme);
+
+       TempNewTheme newTempUserTheme = (TempNewTheme)session.getAttribute("newTempUserTheme");
+       tempNewThemeService.refuseTempNewTheme(newTempUserTheme.getId());
+       session.removeAttribute("newTempUserTheme");
+
+
+       return "forward:/loadAllTempNewThemes/";
+}
+
+
+
 
 }

@@ -55,4 +55,9 @@ public class DaoConfig {
         return new UserDetailsDaoImpl(sessionFactory);
     }
 
+    @Bean
+    public TempNewThemeDao tempNewThemeDao(){
+        return new TempNewThemeImpl(sessionFactory);
+    }
+
 }

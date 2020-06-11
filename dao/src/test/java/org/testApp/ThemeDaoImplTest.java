@@ -5,11 +5,14 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 import org.testApp.api.ThemeDao;
 import org.testApp.config.DaoConfig;
+
+import java.util.ArrayList;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = DaoConfig.class)
@@ -17,6 +20,36 @@ import org.testApp.config.DaoConfig;
 public class ThemeDaoImplTest {
     @Autowired
     private ThemeDao themeDao;
+
+
+    @Test
+    public void testSaveTheme(){
+        Theme theme = new Theme(null, "Тема1", 1);//тема
+        //вопрос 1 с ответами
+        Question q1 = new Question(null,"ТестовыйВопрос1",new ArrayList<>(),  theme);
+        Answer forQ1_1 = new Answer(null, "Первый ответ на вопрос №1", "true", q1);
+        Answer forQ1_2 = new Answer(null, "Второй ответ на вопрос №1", "false", q1);
+        q1.getAnswers().add(forQ1_1);
+        q1.getAnswers().add(forQ1_2);
+        //вопрос 2 с ответами
+        Question q2 = new Question(null,"ТестовыйВопрос2",new ArrayList<>(),  theme);
+        Answer forQ2_1 = new Answer(null, "Первый ответ на вопрос №2", "false", q2);
+        Answer forQ2_2 = new Answer(null, "Второй ответ на вопрос №2", "true", q2);
+        q2.getAnswers().add(forQ2_1);
+        q2.getAnswers().add(forQ2_2);
+
+        //добавляю вопросы в тему
+        theme.gettQuestions().add(q1);
+        theme.gettQuestions().add(q2);
+
+
+        int resultId = themeDao.saveTheme(theme);
+       Assertions.assertNotEquals(-1, resultId);
+
+
+
+
+    }
 
     @Test
     public void testCacheTheme(){

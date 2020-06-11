@@ -40,7 +40,7 @@ public class HibernateConfig {
         final LocalSessionFactoryBean localSessionFactoryBean = new LocalSessionFactoryBean();
         localSessionFactoryBean.setDataSource(dataSource());
         localSessionFactoryBean.setAnnotatedClasses(User.class, Theme.class, Answer.class, Question.class, Questionnaire.class,
-                UserDetails.class); //вместо localSessionFactoryBean.setPackagesToScan("org.testApp");
+                UserDetails.class, TempNewTheme.class); //вместо localSessionFactoryBean.setPackagesToScan("org.testApp");
         localSessionFactoryBean.setHibernateProperties(settingsConfig.hibernateProperties());
 
         return localSessionFactoryBean;

@@ -20,10 +20,11 @@ public class WebConfig {
     private ThemeService themeService;
 
     private Validator userValidator;
+    private TempNewThemeService tempNewThemeService;
 
 
     public WebConfig(QuestionnaireService questionnaireService, UserService userService, QuestionService questionService,
-    InfoForTeacherService infoForTeacherService, ThemeService themeService, Validator userValidator) {
+    InfoForTeacherService infoForTeacherService, ThemeService themeService, Validator userValidator, TempNewThemeService tempNewThemeService) {
 
         this.questionnaireService = questionnaireService;
         this.userService = userService;
@@ -31,6 +32,7 @@ public class WebConfig {
         this.infoForTeacherService = infoForTeacherService;
         this.themeService = themeService;
         this.userValidator = userValidator;
+        this.tempNewThemeService = tempNewThemeService;
     }
 
 
@@ -38,7 +40,7 @@ public class WebConfig {
     public UserController userController(){
         return new UserController(userValidator,
                 userService, questionnaireService, themeService,
-                infoForTeacherService, questionService);
+                infoForTeacherService, questionService, tempNewThemeService);
     }
 
     @Bean

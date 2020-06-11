@@ -82,6 +82,42 @@
 </ul>
 </fieldset>--%>
 
+<c:if test="${tempNewThemes.size() > 0}">
+    <h5 class="display-4">Новые темы на согласовании</h5>
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">ID пользователя</th>
+            <th scope="col">Название темы</th>
+            <th scope="col">Количество вопросов</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:set var="x" value="1"/>
+        <c:forEach items="${tempNewThemes}" var="newTempTheme">
+            <tr>
+                <th scope="row">${x}</th>
+                <td>${newTempTheme.getOwnerId()}</td>
+                <td>${newTempTheme.getThemeName()}</td>
+                <td>${newTempTheme.getNumberOfQuestions()}</td>
+                <form method="get" action="acceptNewTheme" >
+                    <input type="hidden" name="tempThemeId" value="${newTempTheme.getId()}">
+                    <td><button class="btn btn-primary" type="submit">Согласовать</button></td>
+                </form>
+                <form method="get" action="refuseNewTheme" >
+                    <input type="hidden" name="tempThemeId" value="${newTempTheme.getId()}">
+                    <td><button class="btn btn-primary" type="submit">Отменить</button></td>
+                </form>
+
+            </tr>
+            <c:set var="x" value="${x+1}"/>
+        </c:forEach>
+        </tbody>
+    </table>
+</c:if>
+
+
 
 <form id="changeOwnData" name="changeOwnData" method="get" action="changeOwnData.jsp">
     <button class="btn btn-primary" type="submit"><fmt:message key="changeOwnDate.changeData" bundle="${messages}"/></button>

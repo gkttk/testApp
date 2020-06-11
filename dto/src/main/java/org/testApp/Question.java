@@ -35,7 +35,7 @@ public class Question {
     public Question() {
     }
 
-    public Question(int id, String questionText, List<Answer> answers, Theme qTheme) {
+    public Question(Integer id, String questionText, List<Answer> answers, Theme qTheme) {
         this.id = id;
         this.questionText = questionText;
         this.answers = answers;

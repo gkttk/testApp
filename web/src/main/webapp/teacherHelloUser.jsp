@@ -150,8 +150,52 @@
     </ul>
 </fieldset>--%>
 
+<c:if test="${tempUserNewThemes.size() > 0}">
+    <h5 class="display-4">Новые темы на согласовании</h5>
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Название темы</th>
+            <th scope="col">Количество вопросов</th>
+            <th scope="col">Статус</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:set var="x" value="1"/>
+        <c:forEach items="${tempUserNewThemes}" var="newTempUserTheme">
+            <tr>
+                <th scope="row">${x}</th>
+                <td>${newTempUserTheme.getThemeName()}</td>
+                <td>${newTempUserTheme.getNumberOfQuestions()}</td>
+                <c:choose>
+                    <c:when test="${newTempUserTheme.getPermit() == false}">
+                        <td> В процессе согласования</td>
+                    </c:when>
+                    <c:otherwise>
+                        <td>
+                            <form method="get" action="getTempNewTheme">
+                             <input type="hidden" name="newTempUserThemeId" value="${newTempUserTheme.getId()}">
+                            <button class="btn btn-primary" type="submit">Добавить описание темы</button>
+                            </form>
+                        </td>
+                    </c:otherwise>
+                </c:choose>
+            </tr>
+            <c:set var="x" value="${x+1}"/>
+        </c:forEach>
+        </tbody>
+    </table>
+</c:if>
+
+<form id="addNewTheme" method="get" action="addTheme.jsp">
+    <button class="btn btn-primary" type="submit" style="margin-bottom: 4px">Добавить тему</button>
+</form>
+
+
 <form id="changeOwnData" name="changeOwnData" method="get" action="changeOwnData.jsp">
-    <button class="btn btn-primary" type="submit"><fmt:message key="changeOwnDate.changeData" bundle="${messages}"/></button>
+    <button class="btn btn-primary" type="submit"><fmt:message key="changeOwnDate.changeData"
+                                                               bundle="${messages}"/></button>
 </form>
 <form id="exit" name="exit" method="get" action="exit" style="margin-top:3px">
     <button class="btn btn-primary" type="submit"><fmt:message key="HelloUser.exit" bundle="${messages}"/></button>

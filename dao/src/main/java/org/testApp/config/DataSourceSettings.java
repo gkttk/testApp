@@ -13,6 +13,8 @@ public class DataSourceSettings {
     @Value("${driver}")
     private String driver;
 
+
+
     public DataSourceSettings() {
     }
 
@@ -32,4 +34,5 @@ public class DataSourceSettings {
     public String getDriver() {
         return driver;
     }
+
 }

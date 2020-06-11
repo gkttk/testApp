@@ -31,6 +31,19 @@ public class ThemeDaoImpl implements ThemeDao {
         return themeFromDb;
     }
 
+    @Override
+    public Integer saveTheme(Theme theme) {
+        Integer id = -1;
+        try{
+            Session session = sessionFactory.getCurrentSession();
+            id = (Integer)session.save(theme);
+            log.info("saveTheme with themeId:{} - ", id);
+        } catch (HibernateException e) {
+            log.error("Exception  in saveTheme", e);
+        }
+        return id;
+    }
+
 
     public String getName(Integer theme_id) {
         try{
