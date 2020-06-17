@@ -4,6 +4,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.testApp.*;
 import org.testApp.api.*;
@@ -11,6 +12,7 @@ import org.testApp.api.*;
 @Configuration
 @Import(HibernateConfig.class)
 @EnableTransactionManagement
+@EnableJpaRepositories(basePackages = "org.testApp.repositories")
 public class DaoConfig {
 
     private final SessionFactory sessionFactory;

@@ -1,0 +1,70 @@
+
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:c="http://java.sun.com/jsp/jstl/core"
+          xmlns:spring="http://www.springframework.org/tags"
+          version="2.0">
+
+<body style="background-color: #adc0d0">
+
+<h1 class="display-4"><spring:message code="index.registration"/></h1>
+
+<h4><spring:message code="index.registration"/></h4>
+
+<form method="post" action="${pageContext.request.contextPath}/validationLoginReg">
+    <fieldset>
+        <div class="form-group" style="margin: 0px">
+            <input type="text" id="login" name="login" required="required"/>
+            <label for="login">
+                <spring:message code="index.username"/>
+            </label>
+        </div>
+        <div>
+            <input type="text" id="password" name="password" required="required"/>
+            <label for="password">
+                <spring:message code="index.password"/>
+            </label>
+        </div>
+        <div>
+            <input type="text" id="email" name="email" required="required"/>
+            <label for="email">
+                <spring:message code="registration.Email"/>
+            </label>
+        </div>
+        <small id="help" class="form-text text-muted" style="margin: 0px">
+            <spring:message code="registrationPage.notNecessary"/>
+        </small>
+        <div>
+            <input type="text" id="name" name="name"/>
+            <label for="name">
+                <spring:message code="registrationPage.name"/>
+            </label>
+        </div>
+        <div>
+            <input type="text" id="surname" name="surname"/>
+            <label for="surname">
+                <spring:message code="registrationPage.surname"/>
+            </label>
+        </div>
+        <div>
+            <input type="text" id="age" name="age"/>
+            <label for="age">
+                <spring:message code="registrationPage.age"/>
+            </label>
+        </div>
+        <button type="submit" class="btn btn-primary">
+            <spring:message code="index.registration"/>
+        </button>
+    </fieldset>
+</form>
+
+<button class="btn btn-primary" onclick='history.back()' style="margin-top:5px">
+    <spring:message code="teacherPage.backPagination"/>
+</button>
+
+<c:if test="${requestScope.get('UserExistsMessage') != null}">
+    <div class="alert alert-danger" role="alert">${requestScope.get("UserExistsMessage")}</div>
+</c:if>
+
+
+</body>
+</jsp:root>

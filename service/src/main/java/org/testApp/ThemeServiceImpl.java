@@ -4,6 +4,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.testApp.api.ThemeDao;
 import org.testApp.api.ThemeService;
 
+import java.util.List;
+
 public class ThemeServiceImpl implements ThemeService {
 
 
@@ -27,5 +29,10 @@ public class ThemeServiceImpl implements ThemeService {
     @Override
     public String getThemeName(int themeId) {
        return themeDao.getName(themeId);
+    }
+
+    @Override
+    public List<Theme> getAllThemes(){
+        return themeDao.getAllThemes();
     }
 }

@@ -1,0 +1,38 @@
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:c="http://java.sun.com/jsp/jstl/core"
+          xmlns:spring="http://www.springframework.org/tags"
+          version="2.0">
+
+    <body style="background-color: #adc0d0">
+    <h2 class="display-4">
+        <spring:message code="studentHelloUser.helloStudent"/>
+    </h2>
+
+    <h5 class="display-4">
+        <spring:message code="HelloUser.pastTests"/>
+    </h5>
+
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">ID вопросника</th>
+            <th scope="col">Название темы</th>
+            <th scope="col">Процент выполнения</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:set var="x" value="1"/>
+        <c:forEach items="${studentQuestionnairesList}" var="studQuest">
+            <tr>
+                <th scope="row">${x}</th>
+                <td>${studQuest.getId()}</td>
+                <td>${sessionScope.get("themeName" += x)}</td>
+                <td>${studQuest.getScore()}</td>
+            </tr>
+            <c:set var="x" value="${x+1}"/>
+        </c:forEach>
+        </tbody>
+    </table>
+    </body>
+</jsp:root>

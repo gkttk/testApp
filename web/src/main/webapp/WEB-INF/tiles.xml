@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+    <definition name="default" template="/WEB-INF/view/layouts/default.jspx">
+        <put-attribute name="title" value="default title"/>
+        <put-attribute name="header" value="/WEB-INF/view/common/headerCommon.jspx"/>
+        <put-attribute name="body" value=""/>
+        <put-attribute name="footer" value="/WEB-INF/view/common/footerCommon.jspx"/>
+    </definition>
+
+    <definition name="indexPage" extends="default" template="/WEB-INF/view/layouts/default.jspx">
+        <put-attribute name="title" value="Главная страница"/>
+        <put-attribute name="body" value="/WEB-INF/view/mainPage/indexBody.jspx"/>
+    </definition>
+
+    <definition name="testPage" extends="default" template="/WEB-INF/view/layouts/default.jspx">
+        <put-attribute name="title" value="Тест"/>
+        <put-attribute name="body" value="/WEB-INF/view/mainPage/testPage.jspx"/>
+    </definition>
+
+    <definition name="registrationPage" extends="default" template="/WEB-INF/view/layouts/default.jspx">
+        <put-attribute name="title" value="Регистрация"/>
+        <put-attribute name="body" value="/WEB-INF/view/mainPage/registrationPage.jspx"/>
+    </definition>
+
+    <definition name="testResultPage" extends="default" template="/WEB-INF/view/layouts/default.jspx">
+        <put-attribute name="title" value="Результаты теста"/>
+        <put-attribute name="body" value="/WEB-INF/view/mainPage/testResultPage.jspx"/>
+    </definition>
+
+    <definition name="describeNewThemePage" extends="default" template="/WEB-INF/view/layouts/default.jspx">
+        <put-attribute name="title" value="Добавить новую тему"/>
+        <put-attribute name="body" value="/WEB-INF/view/mainPage/describeNewThemePage.jspx"/>
+    </definition>
+
+    <definition name="addThemePage" extends="default" template="/WEB-INF/view/layouts/default.jspx">
+        <put-attribute name="title" value="Запрос на добавление новой темы"/>
+        <put-attribute name="body" value="/WEB-INF/view/mainPage/addThemePage.jspx"/>
+    </definition>
+
+    <definition name="changeOwnDataPage" extends="default" template="/WEB-INF/view/layouts/default.jspx">
+        <put-attribute name="title" value="Изменить свои данные"/>
+        <put-attribute name="body" value="/WEB-INF/view/mainPage/changeOwnDataPage.jspx"/>
+    </definition>
+
+
+
+    <definition name="student" extends="default" template="/WEB-INF/view/layouts/default.jspx">
+        <put-attribute name="title" value="Страница студента"/>
+        <put-attribute name="header" value="/WEB-INF/view/common/headerUser.jspx"/>
+        <put-attribute name="body" value="/WEB-INF/view/mainPage/studentBody.jspx"/>
+        <put-attribute name="footer" value="/WEB-INF/view/common/footerUser.jspx"/>
+    </definition>
+
+    <definition name="teacher" extends="student" template="/WEB-INF/view/layouts/default.jspx">
+        <put-attribute name="title" value="Страница учителя"/>
+        <put-attribute name="header" value="/WEB-INF/view/common/headerUser.jspx"/>
+        <put-attribute name="body" value="/WEB-INF/view/mainPage/teacherBody.jspx"/>
+        <put-attribute name="footer" value="/WEB-INF/view/common/footerUser.jspx"/>
+    </definition>
+
+    <definition name="admin" extends="student" template="/WEB-INF/view/layouts/default.jspx">
+        <put-attribute name="title" value="Страница админа"/>
+        <put-attribute name="header" value="/WEB-INF/view/common/headerUser.jspx"/>
+        <put-attribute name="body" value="/WEB-INF/view/mainPage/adminBody.jspx"/>
+        <put-attribute name="footer" value="/WEB-INF/view/common/footerUser.jspx"/>
+    </definition>
+
+</tiles-definitions>

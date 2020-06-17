@@ -7,6 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 import org.testApp.api.ThemeDao;
+
+import java.util.List;
+
 @Transactional
 public class ThemeDaoImpl implements ThemeDao {
 
@@ -18,10 +21,10 @@ public class ThemeDaoImpl implements ThemeDao {
         this.sessionFactory = sessionFactory;
     }
 
-
+    @Override
     public Theme getTheme(Integer themeId) {
         Theme themeFromDb = null;
-        try{
+        try {
             Session session = sessionFactory.getCurrentSession();
             themeFromDb = session.get(Theme.class, themeId);
             log.info("GetTheme with themeId:{} - ", themeId);
@@ -34,9 +37,9 @@ public class ThemeDaoImpl implements ThemeDao {
     @Override
     public Integer saveTheme(Theme theme) {
         Integer id = -1;
-        try{
+        try {
             Session session = sessionFactory.getCurrentSession();
-            id = (Integer)session.save(theme);
+            id = (Integer) session.save(theme);
             log.info("saveTheme with themeId:{} - ", id);
         } catch (HibernateException e) {
             log.error("Exception  in saveTheme", e);
@@ -46,7 +49,7 @@ public class ThemeDaoImpl implements ThemeDao {
 
 
     public String getName(Integer theme_id) {
-        try{
+        try {
             Session session = sessionFactory.getCurrentSession();
             Theme theme = session.get(Theme.class, theme_id);
             log.info("Get theme - " + theme.getName());
@@ -57,6 +60,20 @@ public class ThemeDaoImpl implements ThemeDao {
         }
     }
 
+
+    public List<Theme> getAllThemes(){
+        String hql = "FROM Theme";
+        List<Theme> themes = null;
+        try {
+
+            Session session = sessionFactory.getCurrentSession();
+            themes = session.createQuery(hql, Theme.class).list();
+            log.info("getAllThemes was successful, count of themes:{}", themes.size());
+        } catch (HibernateException e) {
+            log.error("Can't getAllThemes, Exception: ", e);
+        }
+        return themes;
+    }
 
 
   /* public String getThemeNameByThemeId(int themeId){

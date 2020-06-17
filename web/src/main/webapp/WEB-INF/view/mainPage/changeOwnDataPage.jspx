@@ -1,0 +1,56 @@
+
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:spring="http://www.springframework.org/tags"
+          version="2.0">
+
+<body style="background-color: #adc0d0">
+
+
+<h2 class="display-4">
+    <spring:message code="changeOwnDate.NewData"/>
+</h2>
+<form id="changeData" name="changeData" method="get" action="${pageContext.request.contextPath}/changeOwnData">
+    <fieldset>
+        <div class="form-group">
+            <input type="text" id="newPassword" name="newPassword"/>
+            <label for="newPassword" class="text-dark">
+                <spring:message code="changeOwnDate.newPassword"/>
+            </label>
+        </div>
+        <div class="form-group">
+            <input type="text" id="newEmail" name="newEmail"/>
+            <label for="newEmail">
+                <spring:message code="changeOwnDate.newEmail"/>
+            </label>
+        </div>
+        <div class="form-group">
+            <input type="text" id="newName" name="newName"/>
+            <label for="newName">
+                <spring:message code="changeOwnData.newName"/>
+            </label>
+        </div>
+        <div class="form-group">
+            <input type="text" id="newSurname" name="newSurname"/>
+            <label for="newSurname">
+                <spring:message code="changeOwnData.newSurname"/>
+            </label>
+        </div>
+        <div class="form-group">
+            <input type="text" id="newAge" name="newAge"/>
+            <label for="newAge">
+                <spring:message code="changeOwnData.newAge"/>
+            </label><br/>
+        </div>
+        <button class="btn btn-primary" type="submit" style="margin-bottom: 4px">
+            <spring:message code="changeOwnData.change"/>
+          </button>
+    </fieldset>
+</form>
+
+<button class="btn btn-primary" onclick='history.back()'>
+    <spring:message code="teacherPage.backPagination"/>
+</button>
+
+
+</body>
+</jsp:root>

@@ -1,0 +1,105 @@
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:c="http://java.sun.com/jsp/jstl/core"
+          xmlns:spring="http://www.springframework.org/tags"
+          version="2.0">
+
+    <body style="background-color: #adc0d0">
+    <h5 class="display-4">
+        <spring:message code="adminHelloUser.registeredUsers"/>
+    </h5>
+
+    <ul class="list-group list-group-flush">
+        <c:forEach items="${usersList}" var="user">
+            <li class="list-group-item"><c:out value="${user}"/></li>
+            <br/>
+        </c:forEach>
+    </ul>
+
+    <h5 class="display-4">
+        <spring:message code="adminHelloUser.deleteUser"/>
+    </h5>
+
+    <form id="deleteUserForm" name="deleteUserForm" method="get" action="${pageContext.request.contextPath}/deleteUser">
+        <fieldset>
+            <input type="text" id="deleteUserLogin" name="deleteUserLogin" required="required"/>
+            <label for="deleteUserLogin" class="text-dark">
+                <spring:message code="index.username"/>
+            </label><br/>
+            <button class="btn btn-primary" type="submit">
+                <spring:message code="adminHelloUser.deleteUser"/>
+            </button>
+        </fieldset>
+    </form>
+
+    <c:if test="${requestScope.get('deleteUserMessage') != null}">
+        <div class="alert alert-danger" role="alert">${requestScope.get("deleteUserMessage")}</div>
+    </c:if>
+
+    <h5 class="display-4">
+        <spring:message code="HelloUser.pastTests"/>
+    </h5>
+
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">ID вопросника</th>
+            <th scope="col">Название темы</th>
+            <th scope="col">Процент выполнения</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:set var="x" value="1"/>
+        <c:forEach items="${studentQuestionnairesList}" var="studQuest">
+            <tr>
+                <th scope="row">${x}</th>
+                <td>${studQuest.getId()}</td>
+                <td>${sessionScope.get("themeName" += x)}</td>
+                <td>${studQuest.getScore()}</td>
+            </tr>
+            <c:set var="x" value="${x+1}"/>
+        </c:forEach>
+        </tbody>
+    </table>
+
+    <c:if test="${tempNewThemes.size() > 0}">
+        <h5 class="display-4">Новые темы на согласовании</h5>
+        <table class="table">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">ID пользователя</th>
+                <th scope="col">Название темы</th>
+                <th scope="col">Количество вопросов</th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:set var="x" value="1"/>
+            <c:forEach items="${tempNewThemes}" var="newTempTheme">
+                <tr>
+                    <th scope="row">${x}</th>
+                    <td>${newTempTheme.getOwnerId()}</td>
+                    <td>${newTempTheme.getThemeName()}</td>
+                    <td>${newTempTheme.getNumberOfQuestions()}</td>
+                    <td>
+                        <form method="post" action="${pageContext.request.contextPath}/acceptNewTheme">
+                            <input type="hidden" name="tempThemeId" value="${newTempTheme.getId()}"/>
+                            <button class="btn btn-primary" type="submit">Согласовать</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form method="post" action="${pageContext.request.contextPath}/refuseNewTheme">
+                            <input type="hidden" name="tempThemeId" value="${newTempTheme.getId()}"/>
+                            <button class="btn btn-primary" type="submit">Отменить</button>
+                        </form>
+                    </td>
+                </tr>
+                <c:set var="x" value="${x+1}"/>
+            </c:forEach>
+            </tbody>
+        </table>
+    </c:if>
+
+    </body>
+
+</jsp:root>

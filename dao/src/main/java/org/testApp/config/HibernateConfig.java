@@ -4,6 +4,7 @@ import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -35,8 +36,11 @@ public class HibernateConfig {
         return hikariDataSource;
     }
 
+
+
+
     @Bean
-    public LocalSessionFactoryBean sessionFactoryBean() {
+    public LocalSessionFactoryBean entityManagerFactory() {  //sessionFactoryBean
         final LocalSessionFactoryBean localSessionFactoryBean = new LocalSessionFactoryBean();
         localSessionFactoryBean.setDataSource(dataSource());
         localSessionFactoryBean.setAnnotatedClasses(User.class, Theme.class, Answer.class, Question.class, Questionnaire.class,
@@ -51,10 +55,11 @@ public class HibernateConfig {
     @Bean
     public PlatformTransactionManager transactionManager() {
         HibernateTransactionManager transactionManager = new HibernateTransactionManager();
-        transactionManager.setSessionFactory(sessionFactoryBean().getObject());
+        transactionManager.setSessionFactory(entityManagerFactory().getObject());   //sessionFactoryBean
         return transactionManager;
-
     }
+
+
 
 
 }

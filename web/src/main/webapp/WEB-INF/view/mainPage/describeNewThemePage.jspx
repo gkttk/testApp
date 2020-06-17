@@ -1,0 +1,58 @@
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:c="http://java.sun.com/jsp/jstl/core"
+          xmlns:spring="http://www.springframework.org/tags"
+          version="2.0">
+
+<body style="background-color: #adc0d0">
+
+<h2 class="display-4"><spring:message code="describeNewTheme.describeTheme"/></h2>
+
+<form method="post" action="${pageContext.request.contextPath}/addNewTheme">
+    <input type="hidden" name="newTempThemeName" value="${newTempUserTheme.getThemeName()}"/>
+    <fieldset>
+        <h2 class="display-6">${newTempUserTheme.getThemeName()}</h2>
+        <ol>
+            <c:forEach begin="1" end="${newTempUserTheme.getNumberOfQuestions()}" var="question" varStatus="loop">
+                <li><div class="form-group">
+                    <input type="text" id="questionText" name="questionText" style="width: 600px"/>
+                    <label for="questionText" class="text-dark"><spring:message code="describeNewTheme.questionText"/></label><br/>
+                    <ol>
+                        <c:set var="x" value="1"/>
+                        <li><input type="text" name="answer${loop.count}"  style="width: 300px"/>
+                            <label class="text-dark"><spring:message code="describeNewTheme.answerText"/></label>
+                            <input type="checkbox" name="answerCorrectness${loop.count}_${x}" value="true"/><br/>
+                        </li>
+                        <c:set var="x" value= "${x+1}"/>
+                        <li><input type="text" name="answer${loop.count}"  style="width: 300px"/>
+                            <label class="text-dark"><spring:message code="describeNewTheme.answerText"/></label>
+                            <input type="checkbox" name="answerCorrectness${loop.count}_${x}" value="true"/><br/>
+                        </li>
+                        <c:set var="x" value= "${x+1}"/>
+                        <li><input type="text" name="answer${loop.count}"  style="width: 300px"/>
+                            <label class="text-dark"><spring:message code="describeNewTheme.answerText"/></label>
+                            <input type="checkbox" name="answerCorrectness${loop.count}_${x}" value="true"/><br/>
+                        </li>
+                        <c:set var="x" value= "${x+1}"/>
+                        <li><input type="text" name="answer${loop.count}"  style="width: 300px"/>
+                            <label class="text-dark"><spring:message code="describeNewTheme.answerText"/></label>
+                            <input type="checkbox" name="answerCorrectness${loop.count}_${x}" value="true"/><br/>
+                        </li>
+                        <c:set var="x" value= "${x+1}"/>
+                        <li>
+                            <input type="text" name="answer${loop.count}"  style="width: 300px"/>
+                            <label class="text-dark"><spring:message code="describeNewTheme.answerText"/></label>
+                            <input type="checkbox" name="answerCorrectness${loop.count}_${x}" value="true"/><br/>
+                        </li>
+                    </ol>
+                </div>
+                </li>
+            </c:forEach>
+        </ol>
+        <button type="submit" class="btn btn-primary"><spring:message code="describeNewTheme.addTheme"/></button>
+    </fieldset>
+</form>
+
+
+
+</body>
+</jsp:root>

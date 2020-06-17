@@ -1,0 +1,18 @@
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:spring="http://www.springframework.org/tags"
+          version="2.0">
+    <body style="background-color: #adc0d0">
+
+    <h2 class="display-4">Пользователь ${sessionScope.get("authUser").getLogin()} выполнил тест на ${sessionScope.get("result")} процентов</h2>
+    <h2 class="display-4">Дата прохождения теста - ${sessionScope.get("date")}</h2>
+
+
+    <form id="backToContent" name="backToContent" method="get" action="${pageContext.request.contextPath}/facade">
+        <button class="btn btn-primary" type="submit" form="backToContent">
+            <spring:message code="testResultPage.back"/>
+        </button>
+    </form>
+
+
+    </body>
+</jsp:root>

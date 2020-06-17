@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 import org.testApp.api.InfoForTeacherDao;
+
+import javax.persistence.EntityManagerFactory;
 import java.util.List;
 @Transactional
 public class InfoForTeacherDaoImpl implements InfoForTeacherDao {
@@ -26,7 +28,6 @@ public class InfoForTeacherDaoImpl implements InfoForTeacherDao {
         String sql = "SELECT u.login as userLogin, u.email as userEmail, t.name as themeName, q.score as score\n" +
                 "FROM user u, theme t\n" +
                 "JOIN questionnaire q ON t.id = q.theme_id WHERE q.user_id = u.id";
-
         List<InfoForTeacher> results = null;
         try{
         Session session = sessionFactory.getCurrentSession();

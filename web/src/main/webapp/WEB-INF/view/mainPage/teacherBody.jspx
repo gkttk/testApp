@@ -1,0 +1,140 @@
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:c="http://java.sun.com/jsp/jstl/core"
+          xmlns:spring="http://www.springframework.org/tags"
+          version="2.0">
+
+    <body style="background-color: #adc0d0">
+    <h2 class="display-4"><spring:message code="teacherHelloUser.helloTeacher"/></h2>
+    <h5 class="display-4"><spring:message code="teacherHelloUser.studentsResult"/></h5>
+
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Логин студента</th>
+            <th scope="col">E-mail студента</th>
+            <th scope="col">Тема вопросника</th>
+            <th scope="col">Процент выполнения</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:set var="x" value="1"/>
+        <c:forEach items="${infoForTeacher}" var="info">
+            <tr>
+                <th scope="row">${x}</th>
+                <td>${info.getUserLogin()}</td>
+                <td>${info.getUserEmail()}</td>
+                <td>${info.getThemeName()}</td>
+                <td>${info.getScore()}</td>
+            </tr>
+            <c:set var="x" value="${x+1}"/>
+        </c:forEach>
+        </tbody>
+    </table>
+
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">
+                <c:if test="${currentPage != 1}">
+                    <a class="page-link" href="${pageContext.request.contextPath}/getResultForTeacher?currentPage=${currentPage - 1}">
+                        <span aria-hidden="false">
+                            <spring:message code="teacherPage.backPagination"/>
+                    </span>
+                    </a>
+                </c:if>
+            </li>
+            <c:forEach begin="1" end="${pagesCount}" var="i">
+                <c:choose>
+                    <c:when test="${currentPage eq i}">
+                        <li class="page-item"><a class="page-link" href="#">${i}</a></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/getResultForTeacher?currentPage=${i}">${i}</a>
+                        </li>
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>
+            <li class="page-item">
+                <c:if test="${currentPage lt pagesCount}">
+                    <a class="page-link" href="${pageContext.request.contextPath}/getResultForTeacher?currentPage=${currentPage + 1}">
+                        <span aria-hidden="false">
+                            <spring:message code="teacherPage.forwardPagination"/>
+                        </span>
+                    </a>
+                </c:if>
+            </li>
+        </ul>
+    </nav>
+
+
+    <h5 class="display-4"><spring:message code="HelloUser.pastTests"/></h5>
+
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">ID вопросника</th>
+            <th scope="col">Название темы</th>
+            <th scope="col">Процент выполнения</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:set var="x" value="1"/>
+        <c:forEach items="${studentQuestionnairesList}" var="studQuest">
+            <tr>
+                <th scope="row">${x}</th>
+                <td>${studQuest.getId()}</td>
+                <td>${sessionScope.get("themeName" += x)}</td>
+                <td>${studQuest.getScore()}</td>
+            </tr>
+            <c:set var="x" value="${x+1}"/>
+        </c:forEach>
+        </tbody>
+    </table>
+
+    <c:if test="${tempUserNewThemes.size() > 0}">
+        <h5 class="display-4">Новые темы на согласовании</h5>
+        <table class="table">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Название темы</th>
+                <th scope="col">Количество вопросов</th>
+                <th scope="col">Статус</th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:set var="x" value="1"/>
+            <c:forEach items="${tempUserNewThemes}" var="newTempUserTheme">
+                <tr>
+                    <th scope="row">${x}</th>
+                    <td>${newTempUserTheme.getThemeName()}</td>
+                    <td>${newTempUserTheme.getNumberOfQuestions()}</td>
+                    <c:choose>
+                        <c:when test="${newTempUserTheme.getPermit() == false}">
+                            <td> В процессе согласования</td>
+                        </c:when>
+                        <c:otherwise>
+                            <td>
+                                <form method="get" action="${pageContext.request.contextPath}/getTempNewTheme">
+                                    <input type="hidden" name="newTempUserThemeId" value="${newTempUserTheme.getId()}"/>
+                                    <button class="btn btn-primary" type="submit">Добавить описание темы</button>
+                                </form>
+                            </td>
+                        </c:otherwise>
+                    </c:choose>
+                </tr>
+                <c:set var="x" value="${x+1}"/>
+            </c:forEach>
+            </tbody>
+        </table>
+    </c:if>
+
+    <form id="addNewTheme" method="get" action="${pageContext.request.contextPath}/redirectAddThemePage" style="align-content: center">
+        <button class="btn btn-primary" type="submit" style="margin-bottom: 4px"><spring:message code="describeNewTheme.addTheme"/></button>
+    </form>
+
+    </body>
+
+</jsp:root>

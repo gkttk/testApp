@@ -57,8 +57,12 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
         int randomNum;
         Question question = null;
         List<Question> questions = questionServiceImpl.getQuestions(themeId);
+        int countOfQuestions = questions.size();
         List<Question> questionForQuestionnaire = new LinkedList<>();
         while (questionForQuestionnaire.size() < QUESTION_COUNT) {
+            if(questionForQuestionnaire.size() == countOfQuestions){
+                break;
+            }
             randomNum = random.nextInt(questions.size());
             question = questions.get(randomNum);
             if (!questionForQuestionnaire.contains(question)) {

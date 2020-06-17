@@ -11,6 +11,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 import org.testApp.api.UserDao;
 import org.testApp.config.DaoConfig;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +21,8 @@ import java.util.List;
 public class UserDaoImplTest {
 
     @Autowired
-    private UserDao userDao; //было static, возвращало null, trim не работает
+    private UserDao userDao;
+
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -32,6 +34,7 @@ public class UserDaoImplTest {
         int size = CacheManager.ALL_CACHE_MANAGERS.get(0).getCache("org.testApp.User").getSize();
         Assertions.assertTrue(size > 0);
     }
+
 
     @Test
     public void getUserHibernateTest() {
