@@ -29,7 +29,8 @@ public class UserController {
         this.themeService = themeService;
     }
 
-    @GetMapping("/welcome")
+
+    @GetMapping("/")
     public String welcome(){
         return "indexPage";
     }
