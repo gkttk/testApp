@@ -91,13 +91,13 @@ public class TeacherController {
         User authUser = (User) session.getAttribute("authUser");
         int ownerId = authUser.getId();   //id Owner
 
-        String newThemeName = request.getParameter("newTempThemeName"); //theme name
+        String newThemeName = request.getParameter("newTempThemeName"); //theme name /1
         List<Question> questions = new ArrayList<>();
 
         Theme theme = new Theme(null, newThemeName, ownerId);
 
 
-        String[] questionTexts = request.getParameterValues("questionText");
+        String[] questionTexts = request.getParameterValues("questionText");  //2
 
 
         for (int i = 0; i < questionTexts.length; i++) {   //тема: описание + владелецИД
