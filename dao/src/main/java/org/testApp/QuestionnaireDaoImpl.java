@@ -10,6 +10,7 @@ import org.testApp.api.QuestionnaireDao;
 
 import java.util.ArrayList;
 import java.util.List;
+
 @Transactional
 public class QuestionnaireDaoImpl implements QuestionnaireDao {
 
@@ -24,11 +25,30 @@ public class QuestionnaireDaoImpl implements QuestionnaireDao {
 
 
 
+    @Override
+    public List<Questionnaire> getQuestionnairesForUserPagination(int userId, int numberOfPage, int maxResultsOnPage) {
+        String hql = "FROM Questionnaire WHERE user_id = :userId";
+        List<Questionnaire> result = null;
+
+        try {
+            Session session = sessionFactory.getCurrentSession();
+            result = session.createQuery(hql, Questionnaire.class)
+                    .setParameter("userId", userId)
+                    .setFirstResult((numberOfPage - 1) * maxResultsOnPage)
+                    .setMaxResults(maxResultsOnPage).list();
+            log.info("Questionnaires was gotten for user with id:{}, page number:{}, maxResult:{}", userId, numberOfPage, maxResultsOnPage);
+        } catch (HibernateException e) {
+            log.error("Can't get Questionnaires for user with id:{}, page number:{}, maxResult:{}", userId, numberOfPage, maxResultsOnPage);
+        }
+
+        return result;
+    }
+
 
     @Override
     public Integer add(Questionnaire questionnaire) {
         Integer questionnaireId = -1;
-        try{
+        try {
             Session session = sessionFactory.getCurrentSession();
             questionnaireId = (Integer) session.save(questionnaire);
             log.info("Questionnaire with id:{} was saved", questionnaireId);
@@ -40,7 +60,7 @@ public class QuestionnaireDaoImpl implements QuestionnaireDao {
 
     @Override
     public Boolean delete(Integer questionnaireId) {
-        try{
+        try {
             Session session = sessionFactory.getCurrentSession();
             Questionnaire questionnaire = session.get(Questionnaire.class, questionnaireId);
             session.delete(questionnaire);
@@ -56,7 +76,7 @@ public class QuestionnaireDaoImpl implements QuestionnaireDao {
     public List<Questionnaire> getQuestionnairesForUser(Integer userId) {
         String hql = "FROM Questionnaire WHERE user_id =: userIdParam";
         List<Questionnaire> questionnairesForUserFromDB = new ArrayList<>();
-        try{
+        try {
             Session session = sessionFactory.getCurrentSession();
             questionnairesForUserFromDB = session.createQuery(hql, Questionnaire.class).setParameter("userIdParam", userId).list();
             log.info("Questionnaires for user with ID: {} was gotten", userId);
@@ -69,7 +89,7 @@ public class QuestionnaireDaoImpl implements QuestionnaireDao {
     @Override
     public Boolean deleteByUserId(Integer userId) {
         String hql = "DELETE FROM Questionnaire WHERE user_id =: userIdParam";
-        try{
+        try {
             Session session = sessionFactory.getCurrentSession();
             session.createQuery(hql).setParameter("userIdParam", userId).executeUpdate();
             log.info("Questionnaires with userID: {} was deleted", userId);
@@ -84,21 +104,35 @@ public class QuestionnaireDaoImpl implements QuestionnaireDao {
     public List<Questionnaire> getQuestionnaires() {
         String hql = "FROM Questionnaire";
         List<Questionnaire> questionnairesFromDB = null;
-        try{
+        try {
             Session session = sessionFactory.getCurrentSession();
             questionnairesFromDB = session.createQuery(hql, Questionnaire.class).list();
             log.info("All Questionnaires was gotten");
         } catch (HibernateException e) {
-            log.error("Exception, can't get all questionnaires :",e);
+            log.error("Exception, can't get all questionnaires :", e);
         }
         return questionnairesFromDB;
     }
 
+
+   public Long questionnairesForUserCount(int userId){
+       String hql = "SELECT COUNT(*) FROM Questionnaire WHERE user_id = :userId";
+       long rows = -1L;
+       try {
+           Session session = sessionFactory.getCurrentSession();
+           rows = session.createQuery(hql, Long.class).setParameter("userId", userId).getSingleResult();
+           log.info("Get count of Questionnaire for User with id:{}, count = {}", userId, rows);
+       } catch (HibernateException e) {
+           log.error("Can't get count of Questionnaires for User with id:{}", userId);
+       }
+       return rows;
+   }
+
     @Override
     public Long countOfQuestionnaires() {
         String hql = "SELECT COUNT(*) FROM Questionnaire";
-        Long rows = -1L;
-        try{
+        long rows = -1L;
+        try {
             Session session = sessionFactory.getCurrentSession();
             rows = session.createQuery(hql, Long.class).getSingleResult();
             log.info("Get count of Questionnaire, count = {}", rows);

@@ -33,6 +33,11 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 
 
     @Override
+    public List<Questionnaire> getQuestionnairesForUserPagination(int userId, int numberOfPage, int maxResultsOnPage){
+        return  questionnaireDao.getQuestionnairesForUserPagination(userId, numberOfPage, maxResultsOnPage);
+    }
+
+    @Override
     public int addQuestionnaireInDb(Questionnaire questionnaire) {
         return questionnaireDao.add(questionnaire);
     }
@@ -40,6 +45,11 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
     @Override
     public int questionnairesCount() {
         return questionnaireDao.countOfQuestionnaires().intValue();
+    }
+
+    @Override
+    public int questionnairesForUserCount(int userId) {
+        return questionnaireDao.questionnairesForUserCount(userId).intValue();
     }
 
 

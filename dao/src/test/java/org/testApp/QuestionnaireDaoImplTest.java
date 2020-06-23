@@ -32,6 +32,26 @@ public class QuestionnaireDaoImplTest {
 
 
     @Test
+    public void testCountQuestionnairesForUser() {
+        int userId = 1;
+        long result = questionnaireDao.questionnairesForUserCount(userId);
+        Assertions.assertTrue(result >= 0);
+    }
+
+
+    @Test
+    public void testGetQuestionnairesForUserPagination(){
+        int userId = 1;
+        int numberOfPage = 1;
+        int maxResultOnPage = 2;
+        List<Questionnaire> result = questionnaireDao.getQuestionnairesForUserPagination(userId, numberOfPage, maxResultOnPage);
+        Assertions.assertNotNull(result);
+        result.forEach(questionnaire -> Assertions.assertEquals(userId, questionnaire.getQuestionnaireUser().getId()));
+
+    }
+
+
+    @Test
     public void testAddQuestionnaireHibernate() {
         User userFromDB = userDao.getUserByLoginHibernate("Kirill");
         Theme themeFromDB = themeDao.getTheme(2);

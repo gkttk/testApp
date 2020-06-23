@@ -93,6 +93,42 @@
         </tbody>
     </table>
 
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">
+                <c:if test="${userQuestionnairesCurrentPage != 1}">
+                    <a class="page-link" href="${pageContext.request.contextPath}/addQForStudent?userQuestionnairesCurrentPage=${userQuestionnairesCurrentPage - 1}">
+                        <span aria-hidden="false">
+                            <spring:message code="teacherPage.backPagination"/>
+                    </span>
+                    </a>
+                </c:if>
+            </li>
+            <c:forEach begin="1" end="${userQuestionnairesPagesCount}" var="i">
+                <c:choose>
+                    <c:when test="${userQuestionnairesCurrentPage eq i}">
+                        <li class="page-item"><a class="page-link" href="#">${i}</a></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/addQForStudent?userQuestionnairesCurrentPage=${i}">${i}</a>
+                        </li>
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>
+            <li class="page-item">
+                <c:if test="${userQuestionnairesCurrentPage lt userQuestionnairesPagesCount}">
+                    <a class="page-link" href="${pageContext.request.contextPath}/addQForStudent?userQuestionnairesCurrentPage=${userQuestionnairesCurrentPage + 1}">
+                        <span aria-hidden="false">
+                            <spring:message code="teacherPage.forwardPagination"/>
+                        </span>
+                    </a>
+                </c:if>
+            </li>
+        </ul>
+    </nav>
+
+
+
     <c:if test="${tempUserNewThemes.size() > 0}">
         <h5 class="display-4">Новые темы на согласовании</h5>
         <table class="table">

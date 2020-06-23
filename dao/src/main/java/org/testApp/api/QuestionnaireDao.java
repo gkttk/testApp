@@ -11,6 +11,7 @@ public interface QuestionnaireDao {
     Boolean deleteByUserId(Integer userId);
     List<Questionnaire> getQuestionnaires();
     Long countOfQuestionnaires();
-
+    List<Questionnaire> getQuestionnairesForUserPagination(int userId, int numberOfPage, int maxResultsOnPage);
+    Long questionnairesForUserCount(int userId);
 
 }

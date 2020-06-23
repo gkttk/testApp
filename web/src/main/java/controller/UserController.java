@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.testApp.*;
 import org.testApp.api.*;
 import org.testApp.enums.Role;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.net.ContentHandler;
@@ -22,6 +23,7 @@ public class UserController {
     private QuestionnaireService questionnaireService;
     private ThemeService themeService;
 
+    private final static int MAXRESULTONPAGE = 6;
 
     public UserController(Validator userValidator, UserService userService,
                           QuestionnaireService questionnaireService, ThemeService themeService) {
@@ -33,7 +35,7 @@ public class UserController {
 
 
     @GetMapping("/")
-    public String welcome(){
+    public String welcome() {
         return "redirect:/login";
     }
 
@@ -86,11 +88,27 @@ public class UserController {
     }
 
     @GetMapping("/addQForStudent")
-    public String addQuestionnairesForStudent(HttpSession session) {
-        User authUser = (User) session.getAttribute("authUser");
+    public String addQuestionnairesForStudent(HttpSession session, HttpServletRequest request) {
+        int userQuestionnairesCurrentPage = 1;
+        if (request.getParameter("userQuestionnairesCurrentPage") != null) {
+            userQuestionnairesCurrentPage = Integer.parseInt(request.getParameter("userQuestionnairesCurrentPage"));
+        }
+        User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<Questionnaire> questionnaires = questionnaireService.getQuestionnairesForUserPagination(authUser.getId(), userQuestionnairesCurrentPage, MAXRESULTONPAGE);
+        int resultsCount = questionnaireService.questionnairesForUserCount(authUser.getId());
+        int userQuestionnairesPagesCount = (int) Math.ceil((resultsCount * 1.0) / MAXRESULTONPAGE);
+
+        session.setAttribute("userQuestionnaires", questionnaires);
+        session.setAttribute("userQuestionnairesPagesCount", userQuestionnairesPagesCount);
+        session.setAttribute("userQuestionnairesCurrentPage", userQuestionnairesCurrentPage);
+
+        session.setAttribute("studentQuestionnairesList", questionnaires);
+
+
+      /*  User authUser = (User) session.getAttribute("authUser");
         int authUserId = authUser.getId();
         List<Questionnaire> questionnaires = questionnaireService.getQuestionnairesForStudent(authUserId);
-        session.setAttribute("studentQuestionnairesList", questionnaires);
+        session.setAttribute("studentQuestionnairesList", questionnaires);*/
         return "redirect:/getThemeNames/";
     }
 
@@ -113,7 +131,7 @@ public class UserController {
             return "teacher";
         }
         return "admin";*/
-       return "redirect:/user";
+        return "redirect:/user";
     }
 
 
@@ -155,30 +173,23 @@ public class UserController {
     }
 
 
-
-
-
-   @GetMapping("/changeOwnDataP")
-    public String changeOwnDataP(){
+    @GetMapping("/changeOwnDataP")
+    public String changeOwnDataP() {
         return "changeOwnDataPage";
     }
 
 
-
-@GetMapping("/user")
-    public String user(){
-    User authUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-   // User authUser = (User) session.getAttribute("authUser");
-    if (authUser.getRole().equals(Role.STUDENT)) {
-        return "student";
-    } else if (authUser.getRole().equals(Role.TEACHER)) {
-        return "teacher";
+    @GetMapping("/user")
+    public String user() {
+        User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        // User authUser = (User) session.getAttribute("authUser");
+        if (authUser.getRole().equals(Role.STUDENT)) {
+            return "student";
+        } else if (authUser.getRole().equals(Role.TEACHER)) {
+            return "teacher";
+        }
+        return "admin";
     }
-    return "admin";
-}
-
-
-
 
 
 }
