@@ -12,6 +12,7 @@ import org.testApp.api.QuestionnaireService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -54,18 +55,19 @@ public class TestController {
             Question question = questionnaire.getQuestionnaireQuestions().get(i - 1);
             count += questionService.checkQuestion(question, answers);
         }
-        Double result = (double) (100 / questionnaire.getQuestionnaireQuestions().size()) * count;
-        session.setAttribute("result", result);
-        session.setAttribute("date", new Date());
-
+        double result = (double) (100 / questionnaire.getQuestionnaireQuestions().size()) * count;
+        questionnaire.setDate(LocalDateTime.now());
+        questionnaire.setScore(result);
+        session.setAttribute("questionnaire", questionnaire);
         return "redirect:/addQuestionnaire/";
     }
 
     @GetMapping("/addQuestionnaire")
-    public String addQuestionnaireInDb(HttpSession session) {
-        Double result = (Double) session.getAttribute("result");
+    public String addQuestionnaireInDb(HttpSession session, HttpServletRequest request) {
         Questionnaire questionnaire = (Questionnaire) session.getAttribute("questionnaire");
-        questionnaireService.addQuestionnaireInDb(questionnaire, result);
+        questionnaireService.addQuestionnaireInDb(questionnaire);
+        String formatDate = questionnaireService.dateFormat(questionnaire.getDate());
+        request.setAttribute("formatDate",formatDate);
         return "testResultPage";
     }
 

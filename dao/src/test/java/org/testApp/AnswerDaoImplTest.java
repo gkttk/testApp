@@ -21,6 +21,8 @@ public class AnswerDaoImplTest {
     private AnswerDao answerDao;
 
 
+
+
     @Test
     public void testGetAnswersHibernate() {
         int questionId = 3;

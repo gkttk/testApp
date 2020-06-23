@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface QuestionnaireDao {
 
-    Integer add(Questionnaire questionnaire, double score);
+    Integer add(Questionnaire questionnaire);
     Boolean delete(Integer questionnaireId);
     List<Questionnaire> getQuestionnairesForUser(Integer userId);
     Boolean deleteByUserId(Integer userId);

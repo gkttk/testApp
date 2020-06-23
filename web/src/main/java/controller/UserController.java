@@ -1,5 +1,6 @@
 package controller;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,6 +10,7 @@ import org.testApp.api.*;
 import org.testApp.enums.Role;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.net.ContentHandler;
 import java.util.List;
 
 @Controller
@@ -32,7 +34,7 @@ public class UserController {
 
     @GetMapping("/")
     public String welcome(){
-        return "indexPage";
+        return "redirect:/login";
     }
 
 
@@ -104,13 +106,14 @@ public class UserController {
             session.setAttribute("themeName" + i, themeName);
         }
 
-        User authUser = (User) session.getAttribute("authUser");
+       /* User authUser = (User) session.getAttribute("authUser");
         if (authUser.getRole().equals(Role.STUDENT)) {
             return "student";
         } else if (authUser.getRole().equals(Role.TEACHER)) {
             return "teacher";
         }
-        return "admin";
+        return "admin";*/
+       return "redirect:/user";
     }
 
 
@@ -152,11 +155,7 @@ public class UserController {
     }
 
 
-    @GetMapping("/exit")
-    public String invalidateSession(HttpSession session) {
-        session.invalidate();
-        return "indexPage";
-    }
+
 
 
    @GetMapping("/changeOwnDataP")
@@ -166,7 +165,17 @@ public class UserController {
 
 
 
-
+@GetMapping("/user")
+    public String user(){
+    User authUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+   // User authUser = (User) session.getAttribute("authUser");
+    if (authUser.getRole().equals(Role.STUDENT)) {
+        return "student";
+    } else if (authUser.getRole().equals(Role.TEACHER)) {
+        return "teacher";
+    }
+    return "admin";
+}
 
 
 

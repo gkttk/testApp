@@ -1,10 +1,11 @@
 <jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" xmlns="http://www.w3.org/1999/xhtml"
           xmlns:spring="http://www.springframework.org/tags"
+          xmlns:sec="http://www.springframework.org/security/tags"
           version="2.0">
     <body style="background-color: #adc0d0">
-
-    <h2 class="display-4">Пользователь ${sessionScope.get("authUser").getLogin()} выполнил тест на ${sessionScope.get("result")} процентов</h2>
-    <h2 class="display-4">Дата прохождения теста - ${sessionScope.get("date")}</h2>
+    <sec:authentication var="principal" property="principal"/>
+    <h2 class="display-4">Пользователь ${principal.getLogin()} выполнил тест на ${sessionScope.get("questionnaire").getScore()} процентов</h2>
+    <h2 class="display-4">Дата прохождения теста - ${requestScope.get("formatDate")}</h2>
 
 
     <form id="backToContent" name="backToContent" method="get" action="${pageContext.request.contextPath}/facade">
@@ -12,7 +13,6 @@
             <spring:message code="testResultPage.back"/>
         </button>
     </form>
-
 
     </body>
 </jsp:root>

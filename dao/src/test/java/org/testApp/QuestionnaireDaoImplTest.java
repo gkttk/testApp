@@ -3,6 +3,7 @@ package org.testApp;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +13,7 @@ import org.testApp.api.ThemeDao;
 import org.testApp.api.UserDao;
 import org.testApp.config.DaoConfig;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @ExtendWith(SpringExtension.class)
@@ -20,13 +22,14 @@ import java.util.List;
 public class QuestionnaireDaoImplTest {
 
     @Autowired
-    private  QuestionnaireDao questionnaireDao;  //было static, но возвращает null, trim не работает
+    private  QuestionnaireDao questionnaireDao;
     @Autowired
     private UserDao userDao;
     @Autowired
     private ThemeDao themeDao;
     @Autowired
     private QuestionDao questionDao;
+
 
     @Test
     public void testAddQuestionnaireHibernate() {
@@ -37,10 +40,10 @@ public class QuestionnaireDaoImplTest {
         Questionnaire questionnaire = new Questionnaire(null, scoreForDB, userFromDB, themeFromDB);
         questionsForDB.forEach(question -> question.getQuestionQuestionnaires().add(questionnaire));
         questionnaire.setQuestionnaireQuestions(questionsForDB);
-        Integer questionnaireId = questionnaireDao.add(questionnaire, scoreForDB);
-        questionnaireDao.delete(questionnaireId);
+        questionnaire.setDate(LocalDateTime.now());
+        Integer questionnaireId = questionnaireDao.add(questionnaire);
         Assertions.assertTrue(questionnaireId > 0);
-    }  //hibernate
+    }
 
     @Test
     public void testDeleteQuestionnaireHibernate() {
@@ -48,7 +51,7 @@ public class QuestionnaireDaoImplTest {
         Theme themeFromDB = themeDao.getTheme(2);
         Double scoreForDB = 5.0;
         Questionnaire questionnaire = new Questionnaire(null, scoreForDB, userFromDB, themeFromDB);
-        Integer questionnaireId = questionnaireDao.add(questionnaire, scoreForDB);
+        Integer questionnaireId = questionnaireDao.add(questionnaire);
         Boolean result = questionnaireDao.delete(questionnaireId);
         Assertions.assertEquals(true, result);
     }
@@ -59,7 +62,7 @@ public class QuestionnaireDaoImplTest {
         List<Questionnaire> questionnairesFromDB = questionnaireDao.getQuestionnairesForUser(userId);
         Assertions.assertNotNull(questionnairesFromDB);
         questionnairesFromDB.forEach(questionnaire -> Assertions.assertEquals(userId, questionnaire.getQuestionnaireUser().getId()));
-    } //hibernate
+    }
 
     @Test
     public void testDeleteQuestionnaireByUserId() {
@@ -69,7 +72,7 @@ public class QuestionnaireDaoImplTest {
         Theme themeFromDB = themeDao.getTheme(2);
         double scoreForDB = 5.0;
         Questionnaire questionnaire = new Questionnaire(null, scoreForDB, userForDB, themeFromDB);
-        questionnaireDao.add(questionnaire, scoreForDB);
+        questionnaireDao.add(questionnaire);
         Boolean result = questionnaireDao.deleteByUserId(userId);
         userDao.deleteUserHibernate(userForDB.getLogin());
         Assertions.assertTrue(result);

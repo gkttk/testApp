@@ -1,6 +1,5 @@
 package org.testApp;
 
-import org.springframework.transaction.annotation.Transactional;
 import org.testApp.api.InfoForTeacherDao;
 import org.testApp.api.InfoForTeacherService;
 import java.util.List;

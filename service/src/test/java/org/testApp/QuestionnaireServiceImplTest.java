@@ -27,9 +27,8 @@ public class QuestionnaireServiceImplTest {
     @Test
     public void testAddQuestionnaire() {
         Questionnaire questionnaire1 = new Questionnaire();
-        double score = 5.0;
-        when(questionnaireDao.add(questionnaire1, score)).thenReturn(16);
-        int result = questionnaireService.addQuestionnaireInDb(questionnaire1, score);
+        when(questionnaireDao.add(questionnaire1)).thenReturn(16);
+        int result = questionnaireService.addQuestionnaireInDb(questionnaire1);
 
     }
 

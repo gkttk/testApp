@@ -3,6 +3,9 @@ package org.testApp;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.transaction.annotation.Transactional;
 import org.testApp.api.*;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -30,13 +33,20 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 
 
     @Override
-    public int addQuestionnaireInDb(Questionnaire questionnaire, double result){
-       return questionnaireDao.add(questionnaire, result);
+    public int addQuestionnaireInDb(Questionnaire questionnaire) {
+        return questionnaireDao.add(questionnaire);
     }
 
     @Override
-    public int questionnairesCount(){
+    public int questionnairesCount() {
         return questionnaireDao.countOfQuestionnaires().intValue();
+    }
+
+
+    @Override
+    public String dateFormat(LocalDateTime time) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return time.format(formatter);
     }
 
 
@@ -60,7 +70,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
         int countOfQuestions = questions.size();
         List<Question> questionForQuestionnaire = new LinkedList<>();
         while (questionForQuestionnaire.size() < QUESTION_COUNT) {
-            if(questionForQuestionnaire.size() == countOfQuestions){
+            if (questionForQuestionnaire.size() == countOfQuestions) {
                 break;
             }
             randomNum = random.nextInt(questions.size());

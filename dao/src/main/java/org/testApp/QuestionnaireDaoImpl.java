@@ -21,12 +21,15 @@ public class QuestionnaireDaoImpl implements QuestionnaireDao {
     }
 
 
+
+
+
+
     @Override
-    public Integer add(Questionnaire questionnaire, double score) {
+    public Integer add(Questionnaire questionnaire) {
         Integer questionnaireId = -1;
         try{
             Session session = sessionFactory.getCurrentSession();
-            questionnaire.setScore(score);
             questionnaireId = (Integer) session.save(questionnaire);
             log.info("Questionnaire with id:{} was saved", questionnaireId);
         } catch (HibernateException e) {

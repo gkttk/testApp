@@ -3,6 +3,7 @@ package org.testApp;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +34,10 @@ public class Questionnaire {
     @JoinTable(name = "questions_questionnaires", joinColumns = {@JoinColumn(name = "questionnaire_id")},
             inverseJoinColumns = {@JoinColumn(name = "question_id")})
     private List<Question> questionnaireQuestions = new ArrayList<>();
+
+    @Column(name = "date")
+    private LocalDateTime date;
+
 
 
     public Questionnaire() {
@@ -72,6 +77,15 @@ public class Questionnaire {
     public void setQuestionnaireQuestions(List<Question> questionnaireQuestions) {
         this.questionnaireQuestions = questionnaireQuestions;
     }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
 
     public void setId(Integer id) {
         this.id = id;

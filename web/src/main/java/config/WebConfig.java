@@ -45,6 +45,12 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
 
+
+    @Bean
+    public LoginController loginController(){
+        return new LoginController(userService, userValidator);
+    }
+
     @Bean
     public TestController testController() {
         return new TestController(questionnaireService, questionService);
@@ -103,12 +109,12 @@ public class WebConfig implements WebMvcConfigurer {
         return messageSource;
     }
 
-    @Bean
+  /*  @Bean
     public LocaleChangeInterceptor localeChangeInterceptor() {
         LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
         localeChangeInterceptor.setParamName("locale");
         return localeChangeInterceptor;
-    }
+    }*/
 
     @Bean
     public CookieLocaleResolver localeResolver() {
@@ -120,8 +126,8 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
 
-    @Override
+    /*@Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(localeChangeInterceptor());
-    }
+    }*/
 }

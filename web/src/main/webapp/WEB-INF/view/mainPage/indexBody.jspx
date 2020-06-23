@@ -5,11 +5,10 @@
           version="2.0">
 
 <body style="background-color: #adc0d0">
-<a href="${pageContext.request.contextPath}/?locale=ru" style="padding: 5px">RU</a><br/>
-<a href="${pageContext.request.contextPath}/?locale=en" style="padding: 5px">EN</a>
+
 <h2 class="display-4"><spring:message code="index.mainPage"/></h2>
 
-<form method="post" action="${pageContext.request.contextPath}/checkLoginAuth">
+<form method="post" action="${pageContext.request.contextPath}/login">
          <fieldset>
              <div class="form-group">
                  <input type="text" id="login" name="login" required="required" />
