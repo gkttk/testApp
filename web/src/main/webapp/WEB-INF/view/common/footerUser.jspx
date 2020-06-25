@@ -6,7 +6,7 @@
 
     <footer style="background-color: #adc0d0">
         <div class="card-footer text-center">
-            <form id="changeOwnData" name="changeOwnData" method="get" action="${pageContext.request.contextPath}/changeOwnDataP">
+            <form id="changeOwnData" name="changeOwnData" method="get" action="${pageContext.request.contextPath}/changeOwnData">
                 <button class="btn btn-primary" type="submit">
                     <spring:message code="changeOwnDate.changeData"/>
                  </button>

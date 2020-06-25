@@ -12,7 +12,6 @@ import org.testApp.User;
 import org.testApp.api.UserService;
 import org.testApp.api.Validator;
 import org.testApp.enums.Role;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.List;
@@ -48,7 +47,7 @@ public class LoginController {
                 User user = userService.getUserByLogin(login);
                 Authentication auth = new UsernamePasswordAuthenticationToken(user, null, getAuthorities(user.getRole()));
                 SecurityContextHolder.getContext().setAuthentication(auth);
-                return "forward:/userInSession";
+                return "redirect:/addThemeNamesInSession";
             } else {
                 request.setAttribute("UserWrongPasswordMessage", "Неправильный пароль");
                 return "indexPage";

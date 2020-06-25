@@ -11,7 +11,7 @@ import org.testApp.api.Validator;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping
+@RequestMapping("/registration")
 public class RegistrationController {
 
     private Validator userValidator;
@@ -22,24 +22,22 @@ public class RegistrationController {
         this.userService = userService;
     }
 
-    @PostMapping("/validationLoginReg")
-    public String checkLoginAfterRegistration(HttpServletRequest request) {
+    @GetMapping()
+    public String registration() {
+        return "registrationPage";
+    }
+
+    @PostMapping()
+    public String registration(HttpServletRequest request) {
         String userLogin = request.getParameter("login");
         if (userValidator.checkLoginInDB(userLogin)) {
             request.setAttribute("UserExistsMessage", "Логин занят");
             return "registrationPage";
         }
-        return "forward:/addUser/";
-    }
-
-    @PostMapping("/addUser")
-    public String addUserInDb(HttpServletRequest request) {
-        String userLogin = request.getParameter("login");
         String userPassword = request.getParameter("password");
         String userEmail = request.getParameter("email");
         User user = new User(userLogin, userPassword, userEmail);
         UserDetails userDetails = new UserDetails(null, null, null, null, user);
-
         String name = request.getParameter("name");
         String surname = request.getParameter("surname");
         String age = request.getParameter("age");
@@ -54,13 +52,10 @@ public class RegistrationController {
         }
         user.setuDetails(userDetails);
         userService.addUser(user);
-
-        return "forward:/userInSession/";
+        request.setAttribute("registrationSuccessMessage", "Регистрация прошла успешно");
+        return "indexPage";
     }
 
-    @GetMapping("/registrationPage")
-    public String registrationPage(){
-        return "registrationPage";
-    }
+
 
 }

@@ -9,7 +9,7 @@
 <h2 class="display-4">
     <spring:message code="changeOwnDate.NewData"/>
 </h2>
-<form id="changeData" name="changeData" method="get" action="${pageContext.request.contextPath}/changeOwnData">
+<form id="changeData" name="changeData" method="post" action="${pageContext.request.contextPath}/changeOwnData">
     <fieldset>
         <div class="form-group">
             <input type="text" id="newPassword" name="newPassword"/>

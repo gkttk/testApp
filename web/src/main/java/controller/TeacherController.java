@@ -1,5 +1,6 @@
 package controller;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,7 +10,6 @@ import org.testApp.api.InfoForTeacherService;
 import org.testApp.api.QuestionnaireService;
 import org.testApp.api.TempNewThemeService;
 import org.testApp.api.ThemeService;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
@@ -41,37 +41,32 @@ public class TeacherController {
         if (request.getParameter("currentPage") != null) {
             currentPage = Integer.parseInt(request.getParameter("currentPage"));
         }
-
         List<InfoForTeacher> infoForTeacherList = infoForTeacherService.getResultsPagination(currentPage, MAXRESULTONPAGE);
         int resultsCount = questionnaireService.questionnairesCount();
         int pagesCount = (int) Math.ceil((resultsCount * 1.0) / MAXRESULTONPAGE);
-
         session.setAttribute("infoForTeacher", infoForTeacherList);
         session.setAttribute("pagesCount", pagesCount);
         session.setAttribute("currentPage", currentPage);
-
-        return "redirect:/loadTempNewThemesForUser/";
+        return "redirect:/loadTempNewThemesForUser";
     }
 
     @GetMapping("/loadTempNewThemesForUser")
     public String loadTempNewThemesForUser(HttpSession session) {
-        User authUser = (User) session.getAttribute("authUser");
+        User authUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         List<TempNewTheme> tempNewThemes = tempNewThemeService.getTempNewThemesForUser(authUser.getId());
         session.setAttribute("tempUserNewThemes", tempNewThemes);
-        return "redirect:/addQForStudent/";
+        return "redirect:/addQForStudent";
     }
 
-
-
     @PostMapping("/addThemeForPermit")
-    public String addThemeForPermit(HttpServletRequest request, HttpSession session) throws UnsupportedEncodingException {
+    public String addThemeForPermit(HttpServletRequest request) throws UnsupportedEncodingException {
         request.setCharacterEncoding("UTF-8");
         String themeName = request.getParameter("themeName");
         int numberOfQuestions = Integer.parseInt(request.getParameter("numberOfQuestions"));
-        User authUser = (User) session.getAttribute("authUser");
+        User authUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Integer ownerId = authUser.getId();
         tempNewThemeService.addTempNewThemeForPermit(ownerId, themeName, numberOfQuestions);
-        return "redirect:/loadTempNewThemesForUser/";
+        return "redirect:/loadTempNewThemesForUser";
     }
 
 
@@ -88,26 +83,20 @@ public class TeacherController {
     @PostMapping("/addNewTheme")
     public String addNewTheme(HttpServletRequest request, HttpSession session) throws UnsupportedEncodingException {
         request.setCharacterEncoding("UTF-8");
-        User authUser = (User) session.getAttribute("authUser");
-        int ownerId = authUser.getId();   //id Owner
-
-        String newThemeName = request.getParameter("newTempThemeName"); //theme name /1
+        User authUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        int ownerId = authUser.getId();
+        String newThemeName = request.getParameter("newTempThemeName");
         List<Question> questions = new ArrayList<>();
-
         Theme theme = new Theme(null, newThemeName, ownerId);
+        String[] questionTexts = request.getParameterValues("questionText");
 
-
-        String[] questionTexts = request.getParameterValues("questionText");  //2
-
-
-        for (int i = 0; i < questionTexts.length; i++) {   //тема: описание + владелецИД
+        for (int i = 0; i < questionTexts.length; i++) {
             if (questionTexts[i].isEmpty()) {
                 break;
             }
-            String questionText = questionTexts[i];//вопрос: описание + лист ответов + тема
+            String questionText = questionTexts[i];
             Question question = new Question(null, questionText, new ArrayList<>(), theme);
-
-            String[] answerTexts = request.getParameterValues("answer" + (i + 1)); //ответ: описание + правильность + вопрос
+            String[] answerTexts = request.getParameterValues("answer" + (i + 1));
             for (int j = 0; j < answerTexts.length; j++) {
                 if (answerTexts[j].isEmpty()) {
                     break;
@@ -119,26 +108,22 @@ public class TeacherController {
                     answer.setCorrectness("true");
                 }
                 question.getAnswers().add(answer);
-
             }
             questions.add(question);
         }
-
         theme.settQuestions(questions);
         themeService.addNewTheme(theme);
-
         TempNewTheme newTempUserTheme = (TempNewTheme) session.getAttribute("newTempUserTheme");
         tempNewThemeService.refuseTempNewTheme(newTempUserTheme.getId());
         session.removeAttribute("newTempUserTheme");
-
-        return "redirect:/refreshThemes/";
+        return "redirect:/refreshThemes";
     }
 
     @GetMapping("/refreshThemes")
     public String refreshThemes(HttpSession session){
         List<Theme> themes = themeService.getAllThemes();
         session.setAttribute("allThemes", themes);
-        return "redirect:/loadTempNewThemesForUser/";
+        return "redirect:/loadTempNewThemesForUser";
     }
 
     @GetMapping("/redirectAddThemePage")

@@ -10,7 +10,7 @@
 
 <h4><spring:message code="index.registration"/></h4>
 
-<form method="post" action="${pageContext.request.contextPath}/validationLoginReg">
+<form method="post" action="${pageContext.request.contextPath}/registration">
     <fieldset>
         <div class="form-group" style="margin: 0px">
             <input type="text" id="login" name="login" required="required"/>
@@ -57,9 +57,12 @@
     </fieldset>
 </form>
 
-<button class="btn btn-primary" onclick='history.back()' style="margin-top:5px">
-    <spring:message code="teacherPage.backPagination"/>
-</button>
+<form id="back" name="back" method="get" action="${pageContext.request.contextPath}/login" >
+    <button class="btn btn-primary" style="margin-top:5px">
+        <spring:message code="teacherPage.backPagination"/>
+    </button>
+</form>
+
 
 <c:if test="${requestScope.get('UserExistsMessage') != null}">
     <div class="alert alert-danger" role="alert">${requestScope.get("UserExistsMessage")}</div>

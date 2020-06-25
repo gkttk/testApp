@@ -1,5 +1,6 @@
 package controller;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,12 +10,10 @@ import org.testApp.Questionnaire;
 import org.testApp.User;
 import org.testApp.api.QuestionService;
 import org.testApp.api.QuestionnaireService;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -31,10 +30,9 @@ public class TestController {
 
     @PostMapping("/getQuestionnaire")
     public String getQuestionnaire(HttpServletRequest request, HttpSession session) {
-
         String theme = request.getParameter("testTheme");
         int themeId = Integer.parseInt(theme);
-        User authUser = (User) session.getAttribute("authUser");
+        User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         int studentId = authUser.getId();
         Questionnaire questionnaire = questionnaireService.generateQuestionnaire(studentId, themeId);
         session.setAttribute("questionnaire", questionnaire);
@@ -59,7 +57,7 @@ public class TestController {
         questionnaire.setDate(LocalDateTime.now());
         questionnaire.setScore(result);
         session.setAttribute("questionnaire", questionnaire);
-        return "redirect:/addQuestionnaire/";
+        return "redirect:/addQuestionnaire";
     }
 
     @GetMapping("/addQuestionnaire")
@@ -70,6 +68,9 @@ public class TestController {
         request.setAttribute("formatDate",formatDate);
         return "testResultPage";
     }
+
+
+
 
 
 }

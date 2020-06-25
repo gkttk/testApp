@@ -45,6 +45,10 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
 
+    @Bean
+    public ChangeOwnDataController changeOwnDataController(){
+        return new ChangeOwnDataController(userService);
+    }
 
     @Bean
     public LoginController loginController(){
@@ -73,8 +77,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Bean
     public UserController userController() {
-        return new UserController(userValidator,
-                userService, questionnaireService, themeService);
+        return new UserController(questionnaireService, themeService);
     }
 
   /*   @Bean
