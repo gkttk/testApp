@@ -5,18 +5,18 @@
                   timeToIdleSeconds="120"
                   timeToLiveSeconds="200"
                   memoryStoreEvictionPolicy="LRU"/>
-    <cache name="org.testApp.User"
+    <cache name="com.github.gkttk.testApp.User"
            maxEntriesLocalHeap="2"
            eternal="true">
     </cache>
-    <cache name="org.testApp.UserDetails"
+    <cache name="com.github.gkttk.testApp.UserDetails"
            maxEntriesLocalHeap="2"
            eternal="false"
            timeToIdleSeconds="300"
            timeToLiveSeconds="600">
         <persistence strategy="localTempSwap"/>
     </cache>
-    <cache name="org.testApp.Theme"
+    <cache name="com.github.gkttk.testApp.Theme"
            maxEntriesLocalHeap="100"
            eternal="false"
            timeToLiveSeconds="120">
