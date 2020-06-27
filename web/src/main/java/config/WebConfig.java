@@ -4,6 +4,9 @@ import controller.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
@@ -16,6 +19,7 @@ import org.springframework.web.servlet.view.tiles3.TilesView;
 import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 import org.testApp.api.*;
 
+import javax.servlet.annotation.MultipartConfig;
 import java.util.Locale;
 
 @Configuration
@@ -44,6 +48,11 @@ public class WebConfig implements WebMvcConfigurer {
         this.tempNewThemeService = tempNewThemeService;
     }
 
+
+    @Bean
+    public AvatarUploadController avatarUploadController(){
+        return new AvatarUploadController();
+    }
 
     @Bean
     public ChangeOwnDataController changeOwnDataController(){
@@ -80,14 +89,6 @@ public class WebConfig implements WebMvcConfigurer {
         return new UserController(questionnaireService, themeService);
     }
 
-  /*   @Bean
-    public ViewResolver viewResolver(){
-        InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-        resolver.setPrefix("/");
-        resolver.setSuffix(".jsp");
-        return resolver;
-    }*/
-
 
     @Bean
     public ViewResolver tilesViewResolver() {
@@ -112,12 +113,6 @@ public class WebConfig implements WebMvcConfigurer {
         return messageSource;
     }
 
-  /*  @Bean
-    public LocaleChangeInterceptor localeChangeInterceptor() {
-        LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
-        localeChangeInterceptor.setParamName("locale");
-        return localeChangeInterceptor;
-    }*/
 
     @Bean
     public CookieLocaleResolver localeResolver() {
@@ -129,8 +124,16 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
 
-    /*@Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(localeChangeInterceptor());
-    }*/
+    @Bean
+    public CommonsMultipartResolver multipartResolver(){
+        CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver();
+        commonsMultipartResolver.setMaxUploadSize(5000000);
+        return commonsMultipartResolver;
+    }
+
+    @Override
+    public void addResourceHandlers(final ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/resources/**").addResourceLocations("assests");
+    }
+
 }

@@ -1,5 +1,6 @@
 
-<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" xmlns="http://www.w3.org/1999/xhtml" version="2.0">
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" xmlns="http://www.w3.org/1999/xhtml" version="2.0"
+          xmlns:spring="http://www.springframework.org/tags">
 
 <body style="background-color: #adc0d0">
 
@@ -17,6 +18,12 @@
         </div>
         <button type="submit" class="btn btn-primary" style="margin-top: 4px; margin-bottom: 4px">Отправить на согласование</button>
     </fieldset>
+</form>
+
+<form id="back" name="back" method="get" action="${pageContext.request.contextPath}/user">
+    <button class="btn btn-primary">
+        <spring:message code="teacherPage.backPagination"/>
+    </button>
 </form>
 
 </body>

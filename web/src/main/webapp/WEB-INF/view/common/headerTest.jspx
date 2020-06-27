@@ -4,8 +4,6 @@
           version="2.0">
     <header style="background-color: #adc0d0">
         <div class="card-footer text-center">
-            <a href="${requestScope['javax.servlet.forward.request_uri']}?locale=ru" style="padding: 5px">RU</a>
-            <a href="${requestScope['javax.servlet.forward.request_uri']}?locale=en" style="padding: 5px">EN</a>
         </div>
     </header>
 </jsp:root>

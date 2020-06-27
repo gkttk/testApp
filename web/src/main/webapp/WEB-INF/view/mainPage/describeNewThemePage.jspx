@@ -52,6 +52,11 @@
     </fieldset>
 </form>
 
+<form id="back" name="back" method="get" action="${pageContext.request.contextPath}/user">
+    <button class="btn btn-primary">
+        <spring:message code="teacherPage.backPagination"/>
+    </button>
+</form>
 
 
 </body>
