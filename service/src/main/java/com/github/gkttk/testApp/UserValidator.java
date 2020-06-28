@@ -14,14 +14,14 @@ public class UserValidator implements Validator {
 
     @Override
     public boolean checkLoginInDB(String login){
-        List<User> users = daoUser.getUsersHibernate();
+        List<User> users = daoUser.getUsers();
         boolean result = users.stream().anyMatch(user->user.getLogin().equalsIgnoreCase(login));
         return result;
     }
 
     @Override
     public boolean checkUserPassword(String userLogin, String userPassword) {
-        User user = daoUser.getUserByLoginHibernate(userLogin);
+        User user = daoUser.getUserByLogin(userLogin);
         return user.getPassword().equals(userPassword);
     }
 

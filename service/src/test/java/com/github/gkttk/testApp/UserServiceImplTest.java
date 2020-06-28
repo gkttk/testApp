@@ -21,7 +21,7 @@ public class UserServiceImplTest {
     @Test
     public void testChangePassword() {
         User testUser = new User("mockTest", "mockTestPass", "mockTest@mail.ru");
-        when(userDao.updateUserPasswordHibernate(any(), any())).thenReturn(0L);
+        when(userDao.updateUserPassword(any(), any())).thenReturn(0L);
         Long result = userService.changePassword("Kirill", testUser);
         Assertions.assertEquals(0L, result);
     }
@@ -29,7 +29,7 @@ public class UserServiceImplTest {
     @Test
     public void testChangeEmail() {
         User testUser = new User("mockTest", "mockTestPass", "mockTest@mail.ru");
-        when(userDao.updateUserEmailHibernate("mockTest@gmail.com", testUser)).thenReturn(0L);
+        when(userDao.updateUserEmail("mockTest@gmail.com", testUser)).thenReturn(0L);
         Long result = userService.changeEmail("mockTest@gmail.com", testUser);
         Assertions.assertEquals(0L, result);
     }
@@ -37,14 +37,14 @@ public class UserServiceImplTest {
     @Test
     public void addUser() {
         User testUser = new User(1000, "mockTest", "mockTestPass", "mockTest@mail.ru");
-        when(userDao.addHibernate(testUser)).thenReturn(1000);
+        when(userDao.addUser(testUser)).thenReturn(1000);
         Integer result = userService.addUser(testUser);
         Assertions.assertEquals(1000, result);
     }
 
     @Test
     public void testGetUsersList() {
-        when(userDao.getUsersHibernate()).thenReturn(null);
+        when(userDao.getUsers()).thenReturn(null);
         List<User> users = userService.getUsersList();
         Assertions.assertNull(users);
     }
@@ -52,7 +52,7 @@ public class UserServiceImplTest {
     @Test
     public void testGetUser() {
         User testUser = new User("testUser", "testPass", "test@mail.ru");
-        when(userDao.getUserByLoginHibernate("testUser")).
+        when(userDao.getUserByLogin("testUser")).
                 thenReturn(new User("testUser", "testPass", "test@mail.ru"));
         User userFromDb = userService.getUserByLogin("testUser");
         Assertions.assertEquals(testUser, userFromDb);
@@ -60,7 +60,7 @@ public class UserServiceImplTest {
 
     @Test
     public void testDeleteUser() {
-        when(userDao.deleteUserHibernate("testUser")).thenReturn(true);
+        when(userDao.deleteUser("testUser")).thenReturn(true);
         boolean result = userService.deleteUser("testUser");
         Assertions.assertTrue(result);
     }

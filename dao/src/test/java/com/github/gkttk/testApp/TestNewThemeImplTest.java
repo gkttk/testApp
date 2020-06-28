@@ -9,6 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 import com.github.gkttk.testApp.config.DaoConfig;
+
 import java.util.List;
 
 @ExtendWith(SpringExtension.class)
@@ -31,7 +32,6 @@ public class TestNewThemeImplTest {
         tempNewThemeDao.addTempNewTheme(tempNewThemeTest);
         List<TempNewTheme> result = tempNewThemeDao.getAllTempNewThemes();
         Assertions.assertNotNull(result);
-
     }
 
     @Test
@@ -69,7 +69,6 @@ public class TestNewThemeImplTest {
         int id = tempNewThemeDao.addTempNewTheme(tempNewThemeTest);
         int result = tempNewThemeDao.deleteTempNewTheme(id);
         Assertions.assertNotEquals(0, result);
-
     }
 
 

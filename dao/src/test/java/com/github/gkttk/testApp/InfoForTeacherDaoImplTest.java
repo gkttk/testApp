@@ -18,10 +18,19 @@ public class InfoForTeacherDaoImplTest {
     @Autowired
     private InfoForTeacherDao infoForTeacherDao;
 
+
     @Test
-    public void testGetAllResultHibernate() {
-        List<InfoForTeacher> infoForTeacherFromDB = infoForTeacherDao.getAllResults();
-        Assertions.assertNotNull(infoForTeacherFromDB);
+    public void testGetResultsPagination(){
+        int numberOfPage = 1;
+        int maxResultsOnPage = 5;
+        List<InfoForTeacher> result = infoForTeacherDao.getResultsPagination(numberOfPage, maxResultsOnPage);
+        Assertions.assertNotNull(result);
+    }
+
+    @Test
+    public void testGetAllResults() {
+        List<InfoForTeacher> result = infoForTeacherDao.getAllResults();
+        Assertions.assertNotNull(result);
     }
 
 

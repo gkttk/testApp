@@ -4,10 +4,10 @@ import com.github.gkttk.testApp.Questionnaire;
 import java.util.List;
 
 public interface QuestionnaireDao {
-    Integer add(Questionnaire questionnaire);
-    Boolean delete(Integer questionnaireId);
+    int add(Questionnaire questionnaire);
+    boolean delete(Integer questionnaireId);
     List<Questionnaire> getQuestionnairesForUser(Integer userId);
-    Boolean deleteByUserId(Integer userId);
+    boolean deleteByUserId(Integer userId);
     List<Questionnaire> getQuestionnaires();
     Long countOfQuestionnaires();
     List<Questionnaire> getQuestionnairesForUserPagination(int userId, int numberOfPage, int maxResultsOnPage);

@@ -24,7 +24,7 @@ public class UserValidatorTest {
     public void testCheckLoginInDB() {
         String testLogin = "test";
         User testUser = new User("test", "testPass", "test@mail.ru");
-        when(userDao.getUsersHibernate()).thenReturn(new ArrayList<>(Collections.singletonList(testUser)));
+        when(userDao.getUsers()).thenReturn(new ArrayList<>(Collections.singletonList(testUser)));
         boolean result = userValidator.checkLoginInDB(testLogin);
         Assertions.assertTrue(result);
     }
@@ -33,7 +33,7 @@ public class UserValidatorTest {
     public void testCheckUserPassword() {
         String testLogin = "test";
         User testUser = new User("test", "testPass", "test@mail.ru");
-        when(userDao.getUserByLoginHibernate(testLogin)).thenReturn(testUser);
+        when(userDao.getUserByLogin(testLogin)).thenReturn(testUser);
         boolean result = userValidator.checkUserPassword(testLogin, "testPass");
         Assertions.assertTrue(result);
     }

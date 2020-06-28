@@ -15,9 +15,35 @@ public class ThemeDaoImpl implements ThemeDao {
     private final SessionFactory sessionFactory;
     private static final Logger log = LoggerFactory.getLogger(ThemeDaoImpl.class);
 
-
     public ThemeDaoImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
+    }
+
+    @Override
+    public List<Theme> getAllThemes() {
+        String hql = "FROM Theme";
+        List<Theme> themes = null;
+        try {
+            Session session = sessionFactory.getCurrentSession();
+            themes = session.createQuery(hql, Theme.class).list();
+            log.info("getAllThemes was successful, count of themes:{}", themes.size());
+        } catch (HibernateException e) {
+            log.error("Can't getAllThemes");
+        }
+        return themes;
+    }
+
+    @Override
+    public int saveTheme(Theme theme) {
+        int id = -1;
+        try {
+            Session session = sessionFactory.getCurrentSession();
+            id = (int) session.save(theme);
+            log.info("saveTheme with themeId :{} - ", id);
+        } catch (HibernateException e) {
+            log.error("Fail in saveTheme");
+        }
+        return id;
     }
 
     @Override
@@ -26,54 +52,25 @@ public class ThemeDaoImpl implements ThemeDao {
         try {
             Session session = sessionFactory.getCurrentSession();
             themeFromDb = session.get(Theme.class, themeId);
-            log.info("GetTheme with themeId:{} - ", themeId);
+            log.info("GetTheme with themeId :{} - ", themeId);
         } catch (HibernateException e) {
-            log.error("Exception - {} in getTheme with themeId:{}", e, themeId);
+            log.error("Fail in getTheme with themeId:{}", themeId);
         }
         return themeFromDb;
     }
 
     @Override
-    public Integer saveTheme(Theme theme) {
-        Integer id = -1;
+    public String getName(int themeId) {
         try {
             Session session = sessionFactory.getCurrentSession();
-            id = (Integer) session.save(theme);
-            log.info("saveTheme with themeId:{} - ", id);
-        } catch (HibernateException e) {
-            log.error("Exception  in saveTheme", e);
-        }
-        return id;
-    }
-
-
-    public String getName(Integer theme_id) {
-        try {
-            Session session = sessionFactory.getCurrentSession();
-            Theme theme = session.get(Theme.class, theme_id);
+            Theme theme = session.get(Theme.class, themeId);
             log.info("Get theme - " + theme.getName());
             return theme.getName();
         } catch (HibernateException e) {
-            log.error("Exception - {} in getName() ThemeDao by Id:{}", theme_id, e);
+            log.error("Fail in getName() ThemeDao by Id:{}", themeId);
             return null;
         }
     }
-
-
-    public List<Theme> getAllThemes(){
-        String hql = "FROM Theme";
-        List<Theme> themes = null;
-        try {
-
-            Session session = sessionFactory.getCurrentSession();
-            themes = session.createQuery(hql, Theme.class).list();
-            log.info("getAllThemes was successful, count of themes:{}", themes.size());
-        } catch (HibernateException e) {
-            log.error("Can't getAllThemes, Exception: ", e);
-        }
-        return themes;
-    }
-
 
   /* public String getThemeNameByThemeId(int themeId){
         String query = "SELECT name FROM theme WHERE id = ?";

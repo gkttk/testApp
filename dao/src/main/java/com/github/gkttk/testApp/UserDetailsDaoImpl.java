@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 public class UserDetailsDaoImpl implements UserDetailsDao {
+
     private final SessionFactory sessionFactory;
     private static final Logger log = LoggerFactory.getLogger(UserDetailsDaoImpl.class);
 
@@ -18,7 +19,7 @@ public class UserDetailsDaoImpl implements UserDetailsDao {
     }
 
     @Override
-    public UserDetails getUserDetails(Integer userId) {
+    public UserDetails getUserDetails(int userId) {
         String hql = "FROM UserDetails WHERE user_id =: userIdParam";
         UserDetails userDetails = null;
         try{
@@ -26,20 +27,20 @@ public class UserDetailsDaoImpl implements UserDetailsDao {
             userDetails = session.createQuery(hql, UserDetails.class).setParameter("userIdParam", userId).getSingleResult();
             log.info("Get UserDetails for User with id:{}", userId);
         } catch (HibernateException e) {
-            log.error("Exception: {}; Can't get UserDetail for User with id:{}", e, userId);
+            log.error("Can't get UserDetail for User with id:{}", userId);
         }
         return userDetails;
     }
 
     @Override
-    public Boolean updateUserDetails(UserDetails newUserDetails) {
+    public boolean updateUserDetails(UserDetails newUserDetails) {
         try{
             Session session = sessionFactory.getCurrentSession();
             session.update(newUserDetails);
             log.info("UserDetails for User with id:{} was updated", newUserDetails.getDetailsUser().getId());
             return true;
         } catch (HibernateException e) {
-            log.error("Exception: {}; Can't update UserDetail for User with id:{}", e, newUserDetails.getDetailsUser().getId());
+            log.error("Can't update UserDetail for User with id:{}", newUserDetails.getDetailsUser().getId());
         }
         return false;
     }

@@ -4,7 +4,7 @@ import com.github.gkttk.testApp.TempNewTheme;
 import java.util.List;
 
 public interface TempNewThemeDao {
-    Integer addTempNewTheme(TempNewTheme tempNewTheme);
+    int addTempNewTheme(TempNewTheme tempNewTheme);
     List<TempNewTheme> getAllTempNewThemes();
     TempNewTheme getTempNewTheme(int id);
     boolean updateTempNewTheme(TempNewTheme newTheme);

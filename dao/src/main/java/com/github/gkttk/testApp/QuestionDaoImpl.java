@@ -28,13 +28,13 @@ public class QuestionDaoImpl implements QuestionDao {
             questions = session.createQuery(hql, Question.class).setParameter("themeIdParam", themeId).list();
             log.info("GetQuestions with themeId:{}", themeId);
         } catch (HibernateException e) {
-            log.error("Fail to GetQuestions(Hibernate) with themeId {}", themeId);
+            log.error("Fail to GetQuestions with themeId:{}", themeId);
         }
         return questions;
     }
 
 
-//вопросы без ответов(null)
+
   /*  @Override
     public List<Question> getQuestions(int theme_id) {
         List<Question> questions = new ArrayList<>();

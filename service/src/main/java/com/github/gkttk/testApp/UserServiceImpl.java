@@ -14,22 +14,22 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public long changePassword(String newPassword, User user){
-       return userDao.updateUserPasswordHibernate(newPassword,user);
+       return userDao.updateUserPassword(newPassword,user);
     }
 
     @Override
     public long changeEmail(String newEmail, User user){
-        return userDao.updateUserEmailHibernate(newEmail,user);
+        return userDao.updateUserEmail(newEmail,user);
     }
 
     @Override
     public Integer addUser(User user) {
-          return userDao.addHibernate(user);
+          return userDao.addUser(user);
     }
 
     @Override
     public List<User> getUsersList(){
-        return userDao.getUsersHibernate();
+        return userDao.getUsers();
     }
     @Override
     public User getUser(Integer userId){
@@ -38,19 +38,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByLogin(String userLogin){
-        return userDao.getUserByLoginHibernate(userLogin);
+        return userDao.getUserByLogin(userLogin);
     }
 
 
     @Override
     public boolean deleteUser(String userLogin){
-           return userDao.deleteUserHibernate(userLogin);
+           return userDao.deleteUser(userLogin);
     }
 
 
     @Override
     public boolean updateUser(User newUser){
-        return userDao.updateUserHibernate(newUser);
+        return userDao.updateUser(newUser);
     }
 
 }

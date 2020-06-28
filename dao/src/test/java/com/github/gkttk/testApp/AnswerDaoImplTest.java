@@ -15,11 +15,12 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ContextConfiguration(classes = DaoConfig.class)
 @Transactional
 public class AnswerDaoImplTest {
+
     @Autowired
     private AnswerDao answerDao;
 
     @Test
-    public void testGetAnswersHibernate() {
+    public void testGetAnswers() {
         int questionId = 3;
         List<Answer> answersFromDb = answerDao.getAnswers(questionId);
         Assertions.assertNotNull(answersFromDb);

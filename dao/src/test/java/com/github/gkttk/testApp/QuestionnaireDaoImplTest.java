@@ -29,7 +29,7 @@ public class QuestionnaireDaoImplTest {
     private QuestionDao questionDao;
 
     @Test
-    public void testCountQuestionnairesForUser() {
+    public void testQuestionnairesForUserCount() {
         int userId = 1;
         long result = questionnaireDao.questionnairesForUserCount(userId);
         Assertions.assertTrue(result >= 0);
@@ -43,12 +43,11 @@ public class QuestionnaireDaoImplTest {
         List<Questionnaire> result = questionnaireDao.getQuestionnairesForUserPagination(userId, numberOfPage, maxResultOnPage);
         Assertions.assertNotNull(result);
         result.forEach(questionnaire -> Assertions.assertEquals(userId, questionnaire.getQuestionnaireUser().getId()));
-
     }
 
     @Test
-    public void testAddQuestionnaireHibernate() {
-        User userFromDB = userDao.getUserByLoginHibernate("Kirill");
+    public void testAddQuestionnaire() {
+        User userFromDB = userDao.getUserByLogin("Kirill");
         Theme themeFromDB = themeDao.getTheme(2);
         double scoreForDB = 5.0;
         List<Question> questionsForDB = questionDao.getQuestions(2);
@@ -61,47 +60,47 @@ public class QuestionnaireDaoImplTest {
     }
 
     @Test
-    public void testDeleteQuestionnaireHibernate() {
-        User userFromDB = userDao.getUserByLoginHibernate("Kirill");
+    public void testDeleteQuestionnaire() {
+        User userFromDB = userDao.getUserByLogin("Kirill");
         Theme themeFromDB = themeDao.getTheme(2);
-        Double scoreForDB = 5.0;
+        double scoreForDB = 5.0;
         Questionnaire questionnaire = new Questionnaire(null, scoreForDB, userFromDB, themeFromDB);
-        Integer questionnaireId = questionnaireDao.add(questionnaire);
-        Boolean result = questionnaireDao.delete(questionnaireId);
-        Assertions.assertEquals(true, result);
+        int questionnaireId = questionnaireDao.add(questionnaire);
+        boolean result = questionnaireDao.delete(questionnaireId);
+        Assertions.assertTrue(result);
     }
 
     @Test
-    public void testGetQuestionnairesForUserHibernate() {
+    public void testGetQuestionnairesForUser() {
         Integer userId = 1;
-        List<Questionnaire> questionnairesFromDB = questionnaireDao.getQuestionnairesForUser(userId);
-        Assertions.assertNotNull(questionnairesFromDB);
-        questionnairesFromDB.forEach(questionnaire -> Assertions.assertEquals(userId, questionnaire.getQuestionnaireUser().getId()));
+        List<Questionnaire> result = questionnaireDao.getQuestionnairesForUser(userId);
+        Assertions.assertNotNull(result);
+        result.forEach(questionnaire -> Assertions.assertEquals(userId, questionnaire.getQuestionnaireUser().getId()));
     }
 
     @Test
     public void testDeleteQuestionnaireByUserId() {
         User userForDB = new User(null, "testLogin", "testPassword", "testEmail");
-        Integer userId = userDao.addHibernate(userForDB);
+        int userId = userDao.addUser(userForDB);
         userForDB.setId(userId);
         Theme themeFromDB = themeDao.getTheme(2);
         double scoreForDB = 5.0;
         Questionnaire questionnaire = new Questionnaire(null, scoreForDB, userForDB, themeFromDB);
         questionnaireDao.add(questionnaire);
-        Boolean result = questionnaireDao.deleteByUserId(userId);
-        userDao.deleteUserHibernate(userForDB.getLogin());
+        boolean result = questionnaireDao.deleteByUserId(userId);
+        userDao.deleteUser(userForDB.getLogin());
         Assertions.assertTrue(result);
     }
 
     @Test
     public void testGetQuestionnaires() {
-        List<Questionnaire> questionnairesFromDB = questionnaireDao.getQuestionnaires();
-        Assertions.assertNotNull(questionnairesFromDB);
+        List<Questionnaire> result = questionnaireDao.getQuestionnaires();
+        Assertions.assertNotNull(result);
     }
 
     @Test
     public void testCountOfQuestionnaires() {
-        Long result = questionnaireDao.countOfQuestionnaires();
+        long result = questionnaireDao.countOfQuestionnaires();
         Assertions.assertTrue(result >= 0);
     }
 

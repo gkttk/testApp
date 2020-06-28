@@ -13,6 +13,7 @@ import java.util.List;
 
 @Transactional
 public class InfoForTeacherDaoImpl implements InfoForTeacherDao {
+
     private final SessionFactory sessionFactory;
     private static final Logger log = LoggerFactory.getLogger(InfoForTeacherDaoImpl.class);
 
@@ -37,10 +38,10 @@ public class InfoForTeacherDaoImpl implements InfoForTeacherDao {
                     .setMaxResults(maxResultsOnPage)
                     .setResultTransformer(Transformers.aliasToBean(InfoForTeacher.class))
                     .list();
-            log.info("Get all InfoForTeacher, :{} results", results.size());
+            log.info("Get all InfoForTeacher(Pagination), size:{} results  with numberOfPage:{}, maxResultsOnPage:{}", results.size(), numberOfPage, maxResultsOnPage);
         }
         catch (HibernateException e){
-            log.error("Exception:{}; Can't get all InfoForTeacher", e);
+            log.error("Can't get all InfoForTeacher(Pagination) with numberOfPage:{}, maxResultsOnPage:{}", numberOfPage , maxResultsOnPage);
         }
         return results;
     }
@@ -63,7 +64,7 @@ public class InfoForTeacherDaoImpl implements InfoForTeacherDao {
             log.info("Get all InfoForTeacher, :{} results", results.size());
         }
         catch (HibernateException e){
-            log.error("Exception:{}; Can't get all InfoForTeacher", e);
+            log.error("Can't get all InfoForTeacher");
         }
         return results;
     }

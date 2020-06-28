@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,10 +22,24 @@ public class QuestionnaireDaoImpl implements QuestionnaireDao {
     }
 
     @Override
+    public Long questionnairesForUserCount(int userId) {
+        String hql = "SELECT COUNT(*) FROM Questionnaire WHERE user_id = :userId";
+        long rows = -1L;
+        try {
+            Session session = sessionFactory.getCurrentSession();
+            rows = session.createQuery(hql, Long.class).setParameter("userId", userId).getSingleResult();
+            log.info("Get count of Questionnaire for User with id:{}, count = {}", userId, rows);
+        } catch (HibernateException e) {
+            log.error("Can't get count of Questionnaires for User with id:{}", userId);
+        }
+        return rows;
+    }
+
+
+    @Override
     public List<Questionnaire> getQuestionnairesForUserPagination(int userId, int numberOfPage, int maxResultsOnPage) {
         String hql = "FROM Questionnaire WHERE user_id = :userId";
         List<Questionnaire> result = null;
-
         try {
             Session session = sessionFactory.getCurrentSession();
             result = session.createQuery(hql, Questionnaire.class)
@@ -35,26 +50,25 @@ public class QuestionnaireDaoImpl implements QuestionnaireDao {
         } catch (HibernateException e) {
             log.error("Can't get Questionnaires for user with id:{}, page number:{}, maxResult:{}", userId, numberOfPage, maxResultsOnPage);
         }
-
         return result;
     }
 
 
     @Override
-    public Integer add(Questionnaire questionnaire) {
-        Integer questionnaireId = -1;
+    public int add(Questionnaire questionnaire) {
+        int questionnaireId = -1;
         try {
             Session session = sessionFactory.getCurrentSession();
             questionnaireId = (Integer) session.save(questionnaire);
             log.info("Questionnaire with id:{} was saved", questionnaireId);
         } catch (HibernateException e) {
-            log.error("Exception:{}; Cant save Questionnaire with id:{}", questionnaire, e);
+            log.error("Can't save Questionnaire with id:{}", questionnaire);
         }
         return questionnaireId;
     }
 
     @Override
-    public Boolean delete(Integer questionnaireId) {
+    public boolean delete(Integer questionnaireId) {
         try {
             Session session = sessionFactory.getCurrentSession();
             Questionnaire questionnaire = session.get(Questionnaire.class, questionnaireId);
@@ -62,7 +76,7 @@ public class QuestionnaireDaoImpl implements QuestionnaireDao {
             log.info("Questionnaire with id:{} was deleted", questionnaireId);
             return true;
         } catch (HibernateException e) {
-            log.error("Exception:{}; Cant delete Questionnaire with id:{}", e, questionnaireId);
+            log.error("Cant delete Questionnaire with id:{}", questionnaireId);
             return false;
         }
     }
@@ -76,13 +90,13 @@ public class QuestionnaireDaoImpl implements QuestionnaireDao {
             questionnairesForUserFromDB = session.createQuery(hql, Questionnaire.class).setParameter("userIdParam", userId).list();
             log.info("Questionnaires for user with ID: {} was gotten", userId);
         } catch (HibernateException e) {
-            log.error("Exception: {}, can't get questionnaires with userID: {} from DB", e, userId);
+            log.error("Can't get questionnaires with userID: {} from DB", userId);
         }
         return questionnairesForUserFromDB;
     }
 
     @Override
-    public Boolean deleteByUserId(Integer userId) {
+    public boolean deleteByUserId(Integer userId) {
         String hql = "DELETE FROM Questionnaire WHERE user_id =: userIdParam";
         try {
             Session session = sessionFactory.getCurrentSession();
@@ -90,7 +104,7 @@ public class QuestionnaireDaoImpl implements QuestionnaireDao {
             log.info("Questionnaires with userID: {} was deleted", userId);
             return true;
         } catch (HibernateException e) {
-            log.error("Exception: {}, can't delete questionnaire with userID: {}", e, userId);
+            log.error("Can't delete questionnaire with userID: {}", userId);
         }
         return false;
     }
@@ -104,24 +118,11 @@ public class QuestionnaireDaoImpl implements QuestionnaireDao {
             questionnairesFromDB = session.createQuery(hql, Questionnaire.class).list();
             log.info("All Questionnaires was gotten");
         } catch (HibernateException e) {
-            log.error("Exception, can't get all questionnaires :", e);
+            log.error("Can't get all questionnaires");
         }
         return questionnairesFromDB;
     }
 
-
-   public Long questionnairesForUserCount(int userId){
-       String hql = "SELECT COUNT(*) FROM Questionnaire WHERE user_id = :userId";
-       long rows = -1L;
-       try {
-           Session session = sessionFactory.getCurrentSession();
-           rows = session.createQuery(hql, Long.class).setParameter("userId", userId).getSingleResult();
-           log.info("Get count of Questionnaire for User with id:{}, count = {}", userId, rows);
-       } catch (HibernateException e) {
-           log.error("Can't get count of Questionnaires for User with id:{}", userId);
-       }
-       return rows;
-   }
 
     @Override
     public Long countOfQuestionnaires() {
@@ -130,9 +131,9 @@ public class QuestionnaireDaoImpl implements QuestionnaireDao {
         try {
             Session session = sessionFactory.getCurrentSession();
             rows = session.createQuery(hql, Long.class).getSingleResult();
-            log.info("Get count of Questionnaire, count = {}", rows);
+            log.info("Get count of Questionnaire, count:{}", rows);
         } catch (HibernateException e) {
-            log.error("Exception, can't get count of Questionnaires: ", e);
+            log.error("Can't get count of Questionnaires");
         }
         return rows;
     }

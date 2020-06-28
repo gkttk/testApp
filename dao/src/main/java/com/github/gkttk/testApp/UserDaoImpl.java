@@ -1,4 +1,3 @@
-
 package com.github.gkttk.testApp;
 
 import com.github.gkttk.testApp.api.UserDao;
@@ -27,54 +26,46 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User getUserHibernate(Integer userId) {
         User userFromDB = null;
-        try{
+        try {
             Session session = sessionFactory.getCurrentSession();
             userFromDB = session.get(User.class, userId);
             log.info("Get User with ID: {} from DB", userId);
         } catch (HibernateException e) {
-            log.error("Exception:{}. Can't get User with ID: {} from DB", e, userId);
+            log.error("Can't get User with ID: {} from DB", userId);
         }
         return userFromDB;
     }
 
-
     @Override
-    public Integer addHibernate(User user) {
-        Integer id = null;
-        try{
+    public int addUser(User user) {
+        int id = -1;
+        try {
             Session session = sessionFactory.getCurrentSession();
-            id = (Integer) session.save(user);
+            id = (int) session.save(user);
             log.info("User " + user.getLogin() + " saved");
-
         } catch (HibernateException e) {
-            log.error("Add user error in DAO module" + e);
+            log.error("Add user error in DAO module");
         }
         return id;
     }
 
-
     @Override
-    public List<User> getUsersHibernate() {
-        List<User> usersFromDB = null;
-        try{
+    public boolean updateUser(User user) {
+        try {
             Session session = sessionFactory.getCurrentSession();
-            CriteriaBuilder cb = session.getCriteriaBuilder();
-            CriteriaQuery<User> query = cb.createQuery(User.class);
-            query.select(query.from(User.class));
-            usersFromDB = session.createQuery(query).getResultList();
-            log.info("Get Users from DB");
+            session.update(user);
+            log.info("User with id:{} was updated", user.getId());
+            return true;
         } catch (HibernateException e) {
-            log.error("Exception in getUsers " + e);
+            log.error("Can't update User with id :{}", user.getId());
         }
-        return usersFromDB;
+        return false;
     }
 
-
-
     @Override
-    public User getUserByLoginHibernate(String userLogin) {
+    public User getUserByLogin(String userLogin) {
         String hql = "FROM User WHERE login = :userLogin";
-        try{
+        try {
             Session session = sessionFactory.getCurrentSession();
             Query query = session.createQuery(hql, User.class);
             query.setParameter("userLogin", userLogin);
@@ -82,48 +73,50 @@ public class UserDaoImpl implements UserDao {
             log.info("Get User from users login {}", userLogin);
             return user;
         } catch (HibernateException e) {
-            log.error("GetUser by login: {} exception", userLogin);
+            log.error("GetUser by login: {}", userLogin);
             return null;
         }
     }
 
     @Override
-    public boolean updateUserHibernate(User user) {
-        try{
+    public List<User> getUsers() {
+        List<User> usersFromDB = null;
+        try {
             Session session = sessionFactory.getCurrentSession();
-            session.update(user);
-            log.info("User with id:{} was updated", user.getId());
-            return true;
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<User> query = cb.createQuery(User.class);
+            query.select(query.from(User.class));
+            usersFromDB = session.createQuery(query).getResultList();
+            log.info("Get Users from DB");
         } catch (HibernateException e) {
-            log.error("Exception: {} ; Can't update User with id:{}", e, user.getId());
+            log.error("Exception in getUsers");
         }
-        return false;
+        return usersFromDB;
     }
 
     @Override
-    public boolean deleteUserHibernate(String login) {
+    public boolean deleteUser(String login) {
         String hql = "DELETE User WHERE login = :userLogin";
-        try{
+        try {
             Session session = sessionFactory.getCurrentSession();
             Query query = session.createQuery(hql);
             query.setParameter("userLogin", login);
             query.executeUpdate();
-            log.info("User " + login + " was deleted");
+            log.info("User :{} was deleted", login);
             return true;
         } catch (HibernateException e) {
-            log.error("Exception in deleteUserHibernate by login = " + login + " " + e);
+            log.error("Exception in deleteUserHibernate by login : {}", login);
             return false;
         }
     }
 
-
     @Override
-    public long updateUserForAdminHibernate(String oldUserLogin, User newUser) {
+    public long updateUserForAdmin(String oldUserLogin, User newUser) {
         String hql = "UPDATE User SET password = :newPassword, email = :newEmail, role = :newRole where login = :oldLogin";
         String newPassword = newUser.getPassword();
         String newEmail = newUser.getEmail();
         Role newRole = newUser.getRole();
-        try{
+        try {
             Session session = sessionFactory.getCurrentSession();
             Query query = session.createQuery(hql);
             query.setParameter("newPassword", newPassword);
@@ -131,19 +124,19 @@ public class UserDaoImpl implements UserDao {
             query.setParameter("newRole", newRole);
             query.setParameter("oldLogin", oldUserLogin);
             int result = query.executeUpdate();
-            log.info("User " + oldUserLogin + " was updated");
+            log.info("User :{} was updated", oldUserLogin);
             return result;
         } catch (HibernateException e) {
-            log.error("Exception in updateUserForAdminHibernate by {}, Exception: {}", oldUserLogin, e);
-            return 0;
+            log.error("Exception in updateUserForAdmin by {}", oldUserLogin);
+            return -1L;
         }
     }
 
     @Override
-    public long updateUserEmailHibernate(String newEmail, User user) {
+    public long updateUserEmail(String newEmail, User user) {
         String hql = "UPDATE User Set email = :newEmail WHERE login = :userLogin";
         String userLogin = user.getLogin();
-        try{
+        try {
             Session session = sessionFactory.getCurrentSession();
             Query query = session.createQuery(hql);
             query.setParameter("newEmail", newEmail);
@@ -152,16 +145,16 @@ public class UserDaoImpl implements UserDao {
             log.info("Email for user: {} was updated", userLogin);
             return result;
         } catch (HibernateException e) {
-            log.error("Exception in updateUserEmailHibernate by login: {}, Exception: {}", userLogin, e);
-            return 0;
+            log.error("Exception in updateUserEmailHibernate by login: {}", userLogin);
+            return -1L;
         }
     }
 
     @Override
-    public long updateUserPasswordHibernate(String newPassword, User user) {
+    public long updateUserPassword(String newPassword, User user) {
         String hql = "UPDATE User Set password = :newPassword WHERE login = :userLogin";
         String userLogin = user.getLogin();
-        try{
+        try {
             Session session = sessionFactory.getCurrentSession();
             Query query = session.createQuery(hql);
             query.setParameter("newPassword", newPassword);
@@ -170,15 +163,15 @@ public class UserDaoImpl implements UserDao {
             log.info("Password for user: {} was updated", userLogin);
             return result;
         } catch (HibernateException e) {
-            log.error("Exception in updateUserPasswordHibernate by login: {}, Exception: {}", userLogin, e);
-            return 0;
+            log.error("Exception in updateUserPasswordHibernate by login: {}", userLogin);
+            return -1L;
         }
     }
 
     public int countOfUsers() {
         String hql = "SELECT COUNT(u) FROM User u";
         int result = -1;
-        try{
+        try {
             Session session = sessionFactory.getCurrentSession();
             result = session.createQuery(hql, Long.class).uniqueResult().intValue();
             log.info("get count of users, result: {}", result);

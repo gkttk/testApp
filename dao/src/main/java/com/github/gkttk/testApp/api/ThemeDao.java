@@ -4,8 +4,8 @@ import com.github.gkttk.testApp.Theme;
 import java.util.List;
 
 public interface ThemeDao {
-    String getName(Integer themeId);
+    String getName(int themeId);
     Theme getTheme(Integer themeId);
-    Integer saveTheme(Theme theme);
+    int saveTheme(Theme theme);
     List<Theme> getAllThemes();
 }

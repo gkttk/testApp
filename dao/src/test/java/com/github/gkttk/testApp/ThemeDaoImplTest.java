@@ -18,6 +18,7 @@ import java.util.List;
 @ContextConfiguration(classes = DaoConfig.class)
 @Transactional
 public class ThemeDaoImplTest {
+
     @Autowired
     private ThemeDao themeDao;
 
@@ -46,22 +47,19 @@ public class ThemeDaoImplTest {
         String themeName = themeRepository.findNameByThemeId(id);
         Assertions.assertAll(() -> Assertions.assertNotNull(themeName),
                 () -> Assertions.assertEquals("Объекты и классы", themeName));
-
     }
 
-
     @Test
-    public void testGetAllThemesSpringData(){
+    public void testGetAllThemesSpringData() {
         List<Theme> themes = themeRepository.findAll();
-        Assertions.assertAll(()-> Assertions.assertNotNull(themes),
-                ()-> Assertions.assertNotEquals(0, themes.size()),
-                ()-> themes.forEach(theme -> Assertions.assertNotNull(theme.getId())));
+        Assertions.assertAll(() -> Assertions.assertNotNull(themes),
+                () -> Assertions.assertNotEquals(0, themes.size()),
+                () -> themes.forEach(theme -> Assertions.assertNotNull(theme.getId())));
     }
 
 
-
     @Test
-    public void testGetAllThemeNames() {
+    public void testGetAllThemes() {
         List<Theme> result = themeDao.getAllThemes();
         Assertions.assertNotNull(result);
     }
@@ -100,14 +98,14 @@ public class ThemeDaoImplTest {
         Theme theme1 = themeDao.getTheme(themeId);
         Theme theme2 = themeDao.getTheme(themeId);
         Theme theme3 = themeDao.getTheme(themeId);
-        int size = CacheManager.ALL_CACHE_MANAGERS.get(0).getCache("org.testApp.Theme").getSize();
+        int size = CacheManager.ALL_CACHE_MANAGERS.get(0).getCache("com.github.gkttk.testApp.Theme").getSize();
         Assertions.assertTrue(size > 0);
     }
 
 
     @Test
-    public void testGetThemeHibernate() {
-        Integer themeId = 3;
+    public void testGetTheme() {
+        int themeId = 3;
         Theme theme = themeDao.getTheme(themeId);
         Assertions.assertNotNull(theme);
         Assertions.assertAll(() -> Assertions.assertEquals("Коллекции", theme.getName()),
@@ -117,7 +115,7 @@ public class ThemeDaoImplTest {
 
     @Test
     public void testGetName() {
-        Integer id = 1;
+        int id = 1;
         String themeName = themeDao.getName(id);
         Assertions.assertEquals("Объекты и классы", themeName);
     }

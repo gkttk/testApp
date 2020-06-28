@@ -24,22 +24,22 @@ public class QuestionDaoImplTest {
     private QuestionRepository questionDaoSD;
 
     @Test
-    public void testGetQuestionsHibernate() {
+    public void testGetQuestions() {
         int themeId = 2;
-        List<Question> questionsFromDb = questionDao.getQuestions(themeId);
-        questionsFromDb.forEach(question -> {
+        List<Question> result = questionDao.getQuestions(themeId);
+        Assertions.assertNotNull(result);
+        result.forEach(question -> {
             Assertions.assertEquals(2, question.getqTheme().getId());
-            System.out.println(question.getQuestionText());
         });
     }
 
     @Test
     public void testGetQuestionsSpringData(){
         int themeId = 2;
-        List<Question> questionsFromDb = questionDaoSD.findAllByQTheme(themeId);
-        questionsFromDb.forEach(question -> {
+        List<Question> result = questionDaoSD.findAllByQTheme(themeId);
+        Assertions.assertNotNull(result);
+        result.forEach(question -> {
             Assertions.assertEquals(2, question.getqTheme().getId());
-            System.out.println(question.getQuestionText());
         });
     }
 

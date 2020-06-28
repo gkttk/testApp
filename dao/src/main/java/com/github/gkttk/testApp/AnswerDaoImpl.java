@@ -7,7 +7,6 @@ import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 
 @Transactional
@@ -29,7 +28,7 @@ public class AnswerDaoImpl implements AnswerDao {
             answers = session.createQuery(hql, Answer.class).setParameter("questionIdParam", questionId).list();
             log.info("GetAnswers with id:{}", questionId);
         } catch (HibernateException e) {
-            log.error("Fail to getAnswers(Hibernate) by id {}", questionId);
+            log.error("Fail to getAnswers by id {}", questionId);
         }
         return answers;
     }
