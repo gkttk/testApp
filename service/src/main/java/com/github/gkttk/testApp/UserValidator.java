@@ -13,10 +13,9 @@ public class UserValidator implements Validator {
     }
 
     @Override
-    public boolean checkLoginInDB(String login){
+    public boolean checkLoginInDB(String login) {
         List<User> users = daoUser.getUsers();
-        boolean result = users.stream().anyMatch(user->user.getLogin().equalsIgnoreCase(login));
-        return result;
+        return users.stream().anyMatch(user -> user.getLogin().equalsIgnoreCase(login));
     }
 
     @Override

@@ -13,6 +13,7 @@ import java.util.List;
 
 @ExtendWith(MockitoExtension.class)
 public class UserServiceImplTest {
+
     @Mock
     private static UserDao userDao;
     @InjectMocks
@@ -65,5 +66,21 @@ public class UserServiceImplTest {
         Assertions.assertTrue(result);
     }
 
+    @Test
+    public void testGetUserByLogin() {
+        String mockLogin = "testLogin";
+        User mockUser = new User("testLogin", "testPassword", "testEmail");
+        when(userDao.getUserByLogin(mockLogin)).thenReturn(new User("testLogin", "testPassword", "testEmail"));
+        User result = userService.getUserByLogin(mockLogin);
+        Assertions.assertEquals(result, mockUser);
+    }
 
+    @Test
+    public void testUpdateUser() {
+        User mockUser = new User();
+        when(userDao.updateUser(mockUser)).thenReturn(false);
+        boolean result = userService.updateUser(mockUser);
+        Assertions.assertFalse(result);
+
+    }
 }

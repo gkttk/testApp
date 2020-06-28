@@ -14,9 +14,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
     private ThemeService themeServiceImpl;
     private UserService userServiceImpl;
 
-
     private final int QUESTION_COUNT = 5;
-
 
     public QuestionnaireServiceImpl(QuestionnaireDao questionnaireDao,
                                     QuestionService questionServiceImpl,
@@ -26,12 +24,6 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
         this.questionServiceImpl = questionServiceImpl;
         this.themeServiceImpl = themeServiceImpl;
         this.userServiceImpl = userServiceImpl;
-    }
-
-
-    @Override
-    public List<Questionnaire> getQuestionnairesForUserPagination(int userId, int numberOfPage, int maxResultsOnPage){
-        return  questionnaireDao.getQuestionnairesForUserPagination(userId, numberOfPage, maxResultsOnPage);
     }
 
     @Override
@@ -45,27 +37,8 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
     }
 
     @Override
-    public int questionnairesForUserCount(int userId) {
-        return questionnaireDao.questionnairesForUserCount(userId).intValue();
-    }
-
-
-    @Override
-    public String dateFormat(LocalDateTime time) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        return time.format(formatter);
-    }
-
-
-
-    @Override
     public String getQuestionnaireThemeName(int questionnaireThemeId) {
         return themeServiceImpl.getThemeName(questionnaireThemeId);
-    }
-
-    @Override
-    public boolean deleteQuestionnaire(int userId) {
-        return questionnaireDao.deleteByUserId(userId);
     }
 
     @Override
@@ -95,5 +68,24 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
         return questionnaireDao.getQuestionnairesForUser(userId);
     }
 
+    @Override
+    public int questionnairesForUserCount(int userId) {
+        return questionnaireDao.questionnairesForUserCount(userId).intValue();
+    }
 
+    @Override
+    public String dateFormat(LocalDateTime time) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return time.format(formatter);
+    }
+
+    @Override
+    public boolean deleteQuestionnaire(int userId) {
+        return questionnaireDao.deleteByUserId(userId);
+    }
+
+    @Override
+    public List<Questionnaire> getQuestionnairesForUserPagination(int userId, int numberOfPage, int maxResultsOnPage) {
+        return questionnaireDao.getQuestionnairesForUserPagination(userId, numberOfPage, maxResultsOnPage);
+    }
 }

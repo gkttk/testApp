@@ -6,7 +6,6 @@ import java.util.List;
 
 public class ThemeServiceImpl implements ThemeService {
 
-
     private ThemeDao themeDao;
 
     public ThemeServiceImpl(ThemeDao themeDao) {
@@ -14,8 +13,13 @@ public class ThemeServiceImpl implements ThemeService {
     }
 
     @Override
-    public int addNewTheme(Theme newTheme){
-       return themeDao.saveTheme(newTheme);
+    public String getThemeName(int themeId) {
+        return themeDao.getName(themeId);
+    }
+
+    @Override
+    public int addNewTheme(Theme newTheme) {
+        return themeDao.saveTheme(newTheme);
     }
 
     @Override
@@ -24,12 +28,7 @@ public class ThemeServiceImpl implements ThemeService {
     }
 
     @Override
-    public String getThemeName(int themeId) {
-       return themeDao.getName(themeId);
-    }
-
-    @Override
-    public List<Theme> getAllThemes(){
+    public List<Theme> getAllThemes() {
         return themeDao.getAllThemes();
     }
 }

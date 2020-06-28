@@ -24,12 +24,12 @@ public class TempNewThemeServiceImpl implements TempNewThemeService {
     }
 
     @Override
-    public List<TempNewTheme> getAllTempNewThemes(){
+    public List<TempNewTheme> getAllTempNewThemes() {
         return tempNewThemeDao.getAllTempNewThemes();
     }
 
     @Override
-    public boolean acceptTempNewTheme(int tempNewThemeId){
+    public boolean acceptTempNewTheme(int tempNewThemeId) {
         TempNewTheme tempNewTheme = tempNewThemeDao.getTempNewTheme(tempNewThemeId);
         tempNewTheme.setPermit(true);
         return tempNewThemeDao.updateTempNewTheme(tempNewTheme);

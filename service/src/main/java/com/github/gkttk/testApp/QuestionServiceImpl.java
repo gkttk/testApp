@@ -33,14 +33,14 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public int checkQuestion(Question question, List<String> answers) {
         List<String> correctAnswers = new LinkedList<>();
-        for(Answer answer: question.getAnswers()){
-            if(answer.getCorrectness().equalsIgnoreCase("true")){
+        for (Answer answer : question.getAnswers()) {
+            if (answer.getCorrectness().equalsIgnoreCase("true")) {
                 correctAnswers.add(String.valueOf(answer.getId()));
             }
         }
         Collections.sort(correctAnswers);
         Collections.sort(answers);
-        if(correctAnswers.equals(answers)){
+        if (correctAnswers.equals(answers)) {
             return 1;
         }
         return 0;

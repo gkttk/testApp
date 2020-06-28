@@ -9,7 +9,11 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import com.github.gkttk.testApp.api.QuestionService;
 import com.github.gkttk.testApp.api.QuestionnaireDao;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.List;
+
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -24,15 +28,16 @@ public class QuestionnaireServiceImplTest {
     private static QuestionnaireServiceImpl questionnaireService;
 
     @Test
-    public void testAddQuestionnaire() {
-        Questionnaire questionnaire1 = new Questionnaire();
-        when(questionnaireDao.add(questionnaire1)).thenReturn(16);
-        int result = questionnaireService.addQuestionnaireInDb(questionnaire1);
-
+    public void testAddQuestionnaireInDB() {
+        Questionnaire questionnaire = new Questionnaire();
+        int mockResult = 16;
+        when(questionnaireDao.add(questionnaire)).thenReturn(mockResult);
+        int result = questionnaireService.addQuestionnaireInDb(questionnaire);
+        Assertions.assertEquals(result, mockResult);
     }
 
     @Test
-    public void testQuestionnairesCount(){
+    public void testQuestionnairesCount() {
         when(questionnaireDao.countOfQuestionnaires()).thenReturn(20L);
         int testInt = 20;
         int result = questionnaireService.questionnairesCount();
@@ -54,13 +59,51 @@ public class QuestionnaireServiceImplTest {
 
     @Test
     public void testGetQuestionnairesForStudent() {
-        int studentId = 1;
-        when(questionnaireDao.getQuestionnairesForUser(studentId)).thenReturn(null);
-        List<Questionnaire> listQ = questionnaireService.getQuestionnairesForStudent(studentId);
-        Assertions.assertNull(listQ);
+        int userId = 1;
+        int resultSize = 2;
+        when(questionnaireDao.getQuestionnairesForUser(userId)).thenReturn(Arrays.asList(new Questionnaire(), new Questionnaire()));
+        List<Questionnaire> listQ = questionnaireService.getQuestionnairesForStudent(userId);
+        Assertions.assertEquals(resultSize, listQ.size());
     }
 
+    @Test
+    public void testQuestionnairesForUserCount() {
+        int userId = 1;
+        long mockResult = 10;
+        when(questionnaireDao.questionnairesForUserCount(userId)).thenReturn(mockResult);
+        int result = questionnaireService.questionnairesForUserCount(userId);
+        Assertions.assertEquals(result, mockResult);
+    }
 
+    @Test
+    public void testDateFormat() {
+        LocalDateTime time = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String timeString = time.format(formatter);
+        String result = questionnaireService.dateFormat(time);
+        Assertions.assertEquals(result, timeString);
+    }
+
+    @Test
+    public void testDeleteQuestionnaire() {
+        int userId = 1;
+        when(questionnaireDao.deleteByUserId(userId)).thenReturn(false);
+        boolean result = questionnaireService.deleteQuestionnaire(userId);
+        Assertions.assertFalse(result);
+    }
+
+    @Test
+    public void testgetQuestionnairesForUserPagination() {
+        int userId = 1;
+        int numberOfPage = 2;
+        int maxResultsOnPage = 3;
+        int mockSize = 3;
+        when(questionnaireDao.getQuestionnairesForUserPagination(userId, numberOfPage, maxResultsOnPage))
+                .thenReturn(Arrays.asList(new Questionnaire(), new Questionnaire(), new Questionnaire()));
+        List<Questionnaire> result = questionnaireService.getQuestionnairesForUserPagination(userId, numberOfPage, maxResultsOnPage);
+        Assertions.assertAll(() -> Assertions.assertNotNull(result),
+                () -> Assertions.assertEquals(mockSize, result.size()));
+    }
 
 
 }

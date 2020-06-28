@@ -26,7 +26,6 @@ public class InfoForTeacherServiceImplTest {
                        new InfoForTeacher("test3", "test@3", "theme1", 20d),
                        new InfoForTeacher("test4", "test@4", "theme3", 30d),
                        new InfoForTeacher("test5", "test@5", "theme2", 10d)));
-
       List<InfoForTeacher> result = infoForTeacherService.getResultsPagination(1, 5);
         Assertions.assertNotNull(result);
         Assertions.assertEquals(5, result.size());
