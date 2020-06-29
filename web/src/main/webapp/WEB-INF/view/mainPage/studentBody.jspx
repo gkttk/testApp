@@ -13,15 +13,13 @@
     </h5>
 
 
-
-
     <table class="table">
         <thead class="thead-dark">
         <tr>
             <th scope="col">#</th>
-            <th scope="col">ID вопросника</th>
-            <th scope="col">Название темы</th>
-            <th scope="col">Процент выполнения</th>
+            <th scope="col"><spring:message code="teacherPage.idQuestionnaire"/></th>
+            <th scope="col"><spring:message code="teacherPage.themeName"/></th>
+            <th scope="col"><spring:message code="teacherPage.scoreQuestionnaire"/></th>
         </tr>
         </thead>
         <tbody>

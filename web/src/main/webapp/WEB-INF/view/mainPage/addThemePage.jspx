@@ -4,19 +4,19 @@
 
 <body style="background-color: #adc0d0">
 
-<h2 class="display-4">Добавить новую тему</h2>
+<h2 class="display-4"><spring:message code="describeNewTheme.addTheme"/></h2>
 
 <form method="post" action="${pageContext.request.contextPath}/addThemeForPermit">
     <fieldset>
         <div class="form-group">
             <input type="text" id="themeName" name="themeName" required="required"/>
-            <label for="themeName" class="text-dark">Название темы</label>
+            <label for="themeName" class="text-dark"><spring:message code="teacherPage.themeName"/></label>
         </div>
         <div class="form-group">
             <input type="text" id="numberOfQuestions" name="numberOfQuestions" pattern="[0-9]+" title="please enter number only" required="required"/>
-            <label for="numberOfQuestions" class="text-dark">Количество вопросов</label>
+            <label for="numberOfQuestions" class="text-dark"><spring:message code="teacherPage.countOfQuestions"/></label>
         </div>
-        <button type="submit" class="btn btn-primary" style="margin-top: 4px; margin-bottom: 4px">Отправить на согласование</button>
+        <button type="submit" class="btn btn-primary" style="margin-top: 4px; margin-bottom: 4px"><spring:message code="describeNewTheme.sendForApproval"/></button>
     </fieldset>
 </form>
 

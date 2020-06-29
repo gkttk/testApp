@@ -12,7 +12,6 @@ import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesView;
-
 import java.util.Locale;
 
 @Configuration
@@ -24,14 +23,13 @@ public class WebConfig implements WebMvcConfigurer {
     private QuestionService questionService;
     private InfoForTeacherService infoForTeacherService;
     private ThemeService themeService;
-
     private Validator userValidator;
     private TempNewThemeService tempNewThemeService;
 
 
     public WebConfig(QuestionnaireService questionnaireService, UserService userService, QuestionService questionService,
-                     InfoForTeacherService infoForTeacherService, ThemeService themeService, Validator userValidator, TempNewThemeService tempNewThemeService) {
-
+                     InfoForTeacherService infoForTeacherService, ThemeService themeService,
+                     Validator userValidator, TempNewThemeService tempNewThemeService) {
         this.questionnaireService = questionnaireService;
         this.userService = userService;
         this.questionService = questionService;
@@ -40,7 +38,6 @@ public class WebConfig implements WebMvcConfigurer {
         this.userValidator = userValidator;
         this.tempNewThemeService = tempNewThemeService;
     }
-
 
     @Bean
     public AvatarUploadController avatarUploadController(){
@@ -97,7 +94,6 @@ public class WebConfig implements WebMvcConfigurer {
         return tilesConfigurer;
     }
 
-
     @Bean
     public ReloadableResourceBundleMessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
@@ -105,7 +101,6 @@ public class WebConfig implements WebMvcConfigurer {
         messageSource.setDefaultEncoding("windows-1251");
         return messageSource;
     }
-
 
     @Bean
     public CookieLocaleResolver localeResolver() {
@@ -115,7 +110,6 @@ public class WebConfig implements WebMvcConfigurer {
         localeResolver.setCookieMaxAge(3600);
         return localeResolver;
     }
-
 
     @Bean
     public CommonsMultipartResolver multipartResolver(){

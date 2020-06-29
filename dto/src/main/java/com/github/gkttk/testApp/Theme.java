@@ -22,7 +22,7 @@ public class Theme {
     private List<Question> tQuestions = new ArrayList<>();
 
 
-    @OneToMany(mappedBy = "questionnaireTheme", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "questionnaireTheme", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Questionnaire> uQuestionnaires = new ArrayList<>();
 
     public Theme(){}

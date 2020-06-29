@@ -19,6 +19,11 @@
 
   <dependencies>
     <dependency>
+      <groupId>com.github.gkttk.testApp</groupId>
+      <artifactId>service</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
     </dependency>

@@ -4,7 +4,6 @@ import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 import com.github.gkttk.testApp.config.DaoConfig;
 import com.github.gkttk.testApp.config.ServiceConfig;
-
 import javax.servlet.Filter;
 
 public class WebAppInitialiser extends AbstractAnnotationConfigDispatcherServletInitializer {

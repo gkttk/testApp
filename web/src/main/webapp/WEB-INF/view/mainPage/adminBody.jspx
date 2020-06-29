@@ -43,9 +43,9 @@
         <thead class="thead-dark">
         <tr>
             <th scope="col">#</th>
-            <th scope="col">ID вопросника</th>
-            <th scope="col">Название темы</th>
-            <th scope="col">Процент выполнения</th>
+            <th scope="col"><spring:message code="teacherPage.idQuestionnaire"/></th>
+            <th scope="col"><spring:message code="teacherPage.themeName"/></th>
+            <th scope="col"><spring:message code="teacherPage.scoreQuestionnaire"/></th>
         </tr>
         </thead>
         <tbody>
@@ -63,14 +63,14 @@
     </table>
 
     <c:if test="${tempNewThemes.size() > 0}">
-        <h5 class="display-4">Новые темы на согласовании</h5>
+        <h5 class="display-4"><spring:message code="teacherPage.newThemeOnProcess"/></h5>
         <table class="table">
             <thead class="thead-dark">
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">ID пользователя</th>
-                <th scope="col">Название темы</th>
-                <th scope="col">Количество вопросов</th>
+                <th scope="col"><spring:message code="adminPage.idUser"/></th>
+                <th scope="col"><spring:message code="teacherPage.themeName"/></th>
+                <th scope="col"><spring:message code="teacherPage.countOfQuestions"/></th>
             </tr>
             </thead>
             <tbody>

@@ -11,10 +11,10 @@
         <thead class="thead-dark">
         <tr>
             <th scope="col">#</th>
-            <th scope="col">Логин студента</th>
-            <th scope="col">E-mail студента</th>
-            <th scope="col">Тема вопросника</th>
-            <th scope="col">Процент выполнения</th>
+            <th scope="col">  <spring:message code="teacherPage.loginStudent"/></th>
+            <th scope="col">  <spring:message code="teacherPage.emailStudent"/></th>
+            <th scope="col">  <spring:message code="teacherPage.themeOfQuestionnaire"/></th>
+            <th scope="col">  <spring:message code="teacherPage.scoreQuestionnaire"/></th>
         </tr>
         </thead>
         <tbody>
@@ -74,9 +74,9 @@
         <thead class="thead-dark">
         <tr>
             <th scope="col">#</th>
-            <th scope="col">ID вопросника</th>
-            <th scope="col">Название темы</th>
-            <th scope="col">Процент выполнения</th>
+            <th scope="col">  <spring:message code="teacherPage.idQuestionnaire"/>а</th>
+            <th scope="col">  <spring:message code="teacherPage.themeOfQuestionnaire"/></th>
+            <th scope="col">  <spring:message code="teacherPage.scoreQuestionnaire"/></th>
         </tr>
         </thead>
         <tbody>
@@ -130,14 +130,14 @@
 
 
     <c:if test="${tempUserNewThemes.size() > 0}">
-        <h5 class="display-4">Новые темы на согласовании</h5>
+        <h5 class="display-4">  <spring:message code="teacherPage.newThemeOnProcess"/></h5>
         <table class="table">
             <thead class="thead-dark">
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Название темы</th>
-                <th scope="col">Количество вопросов</th>
-                <th scope="col">Статус</th>
+                <th scope="col"><spring:message code="teacherPage.themeName"/></th>
+                <th scope="col"><spring:message code="teacherPage.countOfQuestions"/></th>
+                <th scope="col"><spring:message code="teacherPage.status"/></th>
             </tr>
             </thead>
             <tbody>
@@ -149,13 +149,13 @@
                     <td>${newTempUserTheme.getNumberOfQuestions()}</td>
                     <c:choose>
                         <c:when test="${newTempUserTheme.getPermit() == false}">
-                            <td> В процессе согласования</td>
+                            <td><spring:message code="teacherPage.statusInProcess"/></td>
                         </c:when>
                         <c:otherwise>
                             <td>
                                 <form method="get" action="${pageContext.request.contextPath}/getTempNewTheme">
                                     <input type="hidden" name="newTempUserThemeId" value="${newTempUserTheme.getId()}"/>
-                                    <button class="btn btn-primary" type="submit">Добавить описание темы</button>
+                                    <button class="btn btn-primary" type="submit"><spring:message code="teacherPage.addDescribe"/></button>
                                 </form>
                             </td>
                         </c:otherwise>

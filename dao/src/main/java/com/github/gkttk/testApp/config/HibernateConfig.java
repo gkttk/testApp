@@ -23,7 +23,6 @@ public class HibernateConfig {
     @Bean
     public DataSource dataSource() {
         final DataSourceSettings dataSourceSettings = settingsConfig.dataSourceSettings();
-
         final HikariDataSource hikariDataSource = new HikariDataSource();
         hikariDataSource.setJdbcUrl(dataSourceSettings.getUrl());
         hikariDataSource.setUsername(dataSourceSettings.getName());

@@ -44,5 +44,7 @@
     <c:if test="${requestScope.get('registrationSuccessMessage') != null}">
         <div class="alert alert-success" role="alert">${requestScope.get("registrationSuccessMessage")}</div>
     </c:if>
+
+
     </body>
 </jsp:root>
