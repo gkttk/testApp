@@ -17,20 +17,19 @@ import java.nio.file.Files;
 @RequestMapping
 public class AvatarUploadController {
 
-    private String rootPath = "D:\\Projects\\userAvatars\\";    /*"C:\\Users\\Кирилл\\image\\";*/
+    private String rootPath = "D:\\Projects\\userAvatars\\";
     private File defaultAvatar = new File("D:\\Projects\\userAvatars\\defaultAvatar.jpg");
 
     @PostMapping("/uploadImage")
-    public String uploadAvatar(@RequestParam(value = "avatar") MultipartFile image) {
+    public String uploadAvatar(@RequestParam(value = "avatar") MultipartFile image){
         User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String fileName = authUser.getLogin() + authUser.getEmail();
         processImage(image, fileName);
         return "redirect:/user";
     }
 
-
     @GetMapping(value = "/downloadImage")
-    public ResponseEntity<byte[]> downloadAvatar(@RequestParam(value = "name") String fileName) {
+    public ResponseEntity<byte[]> downloadAvatar(@RequestParam(value = "name") String fileName){
         File file = new File(rootPath + fileName);
         byte[] content = new byte[0];
        try {
@@ -40,14 +39,13 @@ public class AvatarUploadController {
                content = Files.readAllBytes(defaultAvatar.toPath());
            }
        }catch (IOException ex) {
-            //Exception handling
         }
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.IMAGE_JPEG);
         headers.setContentLength(content.length);
-        return new ResponseEntity<>(content,headers,HttpStatus.OK);
+        return new ResponseEntity<>(content, headers, HttpStatus.OK);
 
-}
+    }
 
     private void processImage(MultipartFile image, String fileName) {
         try {
@@ -56,13 +54,11 @@ public class AvatarUploadController {
                 saveImage(fileName, image);
             }
         } catch (IOException e) {
-            //Error handling
         }
     }
 
-
     private void validateImage(MultipartFile image) throws IOException {
-        if (!image.getContentType().equals("image/jpeg")) {
+        if (image.getContentType() == null || !image.getContentType().equals("image/jpeg")) {
             throw new IOException("Only JPG images accepted");
         }
     }

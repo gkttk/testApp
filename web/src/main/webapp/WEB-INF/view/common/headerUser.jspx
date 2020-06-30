@@ -19,8 +19,8 @@
            <img alt="Person's image" src="${pageContext.request.contextPath}/downloadImage?name=${principal.getLogin()}${principal.getEmail()}.jpg" height="100" width="100" style="float: left"/>
             <div class="header-right" style="float:right">
                 <s:form id="uploadForm" method="post" action="${pageContext.request.contextPath}/uploadImage" enctype="multipart/form-data">
-                <input class="btn btn-primary" id="uploadButton" type="submit"><spring:message code="changeAvatar"/></input> <!--active-->
-                <input name="avatar" type="file"/>
+                <input class="btn btn-primary" id="uploadButton" type="submit" style="margin:5px"><spring:message code="changeAvatar"/></input> <!--active-->
+                <br/><input name="avatar" type="file"/>
               <!--  <input type="file" id="file" name="avatar" style="display:none;" />-->
               <!--  <button class="btn btn-primary" onclick="thisFileUpload();" style="margin:5px">UPLOAD</button>-->
                 </s:form>
