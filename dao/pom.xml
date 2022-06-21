@@ -11,7 +11,7 @@
 
 
     <properties>
-        <mysql-connector-java.version>8.0.19</mysql-connector-java.version>
+        <mysql-connector-java.version>8.0.28</mysql-connector-java.version>
         <spring-orm.version>5.2.6.RELEASE</spring-orm.version>
         <hikariCP.version>3.4.5</hikariCP.version>
     </properties>
